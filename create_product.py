@@ -1,5 +1,6 @@
 import os
 
+from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 
@@ -22,7 +23,7 @@ class StoreProductPage(webapp.RequestHandler):
     def post(self):
         _id = self.request.get('id')
         _name = self.request.get('name')
-        key = db.Key.from_path('Product', 'product')
+        key = db.Key.from_path('Product', _name)
         p = entities.Product(parent=key, id=_id, name=_name)
         p.put()
         self.response.out.write('Created a product!')
