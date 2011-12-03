@@ -7,7 +7,7 @@ class Product(db.Model):
     id = db.StringProperty(required=True)
     name = db.StringProperty(required=True)
     producerName = db.StringProperty()
-    locationMade = db.StringProperty()
+    locationMade = db.GeoPt()
     badgeName = db.StringProperty()
 
 """
