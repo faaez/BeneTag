@@ -6,6 +6,7 @@ Data type representing a product with a BeneTag
 class Product(db.Model):
     id = db.StringProperty(required=True)
     name = db.StringProperty(required=True)
+    picture = db.BlobProperty()
     producerName = db.StringProperty()
     locationMade = db.GeoPtProperty()
     badgeName = db.StringProperty()
