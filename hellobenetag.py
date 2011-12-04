@@ -9,6 +9,7 @@ import create_qr
 import create_factory
 import view_factory
 import search_product
+import create_worker
 
 application = webapp.WSGIApplication([
   ('/', home.HomePage),
@@ -18,6 +19,8 @@ application = webapp.WSGIApplication([
   ('/storefactory', create_factory.StoreFactoryPage),
   ('/createbadge', create_badge.CreateBadgePage),
   ('/storebadge', create_badge.StoreBadgePage),
+  ('/createworker', create_worker.CreateWorkerPage),
+  ('/storeworker', create_worker.StoreWorkerPage),
   ('/view', view_product.ViewProduct),
   ('/qr', create_qr.CreateQrPage),
   ('/viewfactory', view_factory.ViewFactory),

@@ -49,7 +49,7 @@ class StoreFactoryPage(webapp.RequestHandler):
             f = entities.Factory(name=_name, address=_address, location=gp)
 
             f.put()
-            self.redirect('/createfactory?added=True')
+            self.redirect('/')
         else:
             greeting = ("<a href=\"%s\">Sign in or register</a>." %
                         users.create_login_url("/storeproduct"))

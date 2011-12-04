@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/> 
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  </head>
+  <body>
+
+  <body onload="initialize()">
+    <form action="/storeworker" enctype="multipart/formdata" method="post">
+      <div>Name: <input name="name" id="name"></input></div>
+	  <div>Factory: <input id="factoryName" name="factoryName"></input></div>
+      <div>Picture:<input type="file" name="picture"/></div>
+      <div>Profile: <textarea name="profile" id="profile"></textarea></div>
+      <div><input type="submit" value="Create worker"></div>
+    </form>
+  </body>
+  <script type="text/javascript">
+    function initialize() {
+        var factory_names = new Array();
+        {% for name in factory_names %}
+            factory_names.push('{{name}}');
+        {% endfor %}
+        $('#factoryName').autocomplete({
+            source: factory_names
+        });
+    }
+  </script>
+</html>
