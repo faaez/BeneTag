@@ -28,6 +28,7 @@ class ViewProduct(webapp.RequestHandler):
         latitude = product.locationMade.lat
         longitude = product.locationMade.lon
         template_values = {}
+        template_values['id'] = id
         template_values['name'] = name
         template_values['producer'] = producer
         template_values['latitude'] = latitude
