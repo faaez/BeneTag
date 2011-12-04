@@ -24,7 +24,7 @@ class SearchResultPage(webapp.RequestHandler):
         query = self.request.get('query')
         productlist = entities.Product.all()
 
-        matches = [p for p in productlist if query in p.name]
+        matches = [p for p in productlist if query.lower() in p.name.lower()]
         template_values = {
             'matches': matches
         }
