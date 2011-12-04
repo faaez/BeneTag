@@ -13,7 +13,7 @@ class ViewFactory(webapp.RequestHandler):
     def get(self):
       
         factorylist = Factory.all()
-        factory = factorylist[0]
+        factory = factorylist[factorylist.count() -1]
         # Display error if product ID not found
         if not factory:
           template_values = {}
@@ -23,6 +23,7 @@ class ViewFactory(webapp.RequestHandler):
         # Make a dictionary for template
         name = factory.name
         producers = factory.producers
+        productlist = factory.product_set
         workers = factory.workers
         address = factory.address
         if factory.location:
@@ -35,6 +36,7 @@ class ViewFactory(webapp.RequestHandler):
         template_values['id'] = id
         template_values['name'] = name
         template_values['producers'] = producers
+        template_values['products'] = productlist
         template_values['workers'] = workers
         template_values['latitude'] = latitude
         template_values['longitude'] = longitude
