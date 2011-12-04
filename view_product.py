@@ -14,15 +14,14 @@ class ViewProduct(webapp.RequestHandler):
         # Get the id from the get parameter
         id = self.request.get('id')
         # Fetch the data for this product
-        products = Product.gql("WHERE id = :1", id)
+        product = db.get(id)
         # Display error if product ID not found
-        if products.count() < 1:
+        if not product:
           template_values = {}
           path = os.path.join(os.path.dirname(__file__), 'not_found.html')
           self.response.out.write(template.render(path, template_values))
           return
         # Make a dictionary for template
-        product = products[0]
         name = product.name
         producer = product.producerName
         if product.locationMade:
