@@ -57,6 +57,9 @@
   </head>
   <body onload="initialize()">
     <h1 id="productname"> {{ name }} </h1>
+    {% if has_image %}
+        <img id="productimage" src="productimage?id={{id}}"></img>
+    {% endif %}
     <p id="producername">Made by {{producer}} </p>
     {% if latitude and longitude %}
         <div id="map_canvas"></div>
