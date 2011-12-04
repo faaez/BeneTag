@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# benetag: http://ogp.me/ns/fb/benetag#">
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/fb/benetag#">
     <meta property="fb:app_id"      content="286512274727203" /> 
-    <meta property="og:type"        content="benetag:garment" /> 
+    <meta property="og:type"        content="website" /> 
     <meta property="og:url"         content="{{url}}" /> 
     <meta property="og:title"       content="{{name}}" /> 
     <meta property="og:description" content="Made by {{producer}}" /> 
@@ -39,7 +39,14 @@
         function fbshare() {
             FB.login(function(response) {
             if (response.authResponse) {
-                
+                var request = $.ajax({
+                    url: "https://graph.facebook.com/me/benetag:share",
+                    type: "POST",
+                    data: {website : '{{url}}', access_token : 'AAAEElNZAb4SMBAKNSQDZBT2pOFdDypxTrRKOY5VRey3TgwoAzoYtsUDO9DHDuCNnMq3d5RhvJeccuemlmSTV5ow2IpYAPvBf6fx9xG9wZDZD'},
+                    success: function(data) {
+                        alert('shared');
+                    },
+                });
             }
             }, {});
         }
