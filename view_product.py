@@ -52,5 +52,5 @@ class ProductImage(webapp.RequestHandler):
         id = self.request.get('id')
         # Fetch the image for this product
         product = db.get(id)
-        self.response.headers['Content-Type'] = 'image/jpeg'
+        self.response.headers['Content-Type'] = 'image'
         self.response.out.write(product.picture)
