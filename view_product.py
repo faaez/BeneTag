@@ -25,8 +25,12 @@ class ViewProduct(webapp.RequestHandler):
         product = products[0]
         name = product.name
         producer = product.producerName
-        latitude = product.locationMade.lat
-        longitude = product.locationMade.lon
+        if product.locationMade:
+            latitude = product.locationMade.lat
+            longitude = product.locationMade.lon
+        else:
+            latitude = None
+            longitude = None
         template_values = {}
         template_values['id'] = id
         template_values['name'] = name
