@@ -1,18 +1,38 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
-  </head>
-  <body>
+     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/viewfactory.css" />
+    <script type="text/javascript">
+        function initialize() {
+            {% if latitude and longitude %}
+                var latlng = new google.maps.LatLng({{latitude}}, {{longitude}});
+                var myOptions = {
+                    zoom: 8,
+                    center: latlng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+                document.getElementById("map_canvas").style.position="fixed";
+                var marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map,
+                });
+            {% endif %}
+}
+</script>
+</head>
+<body onload="initialize()">
 <h1 id="factoryname">Factory : {{ name }}</h1>
-<div>Address: {{address}}</div>
+<h4>Address: {{address}}</h4>
 <hr></hr>
+
+<h4>Products</h4>
 <div>
-Products</br>
 {% for product in products%}
    </br>{{index}}{{product.name}}
 {% endfor %}
 </div>
-
 <div>
 {% for producer in producers %}
   <p>Producer :{{producer.name}}</p>
@@ -23,5 +43,10 @@ Products</br>
   <p>Worker :{{worker.name}}</p>
 {% endfor %}
 </div>
+<hr></hr>
+    {% if latitude and longitude %}
+        <div id="map_canvas"></div>
+    {% endif %}
+
   </body>
 </html>

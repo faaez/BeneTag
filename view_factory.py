@@ -11,10 +11,12 @@ View a Factory Page
 """
 class ViewFactory(webapp.RequestHandler):
     def get(self):
-      
+        '''if no id is sent, defaults to last factory'''
+        id = self.request.get('id')
         factorylist = Factory.all()
         factory = factorylist[factorylist.count() -1]
-        # Display error if product ID not found
+        if(id):
+            factory = db.get(id)
         if not factory:
           template_values = {}
           path = os.path.join(os.path.dirname(__file__), 'not_found.html')
