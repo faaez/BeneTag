@@ -1,11 +1,17 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
-import create_product, view_product, create_qr, view_factory
+import create_product
+import view_product 
+import create_qr
+import create_factory
+import view_factory
 
 application = webapp.WSGIApplication([
   ('/createproduct', create_product.CreateProductPage),
   ('/storeproduct', create_product.StoreProductPage),
+  ('/createfactory', create_factory.CreateFactoryPage),
+  ('/storefactory', create_factory.StoreFactoryPage),
   ('/view', view_product.ViewProduct),
   ('/qr', create_qr.CreateQrPage),
   ('/viewfactory', view_factory.ViewFactory),
