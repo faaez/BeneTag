@@ -17,6 +17,10 @@ div#qrimage {
     text-align:center;
     display:block;
 }
+div#factory_link {
+    text-align:center;
+    display:block;
+}
 button#fbshare {
     margin-left:auto;
     margin-right:auto;
