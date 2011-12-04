@@ -43,5 +43,5 @@ Data type representing a badge
 """
 class Badge(db.Model):
     name = db.StringProperty(required=True)
-    iconUrl = db.StringProperty()
+    icon = db.BlobProperty()
     description = db.StringProperty() 
