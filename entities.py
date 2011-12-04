@@ -15,7 +15,7 @@ Data type representing a producer
 """
 class Producer(db.Model):
 	factories = db.ListProperty(db.Key)
-        name = db.StringProperty(required=True)
+	name = db.StringProperty(required=True)
 	profileOwner = db.UserProperty(required=True)
 
 """
