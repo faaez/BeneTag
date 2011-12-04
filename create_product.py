@@ -48,7 +48,7 @@ class StoreProductPage(webapp.RequestHandler):
 
             p = entities.Product(name=_name, producerName=_producerName, factoryMade=_factoryMade.key())
             for _badge in _badges:
-                p.badges.append(_badge)
+                p.badges.append(db.Key(_badge))
             p.picture = db.Blob(_picture)
             p.put()
             self.redirect('/view?id=' + str(p.key()))
