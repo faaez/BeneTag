@@ -5,9 +5,9 @@
   <body>
 
     <form action="/storeproduct" method="post">
-      <div>Name: <textarea name="name" rows="1" cols="40"></textarea></div>
-      <div>Producer: <textarea name="producerName" rows="1" cols="40">{{producerName}}</textarea></div>
-	  <div>Factory: <textarea name="factoryName" rows="1" cols="40"></textarea></div>
+      <div>Name: <input name="name"></input></div>
+      <div>Producer: <input name="producerName" value={{producerName}}></input></div>
+	  <div>Factory: <input name="factoryName"></input></div>
 	  <div><label>Picture:</label></div>
             <div><input type="file" name="picture"/></div>
 	  <div>
