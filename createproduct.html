@@ -4,7 +4,7 @@
   </head>
   <body>
 
-    <form action="/storeproduct" method="post">
+    <form action="/storeproduct" enctype="multipart/formdata" method="post">
       <div>Name: <textarea name="name" rows="1" cols="40"></textarea></div>
       <div>Producer: <textarea name="producerName" rows="1" cols="40">{{producerName}}</textarea></div>
 	  <div>Factory: <textarea name="factoryName" rows="1" cols="40"></textarea></div>

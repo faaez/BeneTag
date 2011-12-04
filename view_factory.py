@@ -39,6 +39,7 @@ class ViewFactory(webapp.RequestHandler):
         template_values['latitude'] = latitude
         template_values['longitude'] = longitude
         template_values['url'] = self.request.url
+        template_values['address'] = address
         template_values['qr_url'] = self.request.url.replace('view','qr')
         path = os.path.join(os.path.dirname(__file__), 'viewfactory.html')
         self.response.out.write(template.render(path, template_values))
