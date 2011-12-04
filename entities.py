@@ -14,7 +14,28 @@ class Product(db.Model):
 Data type representing a producer
 """
 class Producer(db.Model):
+	factories = db.ListProperty(db.Key)
     name = db.StringProperty(required=True)
+	profileOwner = db.UserProperty(required=True)
+
+"""
+Data type representing a factory
+"""
+class Factory(db.Model)
+	producers = db.ListProperty(db.Key)
+	workers = db.ListProperty(db.Key)
+	name = db.StringProperty(required=True)
+	address = db.PostalAddressProperty()
+	location = db.GeoPtProperty()
+
+"""
+Data type representing a worker
+"""
+class Worker(db.Model)
+	name = db.StringProperty()
+	factory = db.ReferenceProperty()
+	profile = db.TextProperty()
+	picture = db.BlobProperty()
 
 """
 Data type representing a badge
