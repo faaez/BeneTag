@@ -40,7 +40,7 @@ class StoreProductPage(webapp.RequestHandler):
             _name = self.request.get('name')
             _producerName = self.request.get('producerName')
             _factoryName = self.request.get('factoryName')
-            _badges = self.request.get('badges')
+            _badges = self.request.get_all('badges')
             _picture = self.request.get('picture')
             if isinstance(_picture, unicode):
                 _picture = _picture.encode('utf-8', 'replace')
