@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
+  </head>
+  <body>
+    <form action="/storebadge" enctype="multipart/formdata" method="post">
+      <div>Name: <input name="name"></input></div>
+	  <div>Description: <textarea name="description"></textarea></div>
+	  <div><label>Badge Icon:</label></div>
+            <div><input type="file" name="icon"/></div>
+      <div><input type="submit" value="Create badge"></div>
+    </form>
+  </body>
+</html>

@@ -3,6 +3,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 import home
 import create_product
+import create_badge
 import view_product 
 import create_qr
 import create_factory
