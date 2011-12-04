@@ -1,30 +1,57 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# benetag: http://ogp.me/ns/fb/benetag#">
+    <meta property="fb:app_id"      content="286512274727203" /> 
+    <meta property="og:type"        content="benetag:garment" /> 
+    <meta property="og:url"         content="{{url}}" /> 
+    <meta property="og:title"       content="{{name}}" /> 
+    <meta property="og:description" content="Made by {{producer}}" /> 
+    <meta property="og:image"       content="{{qr_url}}" />
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <title>{{name}} by {{producer}}</title>
     <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="stylesheets/viewproduct.css" />
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="//connect.facebook.net/en_US/all.js"></script>
     <script type="text/javascript">
-        function map_initialize() {
-            var latlng = new google.maps.LatLng({{latitude}}, {{longitude}});
-            var myOptions = {
-                zoom: 8,
-                center: latlng,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-            document.getElementById("map_canvas").style.position="fixed";
+        function initialize() {
+            {% if latitude and longitude %}
+                var latlng = new google.maps.LatLng({{latitude}}, {{longitude}});
+                var myOptions = {
+                    zoom: 8,
+                    center: latlng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+                document.getElementById("map_canvas").style.position="fixed";
+            {% endif %}
+            FB.init({
+                appId      : '286512274727203', // App ID
+                channelUrl : 'benetag.com/view', // Channel File
+                status     : true, // check login status
+                cookie     : true, // enable cookies to allow the server to access the session
+                oauth      : true, // enable OAuth 2.0
+                xfbml      : true  // parse XFBML
+            });
+        }
+
+        function fbshare() {
+            FB.login(function(response) {
+            if (response.authResponse) {
+                
+            }
+            }, {});
         }
     </script>
   </head>
-  <body onload="map_initialize()">
+  <body onload="initialize()">
     <h1 id="productname"> {{ name }} </h1>
     <p id="producername">Made by {{producer}} </p>
     {% if latitude and longitude %}
         <div id="map_canvas"></div>
     {% endif %}
     <div id="qrimage"><img src="qr?id={{id}}"></img></div>
+    <button class="btn primary" id="fbshare" onclick="fbshare()">Share on Facebook</img></button>
+    <div id="fb-root"></div>
   </body>
 </html>
