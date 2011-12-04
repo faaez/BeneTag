@@ -5,6 +5,14 @@
   <body>
 <h1 id="factoryname">Factory : {{ name }}</h1>
 <div>Address: {{address}}</div>
+<hr></hr>
+<div>
+Products</br>
+{% for product in products%}
+   </br>{{index}}{{product.name}}
+{% endfor %}
+</div>
+
 <div>
 {% for producer in producers %}
   <p>Producer :{{producer.name}}</p>
