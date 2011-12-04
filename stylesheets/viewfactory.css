@@ -1,6 +1,10 @@
-h1#productname {
+h1 {
     text-align:center;
 }
+h4 {
+    text-align:center;
+}
+
 p#producername {
     text-align:center;
 }
@@ -13,7 +17,7 @@ div#map_canvas {
     height:200px;
     padding:0px;
 }
-div#qrimage {
+div {
     text-align:center;
     display:block;
 }
