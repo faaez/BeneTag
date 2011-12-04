@@ -6,6 +6,8 @@ p#producername {
 }
 div#map_canvas {
     margin:0px;
+    width:300%;
+    height:200px;
     padding:0px;
 }
 div#qrimage {
