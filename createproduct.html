@@ -5,9 +5,8 @@
   <body>
 
     <form action="/storeproduct" method="post">
-      <div>id: <textarea name="id" rows="1" cols="40"></textarea></div>
       <div>name: <textarea name="name" rows="1" cols="40"></textarea></div>
-      <div>producer: <textarea name="producerName" rows="1" cols="40"></textarea></div>
+      <div>producer: <textarea name="producerName" rows="1" cols="40">{{producerName}}</textarea></div>
       <div>location: <textarea name="locationMade" rows="1" cols="40"></textarea></div>
       <div><input type="submit" value="Create product"></div>
     </form>

@@ -7,7 +7,10 @@ application = webapp.WSGIApplication([
   ('/createproduct', create_product.CreateProductPage),
   ('/storeproduct', create_product.StoreProductPage),
   ('/view', view_product.ViewProduct),
+<<<<<<< HEAD
   ('/qr', create_qr.CreateQrPage)
+=======
+>>>>>>> 2f49f617e56632a0ee6cbe3f4dfed6d1ffb982f7
 ], debug=True)
 
 def main():
