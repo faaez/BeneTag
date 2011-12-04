@@ -6,7 +6,7 @@ import create_product, view_product
 application = webapp.WSGIApplication([
   ('/createproduct', create_product.CreateProductPage),
   ('/storeproduct', create_product.StoreProductPage),
-  ('/view', view_product.ViewProduct)
+  ('/view', view_product.ViewProduct),
 ], debug=True)
 
 def main():

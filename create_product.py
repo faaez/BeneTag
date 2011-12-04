@@ -15,7 +15,9 @@ class CreateProductPage(webapp.RequestHandler):
     def get(self):
 		user = users.get_current_user()
 		if user:
-			template_values = {}
+			template_values = {
+                'producerName': user.nickname()
+            }
 			path = os.path.join(os.path.dirname(__file__), 'createproduct.html')
 			self.response.out.write(template.render(path, template_values))
 		else:
@@ -30,7 +32,6 @@ class StoreProductPage(webapp.RequestHandler):
     def post(self):
 		user = users.get_current_user()
 		if user:
-			_id = self.request.get('id')
 			_name = self.request.get('name')
 			_producerName = self.request.get('producerName')
 			_locationMade = self.request.get('locationMade')
@@ -46,12 +47,10 @@ class StoreProductPage(webapp.RequestHandler):
 			else:
 				gp = None
 
+			p = entities.Product(name=_name, producerName=_producerName, locationMade=gp)
 
-			key = db.Key.from_path('Product', _id)
-			p = entities.Product(parent=key, 
-				id=_id, name=_name, producerName=_producerName, locationMade=gp)
 			p.put()
-			self.redirect('/view?id=' + str(_id))
+			self.redirect('/view?id=' + str(p.key()))
 		else:
 			greeting = ("<a href=\"%s\">Sign in or register</a>." %
                         users.create_login_url("/storeproduct"))
