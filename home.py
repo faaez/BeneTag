@@ -19,6 +19,6 @@ class HomePage(webapp.RequestHandler):
             self.response.out.write(template.render(path, template_values))
         else:
             greeting = ("<a href=\"%s\">Sign in or register</a>." %
-                        users.create_login_url("/createfactory"))
+                        users.create_login_url("/"))
             self.response.out.write("<html><body>%s</body></html>" % greeting)
 
