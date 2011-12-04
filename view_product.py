@@ -24,9 +24,9 @@ class ViewProduct(webapp.RequestHandler):
         # Make a dictionary for template
         name = product.name
         producer = product.producerName
-        if product.locationMade:
-            latitude = product.locationMade.lat
-            longitude = product.locationMade.lon
+        if product.factoryMade and product.factoryMade.location:
+            latitude = product.factoryMade.location.lat
+            longitude = product.factoryMade.location.lon
         else:
             latitude = None
             longitude = None
