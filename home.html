@@ -5,12 +5,21 @@
   </head>
   <body>
     <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
-    <h2>Welcome to BeneTag!</h2>
-    <div class="row show-grid"id="buttons">
-    <a class='span4 btn large' href='/createproduct'>Create product</a>
-    <a class='span4 btn large' href='/createfactory'>Create factory</a> 
-    <a class='span4 btn large' href='/createbadge' >Create badge</a> 
-    <a class='span4 btn large' href='/searchproduct'>Product search</a> 
+    </br><h2><form action="/productsearchresult" method="post">
+      <div><input name="query" type="search" placeholder="Search product by name"></input></div></br>
+      <div><input type="submit" value="Search" a class='span4 btn medium'></div>
+    </form></h2>
+    
+    <div class="column show-grid"id="buttons">
+    <a class='span4 btn large' width='100%' align='center' href='/createproduct'>Create product</a>
+    <a class='span4 btn large' align='center' href='/createfactory'>Create factory</a>
+    <a class='span4 btn large' align='center' href='/createbadge' >Create badge</a>
+    <a class='span4 btn large' align='center' href='/createworker' >Create worker</a>
+    </br></br></br>
     </div>
   </body>
+  <footer>
+  <div><a align='center' href='/about'>About BeneTag</a></div>
+  <div>Copyright BeneTag 2011</div>
+  </footer>
 </html>
