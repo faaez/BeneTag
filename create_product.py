@@ -20,7 +20,7 @@ class CreateProductPage(webapp.RequestHandler):
 			self.response.out.write(template.render(path, template_values))
 		else:
 			greeting = ("<a href=\"%s\">Sign in or register</a>." %
-                        users.create_login_url("/"))
+                        users.create_login_url("/createproduct"))
 			self.response.out.write("<html><body>%s</body></html>" % greeting)
 
 """
