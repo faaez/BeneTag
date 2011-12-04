@@ -25,6 +25,10 @@
                 };
                 var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
                 document.getElementById("map_canvas").style.position="fixed";
+                var marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map,
+                });
             {% endif %}
             FB.init({
                 appId      : '286512274727203', // App ID
