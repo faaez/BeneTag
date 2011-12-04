@@ -1,9 +1,29 @@
+<!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>{{name}} by {{producer}}</title>
     <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="stylesheets/viewproduct.css" />
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+        function map_initialize() {
+            var latlng = new google.maps.LatLng({{latitude}}, {{longitude}});
+            var myOptions = {
+                zoom: 8,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+            document.getElementById("map_canvas").style.position="fixed";
+        }
+    </script>
   </head>
-  <body>
+  <body onload="map_initialize()">
     <h1 id="productname"> {{ name }} </h1>
+    <p id="producername">Made by {{producer}} </p>
+    {% if latitude and longitude %}
+        <div id="map_canvas"></div>
+    {% endif %}
   </body>
 </html>
