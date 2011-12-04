@@ -3,17 +3,17 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
   </head>
   <body>
-<h1 id="factoryname">{{ name }}</h1>
+<h1 id="factoryname">Factory : {{ name }}</h1>
 <div>Address: {{address}}</div>
 <div>
 {% for producer in producers %}
   <p>Producer :{{producer.name}}</p>
-{% endif %}
+{% endfor %}
 </div>
 <div>
 {% for worker in workers %}
   <p>Worker :{{worker.name}}</p>
-{% endif %}
+{% endfor %}
 </div>
   </body>
 </html>

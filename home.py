@@ -15,8 +15,7 @@ class HomePage(webapp.RequestHandler):
         user = users.get_current_user() 
         if user:
             template_values = {}
-            template_values['added'] = (self.request.get('added') == 'True')
-            path = os.path.join(os.path.dirname(__file__), 'createfactory.html')
+            path = os.path.join(os.path.dirname(__file__), 'home.html')
             self.response.out.write(template.render(path, template_values))
         else:
             greeting = ("<a href=\"%s\">Sign in or register</a>." %

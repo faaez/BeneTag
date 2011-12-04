@@ -15,9 +15,14 @@ class CreateProductPage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user:
+            factory_names = []
+            factories = entities.Factory.all()
+            for factory in factories:
+                factory_names.append(factory.name)
             template_values = {
                 'producerName' : user.nickname(),
-                'badges' : entities.Badge.all()
+                'badges' : entities.Badge.all(),
+                'factory_names' : factory_names
             }
             path = os.path.join(os.path.dirname(__file__), 'createproduct.html')
             self.response.out.write(template.render(path, template_values))
@@ -37,13 +42,14 @@ class StoreProductPage(webapp.RequestHandler):
             _factoryName = self.request.get('factoryName')
             _badges = self.request.get('badges')
             _picture = self.request.get('picture')
-        
+            if isinstance(_picture, unicode):
+                _picture = _picture.encode('utf-8', 'replace')
             _factoryMade = entities.Factory.gql("WHERE name = :1", _factoryName).get()
 
             p = entities.Product(name=_name, producerName=_producerName, factoryMade=_factoryMade.key())
             for _badge in _badges:
                 p.badges.append(_badge)
-            p.picture = _picture
+            p.picture = db.Blob(_picture)
             p.put()
             self.redirect('/view?id=' + str(p.key()))
         else:
