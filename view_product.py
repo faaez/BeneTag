@@ -16,7 +16,7 @@ class ViewProduct(webapp.RequestHandler):
         # Fetch the data for this product
         products = Product.gql("WHERE id = :1", id)
         # Display error if product ID not found
-        if products.count() != 1:
+        if products.count() < 1:
           template_values = {}
           path = os.path.join(os.path.dirname(__file__), 'not_found.html')
           self.response.out.write(template.render(path, template_values))
