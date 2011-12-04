@@ -40,7 +40,7 @@ class StoreProductPage(webapp.RequestHandler):
             _name = self.request.get('name')
             _producerName = self.request.get('producerName')
             _factoryName = self.request.get('factoryName')
-            _badges = self.request.get('badges')
+            _badges = self.request.get_all('badges')
             _picture = self.request.get('picture')
             if isinstance(_picture, unicode):
                 _picture = _picture.encode('utf-8', 'replace')
@@ -48,7 +48,7 @@ class StoreProductPage(webapp.RequestHandler):
 
             p = entities.Product(name=_name, producerName=_producerName, factoryMade=_factoryMade.key())
             for _badge in _badges:
-                p.badges.append(_badge)
+                p.badges.append(db.Key(_badge))
             p.picture = db.Blob(_picture)
             p.put()
             self.redirect('/view?id=' + str(p.key()))

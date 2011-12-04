@@ -46,9 +46,8 @@
                 var request = $.ajax({
                     url: "https://graph.facebook.com/me/benetag:share",
                     type: "POST",
-                    data: {website : '{{url}}', access_token : 'AAAEElNZAb4SMBAKNSQDZBT2pOFdDypxTrRKOY5VRey3TgwoAzoYtsUDO9DHDuCNnMq3d5RhvJeccuemlmSTV5ow2IpYAPvBf6fx9xG9wZDZD'},
+                    data: {website : '{{url}}', access_token: response.authResponse.accessToken},
                     success: function(data) {
-                        alert('shared');
                     },
                 });
             }
@@ -62,6 +61,7 @@
     {% if latitude and longitude %}
         <div id="map_canvas"></div>
     {% endif %}
+    <div id="factory_link"><a href="viewfactory?id={{factory_id}}">View Factory</a></div>
     <div id="qrimage"><img src="qr?id={{id}}"></img></div>
     <button class="btn primary" id="fbshare" onclick="fbshare()">Share on Facebook</img></button>
     <div id="fb-root"></div>
