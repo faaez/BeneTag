@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
+  </head>
+  <body>
+<h1 id="factoryname">{{ name }}</h1>
+<div>Address: {{address}}</div>
+<div>
+{% for producer in producers %}
+  <p>Producer :{{producer.name}}</p>
+{% endif %}
+</div>
+<div>
+{% for worker in workers %}
+  <p>Worker :{{worker.name}}</p>
+{% endif %}
+</div>
+  </body>
+</html>
