@@ -46,9 +46,8 @@
                 var request = $.ajax({
                     url: "https://graph.facebook.com/me/benetag:share",
                     type: "POST",
-                    data: {website : '{{url}}', access_token : 'AAAEElNZAb4SMBAKNSQDZBT2pOFdDypxTrRKOY5VRey3TgwoAzoYtsUDO9DHDuCNnMq3d5RhvJeccuemlmSTV5ow2IpYAPvBf6fx9xG9wZDZD'},
+                    data: {website : '{{url}}', access_token: response.authResponse.accessToken},
                     success: function(data) {
-                        alert('shared');
                     },
                 });
             }
@@ -59,6 +58,9 @@
   <body onload="initialize()">
     <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
     <h1 id="productname"> {{ name }} </h1>
+    {% if has_image %}
+        <img id="productimage" src="productimage?id={{id}}"></img>
+    {% endif %}
     <p id="producername">Made by {{producer}} </p>
     {% if latitude and longitude %}
         <div id="map_canvas"></div>

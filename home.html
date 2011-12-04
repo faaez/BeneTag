@@ -1,17 +1,16 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/home.css" />
   </head>
   <body>
     <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
     <h2>Welcome to BeneTag!</h2>
-    <a href='/createproduct'>Add a product to the database</a> 
-    <br>
-    <a href='/createfactory'>Add a factory to the database</a> 
-    <br>
-    <a href='/createbadge'>Add a badge to the database</a> 
-    <br>
-    <a href='/searchproduct'>Search for a product</a> 
-
+    <div class="row show-grid"id="buttons">
+    <a class='span4 btn large' href='/createproduct'>Create product</a>
+    <a class='span4 btn large' href='/createfactory'>Create factory</a> 
+    <a class='span4 btn large' href='/createbadge' >Create badge</a> 
+    <a class='span4 btn large' href='/searchproduct'>Product search</a> 
+    </div>
   </body>
 </html>

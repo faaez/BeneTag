@@ -8,10 +8,9 @@ from google.appengine.ext.webapp import template
 import entities
 
 """
-Creates a form for Producers to enter information 
-about a Product
+Creates a form to create a Worker
 """
-class CreateProductPage(webapp.RequestHandler):
+class CreateWorkerPage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user:
@@ -21,38 +20,34 @@ class CreateProductPage(webapp.RequestHandler):
                 factory_names.append(factory.name)
             template_values = {
                 'producerName' : user.nickname(),
-                'badges' : entities.Badge.all(),
                 'factory_names' : factory_names
             }
-            path = os.path.join(os.path.dirname(__file__), 'createproduct.html')
+            path = os.path.join(os.path.dirname(__file__), 'createworker.html')
             self.response.out.write(template.render(path, template_values))
         else:
-            greeting = ("<a href=\"%s\">Sign in or register</a>." % users.create_login_url("/createproduct"))
+            greeting = ("<a href=\"%s\">Sign in or register</a>." % users.create_login_url("/createworker"))
             self.response.out.write("<html><body>%s</body></html>" % greeting)
 
 """
-Page that stores Product in datastore
+Puts a worker in the database
 """
-class StoreProductPage(webapp.RequestHandler):
+class StoreWorkerPage(webapp.RequestHandler):
     def post(self):
         user = users.get_current_user()
         if user:
             _name = self.request.get('name')
-            _producerName = self.request.get('producerName')
             _factoryName = self.request.get('factoryName')
-            _badges = self.request.get_all('badges')
             _picture = self.request.get('picture')
+            _profile = self.request.get('profile')
             if isinstance(_picture, unicode):
                 _picture = _picture.encode('utf-8', 'replace')
             _factoryMade = entities.Factory.gql("WHERE name = :1", _factoryName).get()
 
-            p = entities.Product(name=_name, producerName=_producerName, factoryMade=_factoryMade.key())
-            for _badge in _badges:
-                p.badges.append(db.Key(_badge))
-            p.picture = db.Blob(_picture)
-            p.put()
-            self.redirect('/view?id=' + str(p.key()))
+            f = entities.Factory(name=_name, factory=_factoryMade.key(), profile=_profile)
+            f.picture = db.Blob(_picture)
+            f.put()
+            self.redirect('/')
         else:
             greeting = ("<a href=\"%s\">Sign in or register</a>." %
-                        users.create_login_url("/storeproduct"))
+                        users.create_login_url("/storeworker"))
             self.response.out.write("<html><body>%s</body></html>" % greeting)
