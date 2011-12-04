@@ -41,6 +41,5 @@ class StoreBadgePage(webapp.RequestHandler):
             b.put()
             self.redirect("/createbadge")
         else:
-            greeting = ("<a href=\"%s\">Sign in or register</a>." %
-                        users.create_login_url("/createbadge"))
+            greeting = "You need admin privileges to create a badge"
             self.response.out.write("<html><body>%s</body></html>" % greeting)
