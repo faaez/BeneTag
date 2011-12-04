@@ -7,6 +7,7 @@ import view_product
 import create_qr
 import create_factory
 import view_factory
+import search_product
 
 application = webapp.WSGIApplication([
   ('/', home.HomePage),
@@ -17,6 +18,8 @@ application = webapp.WSGIApplication([
   ('/view', view_product.ViewProduct),
   ('/qr', create_qr.CreateQrPage),
   ('/viewfactory', view_factory.ViewFactory),
+  ('/searchproduct', search_product.CreateProductSearchPage),
+  ('/productsearchresult', search_product.SearchResultPage)
 ], debug=True)
 
 def main():
