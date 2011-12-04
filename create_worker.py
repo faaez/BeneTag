@@ -43,7 +43,7 @@ class StoreWorkerPage(webapp.RequestHandler):
                 _picture = _picture.encode('utf-8', 'replace')
             _factoryMade = entities.Factory.gql("WHERE name = :1", _factoryName).get()
 
-            f = entities.Factory(name=_name, factory=_factoryMade.key(), profile=_profile)
+            f = entities.Worker(name=_name, factory=_factoryMade.key(), profile=_profile)
             f.picture = db.Blob(_picture)
             f.put()
             self.redirect('/')
