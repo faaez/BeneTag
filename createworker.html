@@ -8,13 +8,14 @@
   <body>
 
   <body onload="initialize()">
-    <form action="/storeworker" enctype="multipart/formdata" method="post">
+  <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
+    <h2><form action="/storeworker" enctype="multipart/formdata" method="post">
       <div>Name: <input name="name" id="name"></input></div>
 	  <div>Factory: <input id="factoryName" name="factoryName"></input></div>
       <div>Picture:<input type="file" name="picture"/></div>
       <div>Profile: <textarea name="profile" id="profile"></textarea></div>
-      <div><input type="submit" value="Create worker"></div>
-    </form>
+      <div><input type="submit" value="Create worker" a class="span4 btn medium"></div>
+    </form></h2>
   </body>
   <script type="text/javascript">
     function initialize() {

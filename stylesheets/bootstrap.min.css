@@ -4,7 +4,7 @@ header {
   no-repeat bottom center; }
 headerimg  {
   max-width: 100%; }
-h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,cite,code,del,dfn,em,img,q,s,samp,small,strike,strong,sub,sup,tt,var,dd,dl,dt,li,ol,ul,fieldset,form,label,legend,button,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;font-weight:normal;font-style:normal;font-size:100%;line-height:1;font-family:inherit;}
+h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,cite,code,del,dfn,em,img,q,s,samp,small,strike,strong,sub,sup,tt,var,dd,dl,dt,li,ol,ul,fieldset,form,label,legend,button,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;font-weight:normal;font-style:normal;font-size:100%;line-height:1;font-family:inherit;text-align:center}
 table{border-collapse:collapse;border-spacing:0;}
 ol,ul{list-style:none;}
 q:before,q:after,blockquote:before,blockquote:after{content:"";}
@@ -21,7 +21,7 @@ img{border:0;-ms-interpolation-mode:bicubic;}
 button,input,select,textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle;}
 button,input{line-height:normal;*overflow:visible;}
 button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
-button,input[type="button"],input[type="reset"],input[type="submit"]{cursor:pointer;-webkit-appearance:button;}
+button,input[type="button"],input[type="reset"],input[type="submit"]{cursor:pointer;-webkit-appearance:button}
 input[type="search"]{-webkit-appearance:textfield;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;width:40%;padding:1%}
 input[type="search"]::-webkit-search-decoration{-webkit-appearance:none;}
 textarea{overflow:auto;vertical-align:top;}
@@ -120,7 +120,7 @@ input,textarea,select,.uneditable-input{display:inline-block;width:210px;height:
 select{padding:initial;}
 input[type=checkbox],input[type=radio]{width:auto;height:auto;padding:0;margin:3px 0;*margin-top:0;line-height:normal;border:none;}
 input[type=file]{background-color:#ffffff;padding:initial;border:initial;line-height:initial;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}
-input[type=button],input[type=reset],input[type=submit]{width:auto;height:auto;}
+input[type=button],input[type=reset],input[type=submit]{width:auto;height:auto;a class:span4 btn medium}
 select,input[type=file]{height:27px;*height:auto;line-height:27px;*margin-top:4px;}
 select[multiple]{height:inherit;background-color:#ffffff;}
 textarea{height:auto;}
