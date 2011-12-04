@@ -15,9 +15,14 @@ class CreateProductPage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user:
+            factory_names = []
+            factories = entities.Factory.all()
+            for factory in factories:
+                factory_names.append(factory.name)
             template_values = {
                 'producerName' : user.nickname(),
-                'badges' : entities.Badge.all()
+                'badges' : entities.Badge.all(),
+                'factory_names' : factory_names
             }
             path = os.path.join(os.path.dirname(__file__), 'createproduct.html')
             self.response.out.write(template.render(path, template_values))
