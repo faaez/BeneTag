@@ -34,20 +34,11 @@ class StoreProductPage(webapp.RequestHandler):
 		if user:
 			_name = self.request.get('name')
 			_producerName = self.request.get('producerName')
-			_locationMade = self.request.get('locationMade')
+			_factoryName = self.request.get('factoryName')
         
-			fields = _locationMade.split(',')
-			if len(fields) == 2:
-				try:
-					lat = float(fields[0])
-					lon = float(fields[1])
-					gp = db.GeoPt(lat, lon)
-				except ValueError:
-					gp = None
-			else:
-				gp = None
+			_factoryMade = entities.Factory.gql("WHERE name = :1", _factoryName).get()
 
-			p = entities.Product(name=_name, producerName=_producerName, locationMade=gp)
+			p = entities.Product(name=_name, producerName=_producerName, factoryMade=_factoryMade.key())
 
 			p.put()
 			self.redirect('/view?id=' + str(p.key()))

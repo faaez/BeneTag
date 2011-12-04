@@ -7,8 +7,8 @@ class Product(db.Model):
     name = db.StringProperty(required=True)
     picture = db.BlobProperty()
     producerName = db.StringProperty()
-    locationMade = db.GeoPtProperty()
-    badgeName = db.StringProperty()
+    factoryMade = db.ReferenceProperty()
+    badges = db.ListProperty(db.Key)
 
 """
 Data type representing a producer
