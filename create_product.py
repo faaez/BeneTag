@@ -25,8 +25,21 @@ class StoreProductPage(webapp.RequestHandler):
         _name = self.request.get('name')
         _producerName = self.request.get('producerName')
         _locationMade = self.request.get('locationMade')
+        
+        fields = _locationMade.split(',')
+        if len(fields) == 2:
+            try:
+                lat = float(fields[0])
+                lon = float(fields[1])
+                gp = db.GeoPt(lat, lon)
+            except ValueError:
+                gp = None
+        else:
+            gp = None
+
+
         key = db.Key.from_path('Product', _id)
         p = entities.Product(parent=key, 
-            id=_id, name=_name, producerName=_producerName, locationMade=_locationMade)
+            id=_id, name=_name, producerName=_producerName, locationMade=gp)
         p.put()
         self.redirect('/view?id=' + str(_id))
