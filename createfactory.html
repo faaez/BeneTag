@@ -18,7 +18,17 @@
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-        
+        google.maps.event.addListener(map, 'click', function(event) {
+            if (!marker) {
+                marker = new google.maps.Marker({
+                    map: map,
+                    position: event.latLng
+                });
+            } else {
+                marker.setPosition(event.latLng);
+            }
+            changeInput();
+        });
     }
 
     function address_change() {
@@ -52,7 +62,7 @@
     <form action="/storefactory" method="post">
       <div>Name: <input name="name"></input></div>
       <div>Address: <input id="address" onchange="address_change()" name="address"></input></div>
-	  <div>Location: <input id="location" name="location"></input></div>
+	  <input id="location" name="location" type="hidden"></input>
       <div><input type="submit" value="Create factory"></div>
     </form>
 
