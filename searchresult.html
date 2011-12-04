@@ -3,6 +3,7 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
   </head>
   <body>
+    <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
     <h2>Results</h2>
     {% for p in matches %}
     <p><a href="/view?id={{p.key}}">{{p.name}}</a></p>
