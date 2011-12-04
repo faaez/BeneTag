@@ -1,0 +1,12 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
+  </head>
+  <body>
+    <h2>Results</h2>
+    {% for p in matches %}
+    <p><a href="/view?id={{p.key}}">{{p.name}}</a></p>
+    {% endfor %}
+    
+  </body>
+</html>
