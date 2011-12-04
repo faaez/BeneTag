@@ -12,13 +12,12 @@
       <div>Name: <input name="name"></input></div>
       <div>Producer: <input name="producerName" value={{producerName}}></input></div>
 	  <div>Factory: <input id="factoryName" name="factoryName"></input></div>
-	  <div><label>Picture:</label></div>
-            <div><input type="file" name="picture"/></div>
-	  <div>
+	  <div>Badges:
 	  {% for badge in badges %}
 		<input type="checkbox" name="badges" value ="{{badge.key}}">{{badge.name}}</input><br/>
 	  {%endfor%}
 	  </div>
+      <div>Picture:<input type="file" name="picture"/></div>
       <div><input type="submit" value="Create product"></div>
     </form>
   </body>
