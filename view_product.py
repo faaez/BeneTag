@@ -12,5 +12,5 @@ View a Product's Page
 class ViewProduct(webapp.RequestHandler):
     def get(self):
         template_values = {}
-        path = os.path.join(os.path.dirname(__file__), 'viewProduct.html')
+        path = os.path.join(os.path.dirname(__file__), 'viewproduct.html')
         self.response.out.write(template.render(path, template_values))
