@@ -23,7 +23,10 @@ class StoreProductPage(webapp.RequestHandler):
     def post(self):
         _id = self.request.get('id')
         _name = self.request.get('name')
-        key = db.Key.from_path('Product', _name)
-        p = entities.Product(parent=key, id=_id, name=_name)
+        _producerName = self.request.get('producerName')
+        _locationMade = self.request.get('locationMade')
+        key = db.Key.from_path('Product', _id)
+        p = entities.Product(parent=key, 
+            id=_id, name=_name, producerName=_producerName, locationMade=_locationMade)
         p.put()
-        self.response.out.write('Created a product!')
+        self.redirect('/view?id=' + str(_id))
