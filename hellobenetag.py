@@ -12,6 +12,8 @@ application = webapp.WSGIApplication([
   ('/storeproduct', create_product.StoreProductPage),
   ('/createfactory', create_factory.CreateFactoryPage),
   ('/storefactory', create_factory.StoreFactoryPage),
+  ('/createbadge', create_badge.CreateBadgePage),
+  ('/storebadge', create_badge.StoreBadgePage),
   ('/view', view_product.ViewProduct),
   ('/qr', create_qr.CreateQrPage),
   ('/viewfactory', view_factory.ViewFactory),
