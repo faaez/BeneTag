@@ -7,14 +7,13 @@ from google.appengine.ext.webapp import template
 from entities import Factory
 
 """
-View a Product's Page
+View a Factory Page
 """
 class ViewFactory(webapp.RequestHandler):
     def get(self):
-        # Get the id from the get parameter
-        id = self.request.get('id')
-        # Fetch the data for this factory
-        factory = db.get(id)
+      
+        factorylist = Factory.all()
+        factory = factorylist[0]
         # Display error if product ID not found
         if not factory:
           template_values = {}
@@ -26,7 +25,7 @@ class ViewFactory(webapp.RequestHandler):
         producers = factory.producers
         workers = factory.workers
         address = factory.address
-        if product.locationMade:
+        if factory.location:
             latitude = factory.location.lat
             longitude = factory.location.lon
         else:
