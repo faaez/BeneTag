@@ -28,3 +28,11 @@ button#fbshare {
     text-align:center;
     display:block;
 }
+img#productimage {
+    margin-left:auto;
+    margin-right:auto;
+    width:100px;
+    height:100px;
+    text-align:center;
+    display:block;
+}
