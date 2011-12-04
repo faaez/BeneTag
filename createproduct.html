@@ -8,11 +8,13 @@
       <div>Name: <textarea name="name" rows="1" cols="40"></textarea></div>
       <div>Producer: <textarea name="producerName" rows="1" cols="40">{{producerName}}</textarea></div>
 	  <div>Factory: <textarea name="factoryName" rows="1" cols="40"></textarea></div>
+	  <div><label>Picture:</label></div>
+            <div><input type="file" name="picture"/></div>
 	  <div>
-	  {% for badge in entities.Badge.gql("SELECT * FROM Badge") %}
-		<input type="checkbox" name="badges" value ="{{badge.key()}}">{{badge.name()}}</input><br/>
-	  </div>
+	  {% for badge in badges %}
+		<input type="checkbox" name="badges" value ="{{badge.key}}">{{badge.name}}</input><br/>
 	  {%endfor%}
+	  </div>
       <div><input type="submit" value="Create product"></div>
     </form>
 
