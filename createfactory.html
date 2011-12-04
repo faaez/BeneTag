@@ -1,18 +1,62 @@
+<!DOCTYPE html>
 <html>
   <head>
+    <title> Create a Factory </title>
     <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/createfactory.css" />
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   </head>
-  <body>
+  <script>
+    var map;
+    var marker;
+    function initialize() {
+        var latlng = new google.maps.LatLng(39.095963, -102.744141);
+        var myOptions = {
+            zoom: 2,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+        
+    }
+
+    function address_change() {
+        var address = $('#address').val();
+        geocoder = new google.maps.Geocoder();
+        geocoder.geocode( { 'address': address}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+                map.setZoom(9);
+                changeInput();
+            } else {
+            }
+        });
+    }
+
+    function changeInput() {
+        var lat = marker.getPosition().lat();
+        var lng = marker.getPosition().lng();
+        $('#location').val(lat+','+lng);
+    }
+  </script>
+  <body onload="initialize()">
   {% if added %}
   <p>Factory added successfully</p>
   {% endif %}
 
     <form action="/storefactory" method="post">
       <div>Name: <input name="name"></input></div>
-      <div>Address: <input name="address"></input></div>
-	  <div>Location: <input name="location"></input></div>
+      <div>Address: <input id="address" onchange="address_change()" name="address"></input></div>
+	  <div>Location: <input id="location" name="location"></input></div>
       <div><input type="submit" value="Create factory"></div>
     </form>
+
+    <div id="map_canvas"></div>
 
   </body>
 </html>
