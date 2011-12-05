@@ -3,6 +3,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 import home
 import about
+import signup
 import create_product
 import create_badge
 import view_product 
@@ -15,6 +16,8 @@ import create_worker
 application = webapp.WSGIApplication([
   ('/', home.HomePage),
   ('/about', about.AboutPage),
+  ('/signup', signup.CreateProducerPage),
+  ('/storeproducer', signup.StoreProducerPage),
   ('/createproduct', create_product.CreateProductPage),
   ('/storeproduct', create_product.StoreProductPage),
   ('/createfactory', create_factory.CreateFactoryPage),

@@ -12,3 +12,19 @@ handlers:
 
 - url: /.*
   script: hellobenetag.py
+  
+- url: /createproduct/.*
+  script: create_product.py
+  login: required
+  
+- url: /createfactory/.*
+  script: create_factory.py
+  login: required  
+
+- url: /createworker/.*
+  script: create_worker.py
+  login: required
+  
+- url: /createbadge/.*
+  script: create_badge.py
+  login: admin

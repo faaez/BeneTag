@@ -10,7 +10,7 @@ class Factory(db.Model):
 	name = db.StringProperty(required=True)
 	address = db.PostalAddressProperty()
 	location = db.GeoPtProperty()
-
+    
 """
 Data type representing a product with a BeneTag
 """
@@ -25,9 +25,13 @@ class Product(db.Model):
 Data type representing a producer
 """
 class Producer(db.Model):
-	factories = db.ListProperty(db.Key)
-	name = db.StringProperty(required=True)
-	profileOwner = db.UserProperty(required=True)
+    factories = db.ListProperty(db.Key)
+    name = db.StringProperty(required=True)
+    email = db.StringProperty()
+    profileOwner = db.UserProperty(required=True)
+    description = db.TextProperty()
+    verifiedProducer = db.BooleanProperty()
+    companyLogo = db.BlobProperty()
 
 """
 Data type representing a worker

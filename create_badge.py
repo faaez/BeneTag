@@ -14,15 +14,11 @@ about a Badge
 class CreateBadgePage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        if user:
-            template_values = {
-                'producerName' : user.nickname()
-            }
-            path = os.path.join(os.path.dirname(__file__), 'createbadge.html')
-            self.response.out.write(template.render(path, template_values))
-        else:
-            greeting = ("<a href=\"%s\">Sign in or register</a>." % users.create_login_url("/createbadge"))
-            self.response.out.write("<html><body>%s</body></html>" % greeting)
+        template_values = {
+            'producerName' : user.nickname()
+        }
+        path = os.path.join(os.path.dirname(__file__), 'createbadge.html')
+        self.response.out.write(template.render(path, template_values))
 
 """
 Page that stores Product in datastore
