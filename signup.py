@@ -24,7 +24,7 @@ class CreateProducerPage(webapp.RequestHandler):
             self.response.out.write("<html><body>%s</body></html>" % greeting)
 
 """
-Puts a producer in the database
+Puts a Producer in the database
 """
 class StoreProducerPage(webapp.RequestHandler):
     def post(self):
