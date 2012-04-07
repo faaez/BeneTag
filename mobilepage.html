@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/fb/benetag#">
+        <meta property="fb:app_id"      content="286512274727203" /> 
+        <meta property="og:type"        content="website" /> 
+        <meta property="og:url"         content="{{url}}" /> 
+        <meta property="og:title"       content="{{name}}" /> 
+        <meta property="og:description" content="Made by {{producer}}" /> 
+        <meta property="og:image"       content="{{qr_url}}" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="apple-touch-icon" href="icon.png"/>
+        
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <title>{{name}} by {{producer}}</title>
+        <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="stylesheets/viewproduct.css" />
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="//connect.facebook.net/en_US/all.js"></script>
+        <script type="text/javascript">
+            function initialize() {
+                {% if latitude and longitude %}
+                var latlng = new google.maps.LatLng({{latitude}}, {{longitude}});
+                var myOptions = {
+                    zoom: 8,
+                    center: latlng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+                document.getElementById("map_canvas").style.position="fixed";
+                var marker = new google.maps.Marker({
+                                                    position: latlng,
+                                                    map: map,
+                                                    });
+                {% endif %}
+                FB.init({
+                        appId      : '286512274727203', // App ID
+                        channelUrl : 'benetag.com/view', // Channel File
+                        status     : true, // check login status
+                        cookie     : true, // enable cookies to allow the server to access the session
+                        oauth      : true, // enable OAuth 2.0
+                        xfbml      : true  // parse XFBML
+                        });
+            }
+            
+            function fbshare() {
+                FB.login(function(response) {
+                         if (response.authResponse) {
+                         var request = $.ajax({
+                                              url: "https://graph.facebook.com/me/benetag:share",
+                                              type: "POST",
+                                              data: {website : '{{url}}', access_token: response.authResponse.accessToken},
+                                              success: function(data) {
+                                              },
+                                              });
+                         }
+                         }, {scope : 'publish_actions'});
+            }
+            </script>
+            
+            <!--this style for new properties in iOS 5 could be moved to css file if need be -->
+            <style type="text/css">
+                
+                @media all {
+                    .panel {
+                        overflow                    : hidden;
+                        position                    : absolute;
+                        display                     : block;
+                        width                       : 100%;
+                        padding-top                 : 60px;
+                        padding-bottom              : 60px;
+                        top                         : 0;
+                        /*height: 100%; */ /* uncomment if desktop */
+                    }
+                    
+                    .scrollable {
+                        overflow                    : scroll;
+                        -webkit-overflow-scrolling  : touch;
+                    }
+                    
+                    .insideScrollablePanel {
+                        margin-left                 : 5%;
+                        margin-right                : 5%;
+                        width                       : 90%;
+                    }
+                    
+                } /* end of medial all */
+                
+                /*--- ipad ---*/
+                /*--- full screen mode ---*/
+                @media (device-width: 768px) and (orientation: portrait) {
+                    .panel {
+                        height                       : 934px; /*1004-80*/
+                    }
+                }
+                /*--- browser mode ---*/
+                @media (device-width: 768px) and (orientation: landscape) {
+                    .panel {
+                        height                       : 668px; /*748-80*/
+                    }
+                }
+                
+                /*--- iphone ---*/
+                /*--- full screen mode ---*/
+                @media (max-width: 480px) and (orientation: portrait) {
+                    .panel {
+                        height                       : 380px; /*460-80*/
+                    }
+                }
+                /*--- browser mode ---*/
+                @media (max-width: 480px) and (orientation: landscape) {
+                    .panel {
+                        height                       : 220px; /*300-80*/
+                    }
+                }
+                </style>
+    </head>
+    <body onload="initialize()">
+        <!-- MAIN PANEL -->
+        <div class="panel">
+            <!-- panel style is a twitter bootstrap style -->
+            
+            <!-- TOP BAR -->
+            <div class="topbar">
+                <!-- topbar style is a twitter bootstrap style -->
+                <!-- here, tool bar definition -->
+                <div class="container-fluid">
+                    <a class="brand" href="#">BeneTag</a>
+                </div>
+            </div>
+            
+            <!-- SCROLLABLE PANEL -->
+            <div class="scrollable panel">
+                <!-- scrollable and panel styles are new styles -->
+                <!-- here, content -->
+                <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
+                <h1 id="productname"> {{ name }} </h1>
+                {% if has_image %}
+                <img id="productimage" src="productimage?id={{id}}"></img>
+                {% endif %}
+                <p id="producername">Made by {{producer}} </p>
+                {% if latitude and longitude %}
+                <div id="map_canvas"></div>
+                {% endif %}
+                <div id="factory_link"><a href="viewfactory?id={{factory_id}}">View Factory</a></div>
+                <button class="btn primary" id="fbshare" onclick="fbshare()">Share on Facebook</img></button>
+                <div id="fb-root"></div>
+            </div>
+        </div>
+
+        
+    </body>
+</html>
