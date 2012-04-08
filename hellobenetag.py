@@ -12,6 +12,7 @@ import create_factory
 import view_factory
 import search_product
 import create_worker
+import mobile_page
 
 application = webapp.WSGIApplication([
   ('/', home.HomePage),
