@@ -27,7 +27,6 @@ class CreateWorkerPage(webapp.RequestHandler):
         else:
             greeting = ("<a href=\"%s\">Sign in or register</a>." % users.create_login_url("/createworker"))
             self.response.out.write("<html><body>%s</body></html>" % greeting)
-
 """
 Puts a worker in the database
 """
