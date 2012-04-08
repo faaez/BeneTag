@@ -5,7 +5,7 @@ from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 
-import entities
+import entities, util
 
 """
 Creates a form to sign up as a Producer
@@ -14,13 +14,16 @@ class CreateProducerPage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user:
-            template_values = {
-                'producerEmail' : user.nickname()
-            }
+            if util.doesCurrentUserHaveProducer(): 
+                # user already has registered a producer, so quit
+                self.response.out.write("<html><body> YOU ALREADY HAVE PRODUCER PAGE FUCK </html></body>")
+                return
+                ''' TODO: Redirect to producer page here '''
+            template_values = {}
             path = os.path.join(os.path.dirname(__file__), 'signup.html')
             self.response.out.write(template.render(path, template_values))
         else:
-            greeting = ("<a href=\"%s\">Sign up with your Google accountr</a>." % users.create_login_url("/signup"))
+            greeting = ("<a href=\"%s\">Sign up with your Google account</a>." % users.create_login_url("/signup"))
             self.response.out.write("<html><body>%s</body></html>" % greeting)
 
 """
