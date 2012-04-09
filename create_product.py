@@ -48,7 +48,7 @@ class StoreProductPage(webapp.RequestHandler):
                 p.badges.append(db.Key(_badge))
             p.picture = db.Blob(_picture)
             p.put()
-            self.redirect('/view?id=' + str(p.key()))
+            self.redirect('/mobilepage?id=' + str(p.key()))
         else:
             greeting = ("<a href=\"%s\">Sign in or register</a>." %
                         users.create_login_url("/storeproduct"))
