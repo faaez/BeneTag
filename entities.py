@@ -5,8 +5,8 @@ Data type representing a producer
 """
 class Producer(db.Model):
     #profile information
-    name = db.StringProperty()
-    email = db.StringProperty()
+    name = db.StringProperty(required=True)
+    email = db.StringProperty(required=True)
     owner = db.UserProperty()
     description = db.TextProperty()
     verified = db.BooleanProperty()

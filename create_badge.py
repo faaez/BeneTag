@@ -14,9 +14,7 @@ about a Badge
 class CreateBadgePage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        template_values = {
-            'producerName' : user.nickname()
-        }
+        template_values = {}
         path = os.path.join(os.path.dirname(__file__), 'createbadge.html')
         self.response.out.write(template.render(path, template_values))
 

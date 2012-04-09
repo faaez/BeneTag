@@ -33,6 +33,20 @@
                                                     position: latlng,
                                                     map: map,
                                                     });
+                var userLat;
+                var userLong;
+                if (navigator.geolocation) // check if browser support this feature or not
+                {
+                    navigator.geolocation.getCurrentPosition(function(position)
+                                                             {
+                                                             userLat = position.coords.latitude;
+                                                             userLong = position.coords.longitude;
+                                                             );
+                }
+                
+                var gUserLatLng = new GLatLng(userLat, userLong);
+                document.getElementById('distance-div').innerHTML = '<p id="distance-value">' + gUserLatLng.distanceFrom(latlng,3959) + ' </p> miles away.';
+                
                 {% endif %}
                 FB.init({
                         appId      : '286512274727203', // App ID
@@ -143,10 +157,11 @@
                 <hr id="separator-line">
                 
                 <table id="badges">
+                    
                     {% for badge in badges %}
                     {%if forloop.counter0|divisibleby:3%} <tr> {%endif%}
-                            <td><img id="badgeimage" src="badgeimage?id={{badge.name}}"></img </td>
-                    {%if forloop.counter0|divisibleby:3%} </tr> {%endif%}
+                            <td><img id="badgeimage" src="badgeimage?key={{badge}}"></img </td>
+                    {%if forloop.counter1|divisibleby:3%} </tr> {%endif%}
                     {%endfor%}
                 </table>
                 <hr id="separator-line">
@@ -168,11 +183,4 @@
 
         
     </body>
-    <script>
-        $('.tabs').tabs();
-        $('.tabs').bind('change', function (e) {
-                        e.target;         // activated tab
-                        e.relatedTarget;  // previous tab
-                        });
-        </script>
 </html>

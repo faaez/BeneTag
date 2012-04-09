@@ -37,7 +37,7 @@ class ViewProduct(webapp.RequestHandler):
         template_values['longitude'] = longitude
         template_values['url'] = self.request.url
         template_values['qr_url'] = self.request.url.replace('view','qr')
-        template_values['factory_id'] = product.factory.key()
+        template_values['factory_id'] = product.factory.key
         template_values['factory_name'] = product.factory.name
         template_values['factory_address'] = product.factory.address
         template_values['badges'] = product.badges
@@ -59,7 +59,6 @@ class ProductImage(webapp.RequestHandler):
 
 class BadgeImage(webapp.RequestHandler):
     def get(self):
-        badgeId = self.request.get('badge')
-        badge = db.get(Id)
+        badge = db.get(self.request.get('key'))
         self.response.headers['Content-Type'] = 'image'
         self.response.out.write(badge.icon)
