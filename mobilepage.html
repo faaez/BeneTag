@@ -33,6 +33,20 @@
                                                     position: latlng,
                                                     map: map,
                                                     });
+                var userLat;
+                var userLong;
+                if (navigator.geolocation) // check if browser support this feature or not
+                {
+                    navigator.geolocation.getCurrentPosition(function(position)
+                                                             {
+                                                             userLat = position.coords.latitude;
+                                                             userLong = position.coords.longitude;
+                                                             );
+                }
+                
+                var gUserLatLng = new GLatLng(userLat, userLong);
+                document.getElementById('distance-div').innerHTML = '<p id="distance-value">' + gUserLatLng.distanceFrom(latlng,3959) + ' </p> miles away.';
+                
                 {% endif %}
                 FB.init({
                         appId      : '286512274727203', // App ID

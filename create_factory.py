@@ -54,7 +54,7 @@ class StoreFactoryPage(webapp.RequestHandler):
                         gp = None
                 else:
                     gp = None
-                f = entities.Factory(name=_name, address=_address, location=gp)
+                f = entities.Factory(name=_name, producer=entities.Producer.gql("WHERE email=:1", user.nickname()).get(), address=_address, location=gp)
         
                 f.put()
                 self.redirect(self.request.uri)
