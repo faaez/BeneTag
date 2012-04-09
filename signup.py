@@ -15,7 +15,7 @@ class CreateProducerPage(webapp.RequestHandler):
         user = users.get_current_user()
         if user: # user signed in
             if util.getCurrentProducer() == None: # no producer page, so create one 
-                template_values = {}
+                template_values = {'redirect': self.request.get('redirect')}
                 path = os.path.join(os.path.dirname(__file__), 'signup.html')
                 self.response.out.write(template.render(path, template_values))
             else: # already has producer page, so redirect
@@ -35,21 +35,26 @@ class StoreProducerPage(webapp.RequestHandler):
     def post(self):
         user = users.get_current_user()
         if user:
-            _name = self.request.get('name')
-            _logo = self.request.get('logo')
-            _description = self.request.get('description')
-            if isinstance(_logo, unicode):
-                _logo = _logo.encode('utf-8', 'replace')
-                
-            p = entities.Producer(name = _name, 
-                                  email=user.nickname(), 
-                                  owner=user,
-                                  description=_description,
-                                  logo=db.Blob(_logo),
-                                  verified=True)
-            p.put()
-
-            
+            if util.getCurrentProducer() == None: # no producer, so add to store
+                '''
+                TODO: If for some reason user refreshes store producer page, then they should get a warning of some sort?
+                Another way this could happen is if they store, and then press back to the signup page, and press store again.
+                What to do in that case? Warning or just ignore? Currently, we're just ignoring
+                '''
+                _name = self.request.get('name')
+                _logo = self.request.get('logo')
+                _description = self.request.get('description')
+                if isinstance(_logo, unicode):
+                    _logo = _logo.encode('utf-8', 'replace')
+                    
+                p = entities.Producer(name = _name, 
+                                      email=user.nickname(), 
+                                      owner=user,
+                                      description=_description,
+                                      logo=db.Blob(_logo),
+                                      verified=True)
+                p.put()
+                        
             self.redirect('/'+self.request.get('redirect'))
         else:
             self.redirect(users.create_login_url(self.request.uri))
