@@ -14,7 +14,7 @@ class Producer(db.Model):
        
     #hierarchical information    
     def factories(self):
-        return Factory.all.filter('producer =', self)
+        return Factory.all().filter('producer =', self)
     def workers(self):
         return Worker.all().filter('producer =', self)
  
