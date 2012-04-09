@@ -59,7 +59,6 @@ class ProductImage(webapp.RequestHandler):
 
 class BadgeImage(webapp.RequestHandler):
     def get(self):
-        badgeId = self.request.get('badge')
-        badge = db.get(Id)
+        badge = db.get(self.request.get('key'))
         self.response.headers['Content-Type'] = 'image'
         self.response.out.write(badge.icon)

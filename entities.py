@@ -7,7 +7,7 @@ class Producer(db.Model):
     #profile information
     name = db.StringProperty(required=True)
     email = db.StringProperty(required=True)
-    owner = db.UserProperty(required=True)
+    owner = db.UserProperty()
     description = db.TextProperty()
     verified = db.BooleanProperty()
     logo = db.BlobProperty()
