@@ -15,6 +15,9 @@
       {% else %}
         <form action="/storeproducer" enctype="multipart/formdata" method="post">
       {% endif %}
+      {% if msg %}
+        You need to create a producer page first<br />
+      {% endif %}
       <div>Company Name: <input name="name" id="name"></input></div>
       <div>Description: <textarea name="description"></textarea></div></br>
        <div>Company logo:<input type="file" name="logo"/></div>

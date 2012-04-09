@@ -18,9 +18,8 @@ class CreateFactoryPage(webapp.RequestHandler):
         user = users.get_current_user() 
         if user: # user signed in
             if util.getCurrentProducer() == None: # no producer signed up, so ask to sign up
-                template_values = {'opt-msg': 'You need to create a producer page first'}
                 path = os.path.join(os.path.dirname(__file__), 'signup.html')
-                self.redirect('/signup?%s' % urllib.urlencode(dict(redirect='createfactory')))
+                self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'createfactory', 'msg': True}))
             else: #if producer signed up
                 template_values = {} 
                 template_values['added'] = (self.request.get('added') == 'True')

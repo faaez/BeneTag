@@ -15,7 +15,7 @@ class CreateProducerPage(webapp.RequestHandler):
         user = users.get_current_user()
         if user: # user signed in
             if util.getCurrentProducer() == None: # no producer page, so create one 
-                template_values = {'redirect': self.request.get('redirect')}
+                template_values = {'redirect': self.request.get('redirect'), 'msg': self.request.get('msg')}
                 path = os.path.join(os.path.dirname(__file__), 'signup.html')
                 self.response.out.write(template.render(path, template_values))
             else: # already has producer page, so redirect
@@ -24,7 +24,8 @@ class CreateProducerPage(webapp.RequestHandler):
                 If another redirect is specified, e.g. from createfactory, it wouldn't come into this else statement
                 (since redirect is specified only if producer page doesn't exist) 
                 '''
-                self.redirect('/')
+                #self.redirect('/')
+                self.response.out.write(self.request.uri)
         else:
             self.redirect(users.create_login_url(self.request.uri))
 
