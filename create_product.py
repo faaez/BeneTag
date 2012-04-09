@@ -20,7 +20,7 @@ class CreateProductPage(webapp.RequestHandler):
         for factory in factories:
             factory_names.append(factory.name)
         template_values = {
-            'producerName' : user.nickname(),
+            'producer_names' : entities.Producer.gql("WHERE email= :1", user.nickname()).fetch(1000),
             'badges' : entities.Badge.all(),
             'factory_names' : factory_names
         }

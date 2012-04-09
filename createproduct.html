@@ -12,7 +12,11 @@
     <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
     <h2><form action="/storeproduct" enctype="multipart/formdata" method="post">
       <div>Name: <input name="name" id="name"></input></div>
-      <div>Producer: <input name="producerName" value={{producerName}}></input></div>
+      <div>Producer: <select name="producerName">
+          {% for producer in producer_names %}
+            <option value={{producer.name}}> {{producer.name}} </option>
+          {%endfor%}
+      </select></div>
 	  <div>Factory: <input id="factoryName" name="factoryName"></input></div>
 	  <div>Badges:
 	  {% for badge in badges %}
