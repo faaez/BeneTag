@@ -1,4 +1,4 @@
-from google.appengine.api import users, users
+from google.appengine.api import users
 from google.appengine.ext import db, webapp
 import entities
 import urllib
@@ -22,7 +22,7 @@ def doesFactoryExist(factory_add):
         factories = getCurrentProducer().factories().filter('name = ', factory_add.name).fetch(1)
         for factory in factories:
             if factory != None: return True
-        factories = getCurrentProducer().factories().filter('location = ', factory_add.location).fetch(1)
+        factories = getCurrentProducer().factories().filter('address = ', factory_add.address).fetch(1)
         for factory in factories:
             if factory != None: return True
     return False
@@ -31,11 +31,13 @@ def doesFactoryExist(factory_add):
 Decode a url into a dictionary of arguments
 Assumption: Only one value per argument
 """
-def decodeURL(query): 
+def decodeURL(url):
+    queries = url.split('?') 
     dictionary = {} 
-    args = query.split('&') 
-    for arg in args: 
-        if '=' in arg: 
-            key,val = arg.split('=') 
-            dictionary[key] = [val] 
+    for query in queries:
+        args = query.split('&') 
+        for arg in args: 
+            if '=' in arg: 
+                key,val = arg.split('=') 
+                dictionary[key] = [val] 
     return dictionary

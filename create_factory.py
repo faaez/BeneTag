@@ -1,10 +1,12 @@
 from google.appengine.api import users
-import urllib
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
+from pprint import pprint
 import cgi
 import entities
+import logging
 import os
+import urllib
 import util
 
 
@@ -20,8 +22,8 @@ class CreateFactoryPage(webapp.RequestHandler):
             if util.getCurrentProducer() == None: # no producer signed up, so ask to sign up
                 self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'createfactory', 'msg': True}))
             else: #if producer signed up
-                template_values = {} 
-                template_values['added'] = (self.request.get('added') == 'True')
+                template_values = util.decodeURL(self.request.uri)
+                logging.debug(template_values)
                 path = os.path.join(os.path.dirname(__file__), 'createfactory.html')
                 self.response.out.write(template.render(path, template_values))
         else: # ask to sign in
@@ -52,10 +54,15 @@ class StoreFactoryPage(webapp.RequestHandler):
                         gp = None
                 else:
                     gp = None
-                f = entities.Factory(name=_name, producer=entities.Producer.gql("WHERE email=:1", user.nickname()).get(), address=_address, location=gp)
+                f = entities.Factory(name=_name,
+                                     producer=util.getCurrentProducer(),
+                                     address=_address,
+                                     location=gp)
         
                 if util.doesFactoryExist(f) == False: 
                     f.put()
-                self.redirect('/createfactory?%s' % urllib.urlencode({'added': True}))
+                    self.redirect('/createfactory?%s' % urllib.urlencode({'added': True}))
+                else:
+                    self.redirect('/createfactory?%s' % urllib.urlencode({'repeat': True}))
         else: # user not signed in
             self.redirect(users.create_login_url(self.request.uri))

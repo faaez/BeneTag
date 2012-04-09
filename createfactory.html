@@ -60,6 +60,9 @@
   {% if added %}
   <p>Factory added successfully</p>
   {% endif %}
+  {% if repeat %}
+  <p>Factory already exists</p>
+  {% endif %}
 
     <h2><form action="/storefactory" method="post">
       <div>Name: <input name="name"></input></div>
