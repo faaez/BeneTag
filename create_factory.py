@@ -1,5 +1,5 @@
 from google.appengine.api import users
-from google.appengine.dist27 import urllib
+import urllib
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
 import cgi
@@ -18,7 +18,6 @@ class CreateFactoryPage(webapp.RequestHandler):
         user = users.get_current_user() 
         if user: # user signed in
             if util.getCurrentProducer() == None: # no producer signed up, so ask to sign up
-                path = os.path.join(os.path.dirname(__file__), 'signup.html')
                 self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'createfactory', 'msg': True}))
             else: #if producer signed up
                 template_values = {} 
@@ -37,7 +36,6 @@ class StoreFactoryPage(webapp.RequestHandler):
         
         if user: # user signed in
             if util.getCurrentProducer() == None: # no producer signed up, so ask to sign up
-                path = os.path.join(os.path.dirname(__file__), 'signup.html')
                 self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'storefactory', 'msg': True}))
             else: # if producer signed up
                 _name = self.request.get('name')
@@ -56,8 +54,8 @@ class StoreFactoryPage(webapp.RequestHandler):
                     gp = None
                 f = entities.Factory(name=_name, address=_address, location=gp)
         
-                f.put()
-                self.redirect(self.request.uri)
+                if util.doesFactoryExist(f) == False: 
+                    f.put()
+                self.redirect('/createfactory?%s' % urllib.urlencode({'added': True}))
         else: # user not signed in
             self.redirect(users.create_login_url(self.request.uri))
-

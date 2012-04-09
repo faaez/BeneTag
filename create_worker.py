@@ -19,7 +19,7 @@ class CreateWorkerPage(webapp.RequestHandler):
             for factory in factories:
                 factory_names.append(factory.name)
             template_values = {
-                'producerName' : util.getCurrentProducerName(),
+                'producerName' : util.getCurrentProducer().name,
                 'factory_names' : factory_names
             }
             path = os.path.join(os.path.dirname(__file__), 'createworker.html')

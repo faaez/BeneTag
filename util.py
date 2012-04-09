@@ -17,9 +17,14 @@ def getCurrentProducer():
 """
 Does the factory already exist under the current producer?
 """
-def doesFactoryExist(factory):
-    factories = getCurrentProducer().factories().filter('name like ', factory.name).filter('location like ', factory.location).fetch(1)
-    if factories == None: return True
+def doesFactoryExist(factory_add):
+    if getCurrentProducer().factories():
+        factories = getCurrentProducer().factories().filter('name = ', factory_add.name).fetch(1)
+        for factory in factories:
+            if factory != None: return True
+        factories = getCurrentProducer().factories().filter('location = ', factory_add.location).fetch(1)
+        for factory in factories:
+            if factory != None: return True
     return False
 
 """
