@@ -20,6 +20,7 @@ class Product(db.Model):
     producerName = db.StringProperty()
     factoryMade = db.ReferenceProperty(Factory)
     badges = db.ListProperty(db.Key)
+    rating = db.FloatProperty()
 
 """
 Data type representing a producer

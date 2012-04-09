@@ -40,6 +40,8 @@ class ViewProduct(webapp.RequestHandler):
         template_values['url'] = self.request.url
         template_values['qr_url'] = self.request.url.replace('view','qr')
         template_values['factory_id'] = product.factoryMade.key()
+        template_values['factory_name'] = product.factoryMade.name
+        template_values['factory_address'] = product.factoryMade.address
         if product.picture:
             template_values['has_image'] = True
         else:

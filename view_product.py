@@ -21,19 +21,18 @@ class ViewProduct(webapp.RequestHandler):
           path = os.path.join(os.path.dirname(__file__), 'not_found.html')
           self.response.out.write(template.render(path, template_values))
           return
-        # Make a dictionary for template
-        name = product.name
-        producer = product.producerName
+        
         if product.factoryMade and product.factoryMade.location:
             latitude = product.factoryMade.location.lat
             longitude = product.factoryMade.location.lon
         else:
             latitude = None
             longitude = None
+        # Make a dictionary for template
         template_values = {}
         template_values['id'] = id
-        template_values['name'] = name
-        template_values['producer'] = producer
+        template_values['name'] = product.name
+        template_values['producer'] = product.producerName
         template_values['latitude'] = latitude
         template_values['longitude'] = longitude
         template_values['url'] = self.request.url

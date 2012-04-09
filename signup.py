@@ -15,7 +15,7 @@ class CreateProducerPage(webapp.RequestHandler):
         user = users.get_current_user()
         if user:
             template_values = {
-                'producerEmail' : user.nickname()
+                'producerEmail' : user.email()
             }
             path = os.path.join(os.path.dirname(__file__), 'signup.html')
             self.response.out.write(template.render(path, template_values))
