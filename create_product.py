@@ -1,11 +1,11 @@
+from google.appengine.api import users
+from google.appengine.ext import db, webapp
+from google.appengine.ext.webapp import template
+import entities
+import util
 import os
 
-from google.appengine.api import users
-from google.appengine.ext import db
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp import template
 
-import entities, util
 
 """
 Creates a form for Producers to enter information 
@@ -20,7 +20,7 @@ class CreateProductPage(webapp.RequestHandler):
         for factory in factories:
             factory_names.append(factory.name)
         template_values = {
-            'producerName' : util.getCurrentProducerName(),
+            'producerName': util.getCurrentProducer().name,
             'badges' : entities.Badge.all(),
             'factory_names' : factory_names
         }

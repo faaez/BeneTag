@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/fb/benetag#">
-        <meta property="fb:app_id"      content="286512274727203" /> 
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">        <meta property="fb:app_id"      content="286512274727203" /> 
         <meta property="og:type"        content="website" /> 
         <meta property="og:url"         content="{{url}}" /> 
         <meta property="og:title"       content="{{name}}" /> 
@@ -13,8 +13,8 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <title>{{name}} by {{producer}}</title>
         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-        <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="stylesheets/viewproduct.css" />
+        <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="stylesheets/mobilepage.css" />
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script src="//connect.facebook.net/en_US/all.js"></script>
@@ -68,8 +68,8 @@
                         position                    : absolute;
                         display                     : block;
                         width                       : 100%;
-                        padding-top                 : 60px;
-                        padding-bottom              : 60px;
+                        padding-top                 : 5px;
+                        padding-bottom              : 5px;
                         top                         : 0;
                         /*height: 100%; */ /* uncomment if desktop */
                     }
@@ -118,28 +118,42 @@
     </head>
     <body onload="initialize()">
         <!-- MAIN PANEL -->
-        <div class="panel">
+        <div >
             <!-- panel style is a twitter bootstrap style -->
             
-            <!-- TOP BAR -->
-            <div class="topbar">
-                <!-- topbar style is a twitter bootstrap style -->
-                <!-- here, tool bar definition -->
-                <div class="container-fluid">
-                    <a class="brand" href="#">BeneTag</a>
-                </div>
-            </div>
-            
             <!-- SCROLLABLE PANEL -->
-            <div class="scrollable panel">
+            <div id="scrollable-panel">
+                <p id="brand"> BeneTag </p>
                 <!-- scrollable and panel styles are new styles -->
                 <!-- here, content -->
-                <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
+                <hr id="top-line">
+                
+                <table id="productinfo">
+                    {% if has_image %}
+                    <td id="productimagecontainer"><img id="productimage" src="productimage?id={{id}}"></img></td>
+                    {% endif %}
+                    <td id="producttextinfo">
+                        
+                    </td>
+                </table>
+                
+                <p id="producername">{{producer}} </p>
                 <h1 id="productname"> {{ name }} </h1>
-                {% if has_image %}
-                <img id="productimage" src="productimage?id={{id}}"></img>
-                {% endif %}
-                <p id="producername">Made by {{producer}} </p>
+                
+                <hr id="separator-line">
+                
+                <table id="badges">
+                    {# i = 0
+                    
+                </table>
+                <hr id="separator-line">
+                <p id="section-heading">Manufactured at:</p>
+                <table id="factory-table">
+                    <td id="distance"> <div id="distance-div"> miles away </td>
+                    <td> <p>{{factory_name}}</br>
+                        {{factory_address}}</p></td>
+                </table>
+                
                 {% if latitude and longitude %}
                 <div id="map_canvas"></div>
                 {% endif %}
@@ -151,4 +165,11 @@
 
         
     </body>
+    <script>
+        $('.tabs').tabs();
+        $('.tabs').bind('change', function (e) {
+                        e.target;         // activated tab
+                        e.relatedTarget;  // previous tab
+                        });
+        </script>
 </html>

@@ -40,6 +40,9 @@ class ViewProduct(webapp.RequestHandler):
         template_values['url'] = self.request.url
         template_values['qr_url'] = self.request.url.replace('view','qr')
         template_values['factory_id'] = product.factoryMade.key()
+        template_values['factory_name'] = product.factoryMade.name
+        template_values['factory_address'] = product.factoryMade.address
+        template_values['badges_number'] = len(product.badges)
         if product.picture:
             template_values['has_image'] = True
         else:
@@ -55,3 +58,10 @@ class ProductImage(webapp.RequestHandler):
         product = db.get(id)
         self.response.headers['Content-Type'] = 'image'
         self.response.out.write(product.picture)
+
+class BadgeImage(webapp.RequestHandler):
+    def get(self):
+        badgeId = self.request.get('badge')
+        badge = db.get(Id)
+        self.response.headers['Content-Type'] = 'image'
+        self.response.out.write(badge.icon)

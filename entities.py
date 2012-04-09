@@ -44,7 +44,7 @@ class Worker(db.Model):
     # hierarchical information
     producer = db.ReferenceProperty(Producer,required=True)
     factory = db.ReferenceProperty(Factory,required=True)
-        
+
 """
 Data type representing a product with a BeneTag
 """
@@ -56,6 +56,7 @@ class Product(db.Model):
     producer = db.ReferenceProperty(Producer)
     factory = db.ReferenceProperty(Factory)
     badges = db.ListProperty(db.Key)
+    rating = db.FloatProperty()
 
 """
 Data type representing a badge
