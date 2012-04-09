@@ -35,15 +35,16 @@ class StoreProductPage(webapp.RequestHandler):
         user = users.get_current_user()
         if user:
             _name = self.request.get('name')
-            _producerName = self.request.get('producerName')
+            _producer = entities.Producer.gql("WHERE name = :1", self.request.get('producerName')).get()
             _factoryName = self.request.get('factoryName')
             _badges = self.request.get_all('badges')
             _picture = self.request.get('picture')
             if isinstance(_picture, unicode):
                 _picture = _picture.encode('utf-8', 'replace')
             _factoryMade = entities.Factory.gql("WHERE name = :1", _factoryName).get()
+            
 
-            p = entities.Product(name=_name, producerName=_producerName, factoryMade=_factoryMade.key())
+            p = entities.Product(name=_name, producer=_producer, factory=_factoryMade)
             for _badge in _badges:
                 p.badges.append(db.Key(_badge))
             p.picture = db.Blob(_picture)

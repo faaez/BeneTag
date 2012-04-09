@@ -54,10 +54,10 @@ class StoreFactoryPage(webapp.RequestHandler):
                         gp = None
                 else:
                     gp = None
-        
                 f = entities.Factory(name=_name, address=_address, location=gp)
         
                 f.put()
                 self.redirect(self.request.uri)
         else: # user not signed in
             self.redirect(users.create_login_url(self.request.uri))
+
