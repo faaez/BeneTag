@@ -18,6 +18,7 @@ def getCurrentProducer():
 Does the factory already exist under the current producer?
 """
 def doesFactoryExist(factory_add):
+    # checks for same name OR same location
     if getCurrentProducer().factories():
         factories = getCurrentProducer().factories().filter('name = ', factory_add.name).fetch(1)
         for factory in factories:
@@ -31,6 +32,7 @@ def doesFactoryExist(factory_add):
 Does the badge already exist?
 """
 def doesBadgeExist(badge_add):
+    # checks for same badge name
     badges = entities.Badge.all().filter('name =', badge_add.name)
     for badge in badges:
         if badge != None: return True    
@@ -40,6 +42,7 @@ def doesBadgeExist(badge_add):
 Does the worker already exist under the current producer?
 """
 def doesWorkerExist(worker_add):
+    # checks for same worker name
     workers = getCurrentProducer().workers().filter('name =', worker_add.name)
     for worker in workers:
         if worker != None: return True    
@@ -50,7 +53,8 @@ def doesWorkerExist(worker_add):
 Does the product already exist?
 """
 def doesProductExist(product_add):
-    products = entities.Product.all().filter('producer =', getCurrentProducer()).filter('name =', product_add.name)
+    # checks for same product name AND same factory
+    products = entities.Product.all().filter('producer =', getCurrentProducer()).filter('name =', product_add.name).filter('factory =', product_add.factory)
     for product in products:
         if product != None: return True    
     return False

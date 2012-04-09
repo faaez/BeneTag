@@ -26,11 +26,9 @@ class CreateProductPage(webapp.RequestHandler):
                 factories = entities.Factory.all()
                 for factory in factories:
                     factory_names.append(factory.name)
-                template_values = {
-                    'producerName': bene_util.getCurrentProducer().name,
-                    'badges' : entities.Badge.all(),
-                    'factory_names' : factory_names
-                }
+                template_values = bene_util.decodeURL(self.request.uri)
+                template_values['factory_names'] = factory_names
+                template_values['badges'] = entities.Badge.all()
                 path = os.path.join(os.path.dirname(__file__), 'createproduct.html')
                 self.response.out.write(template.render(path, template_values))
         else: # otherwise, request sign in
