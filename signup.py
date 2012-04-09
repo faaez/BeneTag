@@ -1,11 +1,11 @@
-import os
-
 from google.appengine.api import users
-from google.appengine.ext import db
-from google.appengine.ext import webapp
+from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
+import entities
+import os
+import util
 
-import entities, util
+
 
 """
 Creates a form to sign up as a Producer
@@ -13,18 +13,20 @@ Creates a form to sign up as a Producer
 class CreateProducerPage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        if user:
-            if util.doesCurrentUserHaveProducer(): 
-                # user already has registered a producer, so quit
-                self.response.out.write("<html><body> YOU ALREADY HAVE PRODUCER PAGE FUCK </html></body>")
-                return
-                ''' TODO: Redirect to producer page here '''
-            template_values = {}
-            path = os.path.join(os.path.dirname(__file__), 'signup.html')
-            self.response.out.write(template.render(path, template_values))
+        if user: # user signed in
+            if util.getCurrentProducer() == None: # no producer page, so create one 
+                template_values = {}
+                path = os.path.join(os.path.dirname(__file__), 'signup.html')
+                self.response.out.write(template.render(path, template_values))
+            else: # already has producer page, so redirect
+                ''' 
+                TODO: Redirect to producer page here.
+                If another redirect is specified, e.g. from createfactory, it wouldn't come into this else statement
+                (since redirect is specified only if producer page doesn't exist) 
+                '''
+                self.redirect('/')
         else:
-            greeting = ("<a href=\"%s\">Sign up with your Google account</a>." % users.create_login_url("/signup"))
-            self.response.out.write("<html><body>%s</body></html>" % greeting)
+            self.redirect(users.create_login_url(self.request.uri))
 
 """
 Puts a Producer in the database
@@ -34,17 +36,20 @@ class StoreProducerPage(webapp.RequestHandler):
         user = users.get_current_user()
         if user:
             _name = self.request.get('name')
-            _email = self.request.get('email')
             _logo = self.request.get('logo')
             _description = self.request.get('description')
             if isinstance(_logo, unicode):
                 _logo = _logo.encode('utf-8', 'replace')
                 
-            p = entities.Producer(name = _name,profileOwner=user,email=_email,companyLogo=db.Blob(_logo),description=_description)
+            p = entities.Producer(name = _name, 
+                                  email=user.nickname(), 
+                                  owner=user,
+                                  description=_description,
+                                  logo=db.Blob(_logo),
+                                  verified=True)
             p.put()
 
-            self.redirect('/')
+            
+            self.redirect('/'+self.request.get('redirect'))
         else:
-            greeting = ("<a href=\"%s\">Sign up with your Google account</a>." %
-                        users.create_login_url("/storeproducer"))
-            self.response.out.write("<html><body>%s</body></html>" % greeting)
+            self.redirect(users.create_login_url(self.request.uri))
