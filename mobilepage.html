@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/fb/benetag#">
-        <link href="http://fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet" type="text/css">
-        <meta property="fb:app_id"      content="286512274727203" /> 
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">        <meta property="fb:app_id"      content="286512274727203" /> 
         <meta property="og:type"        content="website" /> 
         <meta property="og:url"         content="{{url}}" /> 
         <meta property="og:title"       content="{{name}}" /> 
@@ -14,7 +13,7 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <title>{{name}} by {{producer}}</title>
         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-        <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+        <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="stylesheets/mobilepage.css" />
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -119,28 +118,32 @@
     </head>
     <body onload="initialize()">
         <!-- MAIN PANEL -->
-        <div class="panel">
+        <div >
             <!-- panel style is a twitter bootstrap style -->
             
             <!-- SCROLLABLE PANEL -->
-            <div class="scrollable panel">
+            <div id="scrollable-panel">
                 <p id="brand"> BeneTag </p>
                 <!-- scrollable and panel styles are new styles -->
                 <!-- here, content -->
                 <hr id="top-line">
-                <h1 id="productname"> {{ name }} </h1>
-                <p id="producername">Made by {{producer}} </p>
-                {% if has_image %}
+                
                 <table id="productinfo">
+                    {% if has_image %}
                     <td id="productimagecontainer"><img id="productimage" src="productimage?id={{id}}"></img></td>
+                    {% endif %}
                     <td id="producttextinfo">
                         
                     </td>
                 </table>
-                {% endif %}
+                
+                <p id="producername">{{producer}} </p>
+                <h1 id="productname"> {{ name }} </h1>
                 
                 <hr id="separator-line">
+                
                 <table id="badges">
+                    {# i = 0
                     
                 </table>
                 <hr id="separator-line">
@@ -150,7 +153,6 @@
                     <td> <p>{{factory_name}}</br>
                         {{factory_address}}</p></td>
                 </table>
-                    
                 
                 {% if latitude and longitude %}
                 <div id="map_canvas"></div>
