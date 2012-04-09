@@ -5,7 +5,7 @@ from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 
-import entities, util
+import entities, bene_util
 
 """
 Creates a form to create a Worker
@@ -19,14 +19,13 @@ class CreateWorkerPage(webapp.RequestHandler):
             for factory in factories:
                 factory_names.append(factory.name)
             template_values = {
-                'producerName' : util.getCurrentProducer().name,
+                'producerName' : bene_util.getCurrentProducer().name,
                 'factory_names' : factory_names
             }
             path = os.path.join(os.path.dirname(__file__), 'createworker.html')
             self.response.out.write(template.render(path, template_values))
         else:
-            greeting = ("<a href=\"%s\">Sign in or register</a>." % users.create_login_url("/createworker"))
-            self.response.out.write("<html><body>%s</body></html>" % greeting)
+            self.redirect(users.create_login_url(self.request.uri))
 """
 Puts a worker in the database
 """

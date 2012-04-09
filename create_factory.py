@@ -7,7 +7,7 @@ import entities
 import logging
 import os
 import urllib
-import util
+import bene_util
 
 
 
@@ -19,11 +19,10 @@ class CreateFactoryPage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user() 
         if user: # user signed in
-            if util.getCurrentProducer() == None: # no producer signed up, so ask to sign up
+            if bene_util.getCurrentProducer() == None: # no producer signed up, so ask to sign up
                 self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'createfactory', 'msg': True}))
             else: #if producer signed up
-                template_values = util.decodeURL(self.request.uri)
-                logging.debug(template_values)
+                template_values = bene_util.decodeURL(self.request.uri)
                 path = os.path.join(os.path.dirname(__file__), 'createfactory.html')
                 self.response.out.write(template.render(path, template_values))
         else: # ask to sign in
@@ -37,7 +36,7 @@ class StoreFactoryPage(webapp.RequestHandler):
         user = users.get_current_user()
         
         if user: # user signed in
-            if util.getCurrentProducer() == None: # no producer signed up, so ask to sign up
+            if bene_util.getCurrentProducer() == None: # no producer signed up, so ask to sign up
                 self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'storefactory', 'msg': True}))
             else: # if producer signed up
                 _name = self.request.get('name')
@@ -55,11 +54,11 @@ class StoreFactoryPage(webapp.RequestHandler):
                 else:
                     gp = None
                 f = entities.Factory(name=_name,
-                                     producer=util.getCurrentProducer(),
+                                     producer=bene_util.getCurrentProducer(),
                                      address=_address,
                                      location=gp)
         
-                if util.doesFactoryExist(f) == False: 
+                if bene_util.doesFactoryExist(f) == False: 
                     f.put()
                     self.redirect('/createfactory?%s' % urllib.urlencode({'added': True}))
                 else:

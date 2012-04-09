@@ -2,7 +2,7 @@ from google.appengine.api import users
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
 import entities
-import util
+import bene_util
 import os
 
 
@@ -20,7 +20,7 @@ class CreateProductPage(webapp.RequestHandler):
         for factory in factories:
             factory_names.append(factory.name)
         template_values = {
-            'producerName': util.getCurrentProducer().name,
+            'producerName': bene_util.getCurrentProducer().name,
             'badges' : entities.Badge.all(),
             'factory_names' : factory_names
         }

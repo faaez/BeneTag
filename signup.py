@@ -3,7 +3,7 @@ from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
 import entities
 import os
-import util
+import bene_util
 
 
 
@@ -14,8 +14,8 @@ class CreateProducerPage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user: # user signed in
-            if util.getCurrentProducer() == None: # no producer page, so create one 
-                template_values = util.decodeURL(self.request.uri)
+            if bene_util.getCurrentProducer() == None: # no producer page, so create one 
+                template_values = bene_util.decodeURL(self.request.uri)
                 path = os.path.join(os.path.dirname(__file__), 'signup.html')
                 self.response.out.write(template.render(path, template_values))
             else: # already has producer page, so redirect
@@ -35,7 +35,7 @@ class StoreProducerPage(webapp.RequestHandler):
     def post(self):
         user = users.get_current_user()
         if user:
-            if util.getCurrentProducer() == None: # no producer, so add to store
+            if bene_util.getCurrentProducer() == None: # no producer, so add to store
                 '''
                 TODO: If for some reason user refreshes store producer page, then they should get a warning of some sort?
                 Another way this could happen is if they store, and then press back to the signup page, and press store again.
