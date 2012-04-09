@@ -40,6 +40,7 @@ class StoreProducerPage(webapp.RequestHandler):
                 TODO: If for some reason user refreshes store producer page, then they should get a warning of some sort?
                 Another way this could happen is if they store, and then press back to the signup page, and press store again.
                 What to do in that case? Warning or just ignore? Currently, we're just ignoring
+                Note that this could be deliberate attempt by user to change value
                 '''
                 _name = self.request.get('name')
                 _logo = self.request.get('logo')

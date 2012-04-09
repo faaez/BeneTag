@@ -28,6 +28,35 @@ def doesFactoryExist(factory_add):
     return False
 
 """
+Does the badge already exist?
+"""
+def doesBadgeExist(badge_add):
+    badges = entities.Badge.all().filter('name =', badge_add.name)
+    for badge in badges:
+        if badge != None: return True    
+    return False
+
+"""
+Does the worker already exist under the current producer?
+"""
+def doesWorkerExist(worker_add):
+    workers = getCurrentProducer().workers().filter('name =', worker_add.name)
+    for worker in workers:
+        if worker != None: return True    
+    return False
+
+
+"""
+Does the product already exist?
+"""
+def doesProductExist(product_add):
+    products = entities.Product.all().filter('producer =', getCurrentProducer()).filter('name =', product_add.name)
+    for product in products:
+        if product != None: return True    
+    return False
+
+
+"""
 Decode a url into a dictionary of arguments
 Assumption: Only one value per argument
 """

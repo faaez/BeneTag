@@ -1,11 +1,12 @@
-import os
-
 from google.appengine.api import users
-from google.appengine.ext import db
-from google.appengine.ext import webapp
+from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
+import bene_util
+import entities
+import os
+import urllib
 
-import entities, bene_util
+
 
 """
 Creates a form to create a Worker
@@ -13,18 +14,21 @@ Creates a form to create a Worker
 class CreateWorkerPage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        if user:
-            factory_names = []
-            factories = entities.Factory.all()
-            for factory in factories:
-                factory_names.append(factory.name)
-            template_values = {
-                'producerName' : bene_util.getCurrentProducer().name,
-                'factory_names' : factory_names
-            }
-            path = os.path.join(os.path.dirname(__file__), 'createworker.html')
-            self.response.out.write(template.render(path, template_values))
-        else:
+        if user: # if user not signed in
+            if bene_util.getCurrentProducer() == None: # if producer page doesn't exist, need to create one
+                self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'createworker', 'msg': True}))
+            else: # if producer page exists, display form to create new worker
+                factory_names = []
+                factories = entities.Factory.all()
+                for factory in factories:
+                    factory_names.append(factory.name)
+                template_values = {
+                    'producerName' : bene_util.getCurrentProducer().name,
+                    'factory_names' : factory_names
+                }
+                path = os.path.join(os.path.dirname(__file__), 'createworker.html')
+                self.response.out.write(template.render(path, template_values))
+        else: # otherwise, request sign in
             self.redirect(users.create_login_url(self.request.uri))
 """
 Puts a worker in the database
@@ -32,20 +36,25 @@ Puts a worker in the database
 class StoreWorkerPage(webapp.RequestHandler):
     def post(self):
         user = users.get_current_user()
-        if user:
-            _name = self.request.get('name')
-            _factoryName = self.request.get('factoryName')
-            _picture = self.request.get('picture')
-            _profile = self.request.get('profile')
-            if isinstance(_picture, unicode):
-                _picture = _picture.encode('utf-8', 'replace')
-            _factoryMade = entities.Factory.gql("WHERE name = :1", _factoryName).get()
-
-            f = entities.Worker(name=_name, factory=_factoryMade.key(), profile=_profile)
-            f.picture = db.Blob(_picture)
-            f.put()
-            self.redirect('/')
-        else:
-            greeting = ("<a href=\"%s\">Sign in or register</a>." %
-                        users.create_login_url("/storeworker"))
-            self.response.out.write("<html><body>%s</body></html>" % greeting)
+        if user: # if user signed in
+            if bene_util.getCurrentProducer() == None: # if producer page doesn't exist, need to create one
+                self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'storeworker', 'msg': True}))
+            else: # if producer page exists, store new worker
+                _name = self.request.get('name')
+                _factoryName = self.request.get('factoryName')
+                _picture = self.request.get('picture')
+                _profile = self.request.get('profile')
+                if isinstance(_picture, unicode):
+                    _picture = _picture.encode('utf-8', 'replace')
+                _factoryMade = entities.Factory.gql("WHERE name = :1", _factoryName).get()
+    
+                f = entities.Worker(name=_name, factory=_factoryMade.key(), profile=_profile)
+                f.picture = db.Blob(_picture)
+                if bene_util.doesBadgeExist(f) == False: 
+                    f.put()
+                    self.redirect('/createworker?%s' % urllib.urlencode({'added': True}))
+                else:
+                    self.redirect('/createworker?%s' % urllib.urlencode({'repeat': True}))
+                #self.redirect('/')
+        else: # otherwise, request sign in
+            self.redirect(users.create_login_url(self.request.uri))
