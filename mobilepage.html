@@ -143,8 +143,11 @@
                 <hr id="separator-line">
                 
                 <table id="badges">
-                    {# i = 0
-                    
+                    {% for badge in badges %}
+                    {%if forloop.counter0|divisibleby:3%} <tr> {%endif%}
+                            <td><img id="badgeimage" src="badgeimage?id={{badge.name}}"></img </td>
+                    {%if forloop.counter0|divisibleby:3%} </tr> {%endif%}
+                    {%endfor%}
                 </table>
                 <hr id="separator-line">
                 <p id="section-heading">Manufactured at:</p>

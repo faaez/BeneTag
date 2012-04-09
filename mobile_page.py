@@ -23,26 +23,24 @@ class ViewProduct(webapp.RequestHandler):
             self.response.out.write(template.render(path, template_values))
             return
         # Make a dictionary for template
-        name = product.name
-        producer = product.producerName
-        if product.factoryMade and product.factoryMade.location:
-            latitude = product.factoryMade.location.lat
-            longitude = product.factoryMade.location.lon
+        if product.factory and product.factory.location:
+            latitude = product.factory.location.lat
+            longitude = product.factory.location.lon
         else:
             latitude = None
             longitude = None
         template_values = {}
         template_values['id'] = id
-        template_values['name'] = name
-        template_values['producer'] = producer
+        template_values['name'] = product.name
+        template_values['producer'] = product.producer.name
         template_values['latitude'] = latitude
         template_values['longitude'] = longitude
         template_values['url'] = self.request.url
         template_values['qr_url'] = self.request.url.replace('view','qr')
         template_values['factory_id'] = product.factoryMade.key()
-        template_values['factory_name'] = product.factoryMade.name
-        template_values['factory_address'] = product.factoryMade.address
-        template_values['badges_number'] = len(product.badges)
+        template_values['factory_name'] = product.factory.name
+        template_values['factory_address'] = product.factory.address
+        template_values['badges'] = product.badges
         if product.picture:
             template_values['has_image'] = True
         else:
