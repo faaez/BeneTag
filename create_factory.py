@@ -45,6 +45,7 @@ class StoreFactoryPage(webapp.RequestHandler):
                     _name = self.request.get('name')
                     _address = self.request.get('address')
                     _location = self.request.get('location')
+                    _unique = self.request.get('unique')
                     
                     fields = _location.split(',')
                     if len(fields) == 2:
@@ -60,8 +61,8 @@ class StoreFactoryPage(webapp.RequestHandler):
                                          producer=_producer,
                                          address=_address,
                                          location=gp,
+                                         unique=_unique,
                                          owner=user)
-            
                     if bene_util.doesFactoryExist(f) == False: 
                         f.put()
                         self.redirect('/createfactory?%s' % urllib.urlencode({'added': True}))

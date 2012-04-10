@@ -49,6 +49,7 @@ class StoreWorkerPage(webapp.RequestHandler):
                     _factoryName = self.request.get('factoryName')
                     _picture = self.request.get('picture')
                     _profile = self.request.get('profile')
+                    _unique = self.request.get('unique')
                     if isinstance(_picture, unicode):
                         _picture = _picture.encode('utf-8', 'replace')
                     _factoryMade = _producer.factories().filter("name = ", _factoryName).get()
@@ -57,6 +58,7 @@ class StoreWorkerPage(webapp.RequestHandler):
                                         producer = _producer, 
                                         factory=_factoryMade, 
                                         profile=_profile,
+                                        unique=_unique,
                                         owner=user)
                     f.picture = db.Blob(_picture)
                     if bene_util.doesWorkerExist(f) == False: 

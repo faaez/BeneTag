@@ -28,8 +28,13 @@ class CreateProductPage(webapp.RequestHandler):
                     factories = bene_util.getCurrentProducer().factories()
                     for factory in factories:
                         factory_names.append(factory.name)
+                    worker_names = []
+                    workers = bene_util.getCurrentProducer().workers()
+                    for worker in workers:
+                        worker_names.append(worker.name)
                     template_values = bene_util.decodeURL(self.request.uri)
                     template_values['factory_names'] = factory_names
+                    template_values['worker_names'] = worker_names
                     template_values['badges'] = entities.Badge.all()
                     path = os.path.join(os.path.dirname(__file__), 'createproduct.html')
                     self.response.out.write(template.render(path, template_values))
@@ -52,20 +57,27 @@ class StoreProductPage(webapp.RequestHandler):
             else: # if producer page exists
                 if _producer.verified: # if producer is verified, then store
                     _name = self.request.get('name')
-                    
                     _factoryName = self.request.get('factoryName')
+                    _workerNames = self.request.get('workerNames')
                     _badges = self.request.get_all('badges')
                     _picture = self.request.get('picture')
+                    _unique = self.request.get('unique')
                     if isinstance(_picture, unicode):
                         _picture = _picture.encode('utf-8', 'replace')
-                    _factoryMade = _producer.factories().filter("name = ", _factoryName).get()
+                    _factoryMade = _producer.factories().filter('name = ', _factoryName).get()
                     '''
                     XXX: Assumes factory name is unique for a producer. This is enforced when creating factories
                     '''
+                    _workers = _producer.workers().filter('name =', _workerNames)
+                    ''' ADD PRODUCT KEY TO WORKERS '''
+                    
+                    
+                    
                     
                     p = entities.Product(name=_name, 
                                          producer=_producer, 
                                          factory=_factoryMade,
+                                         unique=_unique,
                                          owner=user)
                     for _badge in _badges:
                         p.badges.append(db.Key(_badge))

@@ -34,6 +34,9 @@ class Factory(db.Model):
     #security
     owner = db.UserProperty()
     
+    #producer-defined identifier (only for producer)
+    unique = db.StringProperty()
+    
     #hierarchical information
     producer = db.ReferenceProperty(Producer)
     def workers(self):
@@ -53,9 +56,15 @@ class Worker(db.Model):
     # security
     owner = db.UserProperty()
     
+    #producer-defined identifier (only for producer)
+    unique = db.StringProperty()
+    
     # hierarchical information
     producer = db.ReferenceProperty(Producer)
     factory = db.ReferenceProperty(Factory)
+    products = db.ListProperty(db.Key)
+    def products(self):
+        return db.get(self.products)
 
 """
 Data type representing a product with a BeneTag
@@ -68,11 +77,16 @@ class Product(db.Model):
     # security
     owner = db.UserProperty()
     
+    #producer-defined identifier (only for producer)
+    unique = db.StringProperty()
+    
     # hierarchical information
     producer = db.ReferenceProperty(Producer)
     factory = db.ReferenceProperty(Factory)
     badges = db.ListProperty(db.Key)
     rating = db.FloatProperty()
+    def workers(self):
+        return Worker.all().filter('products =', self)
 
 """
 Data type representing a badge
@@ -81,3 +95,7 @@ class Badge(db.Model):
     name = db.StringProperty()
     icon = db.BlobProperty()
     description = db.StringProperty() 
+    
+    # hierarchical information
+    def products(self):
+        return Product.all().filter('badges =', self)
