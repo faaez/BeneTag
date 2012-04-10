@@ -7,10 +7,12 @@ class Producer(db.Model):
     #profile information
     name = db.StringProperty(required=True)
     email = db.StringProperty(required=True)
-    owner = db.UserProperty()
     description = db.TextProperty()
     verified = db.BooleanProperty()
     logo = db.BlobProperty()
+    
+    #security
+    owner = db.UserProperty()
        
     #hierarchical information    
     def factories(self):
@@ -29,6 +31,9 @@ class Factory(db.Model):
     address = db.PostalAddressProperty()
     location = db.GeoPtProperty()
     
+    #security
+    owner = db.UserProperty()
+    
     #hierarchical information
     producer = db.ReferenceProperty(Producer)
     def workers(self):
@@ -45,6 +50,9 @@ class Worker(db.Model):
     profile = db.TextProperty()
     picture = db.BlobProperty()
     
+    # security
+    owner = db.UserProperty()
+    
     # hierarchical information
     producer = db.ReferenceProperty(Producer)
     factory = db.ReferenceProperty(Factory)
@@ -53,8 +61,12 @@ class Worker(db.Model):
 Data type representing a product with a BeneTag
 """
 class Product(db.Model):
+    # profile information
     name = db.StringProperty()
     picture = db.BlobProperty()
+    
+    # security
+    owner = db.UserProperty()
     
     # hierarchical information
     producer = db.ReferenceProperty(Producer)

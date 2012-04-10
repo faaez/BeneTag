@@ -63,7 +63,9 @@
   {% if repeat %}
   <p>Factory already exists</p>
   {% endif %}
-
+  {% if verify %}
+  <p>You are not yet verified as a producer</p>
+  {% endif %}
     <h2><form action="/storefactory" method="post">
       <div>Name: <input name="name"></input></div>
       <div>Address: <input id="address" onchange="address_change()" name="address"></input></div>

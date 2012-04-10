@@ -52,7 +52,7 @@ Does the product already exist?
 """
 def doesProductExist(product_add):
     # checks for same product name AND same factory
-    products = entities.Product.all().filter('producer =', getCurrentProducer()).filter('name =', product_add.name).filter('factory =', product_add.factory)
+    products = getCurrentProducer().products().filter('name =', product_add.name).filter('factory =', product_add.factory)
     for product in products:
         if product != None: return True    
     return False
