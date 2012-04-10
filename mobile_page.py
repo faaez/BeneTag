@@ -4,8 +4,6 @@ from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 
-from entities import Product
-
 """
     View mobile page for the product
 """
@@ -13,9 +11,9 @@ from entities import Product
 class ViewProduct(webapp.RequestHandler):
     def get(self):
         # Get the id from the get parameter
-        id = self.request.get('id')
+        ID = self.request.get('id')
         # Fetch the data for this product
-        product = db.get(id)
+        product = db.get(ID)
         # Display error if product ID not found
         if not product:
             template_values = {}
@@ -30,7 +28,7 @@ class ViewProduct(webapp.RequestHandler):
             latitude = None
             longitude = None
         template_values = {}
-        template_values['id'] = id
+        template_values['id'] = ID
         template_values['name'] = product.name
         template_values['producer'] = product.producer.name
         template_values['latitude'] = latitude
@@ -40,7 +38,7 @@ class ViewProduct(webapp.RequestHandler):
         template_values['factory_id'] = product.factory.key
         template_values['factory_name'] = product.factory.name
         template_values['factory_address'] = product.factory.address
-        #template_values['badges'] = product.badges
+        template_values['badges'] = product.badges
         if product.picture:
             template_values['has_image'] = True
         else:
@@ -51,9 +49,9 @@ class ViewProduct(webapp.RequestHandler):
 class ProductImage(webapp.RequestHandler):
     def get(self):
         # Get the id from the get parameter
-        id = self.request.get('id')
+        ID = self.request.get('id')
         # Fetch the image for this product
-        product = db.get(id)
+        product = db.get(ID)
         self.response.headers['Content-Type'] = 'image'
         self.response.out.write(product.picture)
 
