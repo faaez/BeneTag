@@ -23,9 +23,9 @@ class ViewFactory(webapp.RequestHandler):
             return
         # Make a dictionary for template
         name = factory.name
-        producers = factory.producer
+        producer = factory.producer
         productlist = factory.product_set
-        workers = factory.workers
+        workers = factory.workers()
         address = factory.address
         if factory.location:
             latitude = factory.location.lat
@@ -36,7 +36,7 @@ class ViewFactory(webapp.RequestHandler):
         template_values = {}
         template_values['id'] = ID
         template_values['name'] = name
-        template_values['producers'] = producers
+        template_values['producer'] = producer
         template_values['products'] = productlist
         template_values['workers'] = workers
         template_values['latitude'] = latitude
