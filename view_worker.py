@@ -12,16 +12,16 @@ View a Worker Page
 class ViewWorker(webapp.RequestHandler):
     def get(self):
         '''if no id is sent, defaults to last factory'''
-        id = self.request.get('id')
+        ID = self.request.get('id')
         workerlist = Worker.all()
         worker = workerlist[workerlist.count() -1]
-        if(id):
-            worker = db.get(id)
+        if(ID):
+            worker = db.get(ID)
         if not worker:
-          template_values = {}
-          path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-          self.response.out.write(template.render(path, template_values))
-          return
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return
         # Make a dictionary for template
         name = worker.name
         factory = worker.factory
@@ -34,7 +34,7 @@ class ViewWorker(webapp.RequestHandler):
             latitude = None
             longitude = None
         template_values = {}
-        template_values['id'] = id
+        template_values['id'] = ID
         template_values['name'] = name
         template_values['factory'] = factory
         template_values['picture'] = picture
@@ -53,8 +53,8 @@ class ViewWorker(webapp.RequestHandler):
 class WorkerImage(webapp.RequestHandler):
     def get(self):
         # Get the id from the get parameter
-        id = self.request.get('id')
+        ID = self.request.get('id') 
         # Fetch the image for this worker
-        worker = db.get(id)
+        worker = db.get(ID)
         self.response.headers['Content-Type'] = 'image'
         self.response.out.write(worker.picture)

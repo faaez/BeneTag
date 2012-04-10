@@ -1,10 +1,9 @@
+from google.appengine.ext import db, webapp
+from google.appengine.ext.webapp import template
+import bene_util
 import os
 
-from google.appengine.ext import db
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp import template
 
-from entities import Factory
 
 """
 View a Factory Page
@@ -12,19 +11,19 @@ View a Factory Page
 class ViewFactory(webapp.RequestHandler):
     def get(self):
         '''if no id is sent, defaults to last factory'''
-        id = self.request.get('id')
-        factorylist = Factory.all()
+        ID = self.request.get('id')
+        factorylist = bene_util.getCurrentProducer().factories()
         factory = factorylist[factorylist.count() -1]
-        if(id):
-            factory = db.get(id)
+        if(ID):
+            factory = db.get(ID)
         if not factory:
-          template_values = {}
-          path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-          self.response.out.write(template.render(path, template_values))
-          return
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return
         # Make a dictionary for template
         name = factory.name
-        producers = factory.producers
+        producers = factory.producer
         productlist = factory.product_set
         workers = factory.workers
         address = factory.address
@@ -35,7 +34,7 @@ class ViewFactory(webapp.RequestHandler):
             latitude = None
             longitude = None
         template_values = {}
-        template_values['id'] = id
+        template_values['id'] = ID
         template_values['name'] = name
         template_values['producers'] = producers
         template_values['products'] = productlist
