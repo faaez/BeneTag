@@ -1,5 +1,5 @@
 from google.appengine.api import users
-from google.appengine.ext import db, webapp
+from google.appengine.ext import webapp, db
 from google.appengine.ext.webapp import template
 import bene_util
 import entities
@@ -42,7 +42,8 @@ class StoreBadgePage(webapp.RequestHandler):
                     if isinstance(_icon,unicode):
                         _icon = _icon.encode('utf-8', 'replace')
         
-                    b = entities.Badge(name=_name, icon=_icon, description=_description)
+                    b = entities.Badge(name=_name, description=_description)
+                    b.icon = db.Blob(_icon)
                     
                     if bene_util.doesBadgeExist(b) == False: 
                         b.put()
@@ -53,6 +54,9 @@ class StoreBadgePage(webapp.RequestHandler):
                 else: # otherwise, don't add badge
                     greeting = "You need admin privileges to create a badge"
                     self.response.out.write("<html><body>%s</body></html>" % greeting)
+                    '''
+                    TODO: Redirect to home
+                    '''
         else: # otherwise, needs to sign in 
             self.redirect(users.create_login_url(self.request.uri))
             

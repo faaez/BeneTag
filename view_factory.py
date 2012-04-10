@@ -24,7 +24,7 @@ class ViewFactory(webapp.RequestHandler):
           return
         # Make a dictionary for template
         name = factory.name
-        producers = factory.producers
+        producers = factory.producer
         productlist = factory.product_set
         workers = factory.workers
         address = factory.address
