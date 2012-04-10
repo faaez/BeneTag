@@ -40,7 +40,7 @@ class ViewProduct(webapp.RequestHandler):
         template_values['factory_id'] = product.factory.key
         template_values['factory_name'] = product.factory.name
         template_values['factory_address'] = product.factory.address
-        template_values['badges'] = product.badges
+        #template_values['badges'] = product.badges
         if product.picture:
             template_values['has_image'] = True
         else:
