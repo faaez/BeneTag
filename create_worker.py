@@ -19,7 +19,7 @@ class CreateWorkerPage(webapp.RequestHandler):
                 self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'createworker', 'msg': True}))
             else: # if producer page exists, display form to create new worker
                 factory_names = []
-                factories = entities.Factory.all()
+                factories = bene_util.getCurrentProducer().factories()
                 for factory in factories:
                     factory_names.append(factory.name)
                 template_values = bene_util.decodeURL(self.request.uri)

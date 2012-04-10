@@ -23,7 +23,7 @@ class CreateProductPage(webapp.RequestHandler):
                 self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'createproduct', 'msg': True}))
             else: # if producer page exists, create form to get new product        
                 factory_names = []
-                factories = entities.Factory.all()
+                factories = bene_util.getCurrentProducer().factories()
                 for factory in factories:
                     factory_names.append(factory.name)
                 template_values = bene_util.decodeURL(self.request.uri)

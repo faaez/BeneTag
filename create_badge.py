@@ -53,6 +53,9 @@ class StoreBadgePage(webapp.RequestHandler):
                 else: # otherwise, don't add badge
                     greeting = "You need admin privileges to create a badge"
                     self.response.out.write("<html><body>%s</body></html>" % greeting)
+                    '''
+                    TODO: Redirect to home
+                    '''
         else: # otherwise, needs to sign in 
             self.redirect(users.create_login_url(self.request.uri))
             
