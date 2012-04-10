@@ -35,15 +35,15 @@ class Factory(db.Model):
     owner = db.UserProperty()
     
     #producer-defined identifier (only for producer)
-    unique = db.StringProperty() 
-    def unique(self):
-        '''
-        Use this if you want to know any unique id for the entity. 
-        A possible use of this would be if you want to get input from user about a specific factory, 
-        and you want to uniquely identify it somehow
-        '''
-        if self.unique == None: return self.id
-        return self.unique 
+    unique = db.StringProperty()
+#    def unique(self):
+#        '''
+#        Use this if you want to know any unique id for the entity. 
+#        A possible use of this would be if you want to get input from user about a specific factory, 
+#        and you want to uniquely identify it somehow
+#        '''
+#        if self.unique == None: return self.id
+#        return self.unique 
     
     #hierarchical information
     producer = db.ReferenceProperty(Producer)
@@ -66,14 +66,14 @@ class Worker(db.Model):
     
     #producer-defined identifier (only for producer)
     unique = db.StringProperty()
-    def unique(self):
-        '''
-        Use this if you want to know any unique id for the entity. 
-        A possible use of this would be if you want to get input from user about a specific worker, 
-        and you want to uniquely identify it somehow
-        '''
-        if self.unique == None: return self.id
-        return self.unique
+#    def unique(self):
+#        '''
+#        Use this if you want to know any unique id for the entity. 
+#        A possible use of this would be if you want to get input from user about a specific worker, 
+#        and you want to uniquely identify it somehow
+#        '''
+#        if self.unique == None: return self.id
+#        return self.unique
     
     # hierarchical information
     producer = db.ReferenceProperty(Producer)
@@ -96,14 +96,14 @@ class Product(db.Model):
     
     #producer-defined identifier (only for producer)
     unique = db.StringProperty()
-    def unique(self): 
-        '''
-        Use this if you want to know any unique id for the entity. 
-        A possible use of this would be if you want to get input from user about a specific product, 
-        and you want to uniquely identify it somehow
-        ''' 
-        if self.unique == None: return self.id
-        return self.unique
+#    def unique(self): 
+#        '''
+#        Use this if you want to know any unique id for the entity. 
+#        A possible use of this would be if you want to get input from user about a specific product, 
+#        and you want to uniquely identify it somehow
+#        ''' 
+#        if self.unique == None: return self.id
+#        return self.unique
     
     # hierarchical information
     producer = db.ReferenceProperty(Producer)

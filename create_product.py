@@ -24,17 +24,9 @@ class CreateProductPage(webapp.RequestHandler):
                 self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'createproduct', 'msg': True}))
             else: # if producer page exists
                 if _producer.verified: # if verified, create form to get new product        
-                    factory_names = []
-                    factories = bene_util.getCurrentProducer().factories()
-                    for factory in factories:
-                        factory_names.append(factory.name)
-                    worker_names = []
-                    workers = bene_util.getCurrentProducer().workers()
-                    for worker in workers:
-                        worker_names.append(worker.name)
                     template_values = bene_util.decodeURL(self.request.uri)
-                    template_values['factory_names'] = factory_names
-                    template_values['worker_names'] = worker_names
+                    template_values['factories'] = bene_util.getCurrentProducer().factories()
+                    template_values['workers'] = bene_util.getCurrentProducer().workers()
                     template_values['badges'] = entities.Badge.all()
                     path = os.path.join(os.path.dirname(__file__), 'createproduct.html')
                     self.response.out.write(template.render(path, template_values))

@@ -36,8 +36,12 @@
   <script type="text/javascript">
     function initialize() {
         var factory_names = new Array();
-        {% for name in factory_names %}
-            factory_names.push('{{name}}');
+        {% for factory in factories %}
+            {% if factory.unique %}
+            	factory_names.push('{{factory.name}} ({{factory.unique}})');
+            {% else %}
+            	factory_names.push('{{factory.name}}');
+            {% endif %}
         {% endfor %}
         $('#factoryName').autocomplete({
             source: factory_names

@@ -1,10 +1,11 @@
 from google.appengine.api import users
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
+import bene_util
+import cgi
 import entities
 import os
 import urllib
-import bene_util
 
 
 
@@ -46,7 +47,7 @@ class StoreFactoryPage(webapp.RequestHandler):
                     _address = self.request.get('address')
                     _location = self.request.get('location')
                     _unique = self.request.get('unique')
-                    
+                                                                               
                     fields = _location.split(',')
                     if len(fields) == 2:
                         try:
