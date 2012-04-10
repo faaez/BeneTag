@@ -168,7 +168,9 @@
                 <hr id="separator-line">
                 <p id="section-heading">Manufactured at:</p>
                 <table id="factory-table">
+                    {% if latitude and longitude %}
                     <td id="distance"> <div id="distance-div"> miles away </td>
+                    {%endif%}
                     <td> <p>{{factory_name}}</br>
                         {{factory_address}}</p></td>
                 </table>
