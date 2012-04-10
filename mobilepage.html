@@ -54,7 +54,7 @@
                                                              var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
                                                              var d = R * c;
                                                              
-                                                             document.getElementById('distance').innerHTML = '<div id="distance-div">                                                      <div id="distance-value">' + d.toFixed(1) mi + ' </div> <div> away</div></div>';
+                                                             document.getElementById('distance').innerHTML = '<div id="distance-div"> <div id="distance-value">' + d.toFixed(1) + ' mi </div> <p id="away"> away</p></div>';
                                                              });
                 }
                 
@@ -185,13 +185,25 @@
                     <td> <p>{{factory_name}}</br>
                         {{factory_address}}</p></td>
                 </table>
-                
+                <div id="factory_link"> <a href="viewfactory?id={{factory_id}}">see more info ></a></div>
+                </br>
                 {% if latitude and longitude %}
+                
                 <div id="map_canvas"></div>
                 {% endif %}
-                <div id="factory_link"><a href="viewfactory?id={{factory_id}}">View Factory</a></div>
-                <button class="btn primary" id="fbshare" onclick="fbshare()">Share on Facebook</img></button>
+                <hr id="separator-line">
+                <div id="social-buttons">
+                    <div><button class="btn secondary" id="fbshare" onclick="fbshare()">Share on Facebook</img></button></div>
+                    <div id="social-row"><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-hashtags="BeneTag">Tweet</a>
+                    </div>
+                    <div id="social-row"><g:plusone></g:plusone></div>
+                    <div id="social-row"><a href="http://pinterest.com/pin/create/button/?url={{url}} &media={{qr_url}}&description=Made by {{producer}}" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a></div>
+                </div>
+                
                 <div id="fb-root"></div>
+                <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+                <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
             </div>
         </div>
     </body>
