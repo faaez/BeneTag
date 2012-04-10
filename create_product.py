@@ -46,13 +46,16 @@ class StoreProductPage(webapp.RequestHandler):
                 self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'storeproduct', 'msg': True}))
             else: # if producer page exists, store new product
                 _name = self.request.get('name')
-                _producer = entities.Producer.gql("WHERE name = :1", self.request.get('producerName')).get()
+                _producer = bene_util.getCurrentProducer()
                 _factoryName = self.request.get('factoryName')
                 _badges = self.request.get_all('badges')
                 _picture = self.request.get('picture')
                 if isinstance(_picture, unicode):
                     _picture = _picture.encode('utf-8', 'replace')
-                _factoryMade = entities.Factory.gql("WHERE name = :1", _factoryName).get()
+                _factoryMade = _producer.factories().filter("name = ", _factoryName).get()
+                '''
+                XXX: Assumes factory name is unique for a producer. This is enforced when creating factories
+                '''
                 
                 p = entities.Product(name=_name, producer=_producer, factory=_factoryMade)
                 for _badge in _badges:

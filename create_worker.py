@@ -45,9 +45,10 @@ class StoreWorkerPage(webapp.RequestHandler):
                 _profile = self.request.get('profile')
                 if isinstance(_picture, unicode):
                     _picture = _picture.encode('utf-8', 'replace')
-                _factoryMade = entities.Factory.gql("WHERE name = :1", _factoryName).get()
+                _producer = bene_util.getCurrentProducer()
+                _factoryMade = _producer.factories().filter("name = ", _factoryName).get()
     
-                f = entities.Worker(name=_name, factory=_factoryMade.key(), profile=_profile)
+                f = entities.Worker(name=_name, producer = _producer, factory=_factoryMade, profile=_profile)
                 f.picture = db.Blob(_picture)
                 if bene_util.doesBadgeExist(f) == False: 
                     f.put()
