@@ -33,6 +33,8 @@
                                                     position: latlng,
                                                     map: map,
                                                     });
+                
+                
                 var userLat;
                 var userLong;
                 if (navigator.geolocation) // check if browser support this feature or not
@@ -41,11 +43,20 @@
                                                              {
                                                              userLat = position.coords.latitude;
                                                              userLong = position.coords.longitude;
-                                                             );
+                                                             var R = 3959; // miles
+                                                             var dLat = (userLat-{{latitude}})*(Math.PI/180);
+                                                             var dLon = (userLong-{{longitude}})*(Math.PI/180);
+                                                             var lat1 = {{latitude}}*(Math.PI/180);
+                                                             var lat2 = userLat*(Math.PI/180);
+                                                             
+                                                             var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                                                             Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+                                                             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+                                                             var d = R * c;
+                                                             
+                                                             document.getElementById('distance').innerHTML = '<div id="distance-div">                                                      <div id="distance-value">' + d.toFixed(1) mi + ' </div> <div> away</div></div>';
+                                                             });
                 }
-                
-                var gUserLatLng = new GLatLng(userLat, userLong);
-                document.getElementById('distance-div').innerHTML = '<p id="distance-value">' + gUserLatLng.distanceFrom(latlng,3959) + ' </p> miles away.';
                 
                 {% endif %}
                 FB.init({
@@ -169,7 +180,7 @@
                 <p id="section-heading">Manufactured at:</p>
                 <table id="factory-table">
                     {% if latitude and longitude %}
-                    <td id="distance"> <div id="distance-div"> miles away </td>
+                    <td id="distance"> </td>
                     {%endif%}
                     <td> <p>{{factory_name}}</br>
                         {{factory_address}}</p></td>
@@ -183,7 +194,5 @@
                 <div id="fb-root"></div>
             </div>
         </div>
-
-        
     </body>
 </html>
