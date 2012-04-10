@@ -1,6 +1,7 @@
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
 import bene_util
+import entities
 import os
 
 
@@ -10,13 +11,13 @@ View a Factory Page
 """
 class ViewFactory(webapp.RequestHandler):
     def get(self):
-        '''if no id is sent, defaults to last factory'''
         ID = self.request.get('id')
-        factorylist = bene_util.getCurrentProducer().factories()
-        factory = factorylist[factorylist.count() -1]
-        if(ID):
-            factory = db.get(ID)
+        factory = db.get(ID)
         if not factory:
+            '''
+            TODO: if no id is sent, defaults to page with all factories?
+            '''
+            #factorylist = entities.Factory.all()
             template_values = {}
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
@@ -24,7 +25,7 @@ class ViewFactory(webapp.RequestHandler):
         # Make a dictionary for template
         name = factory.name
         producer = factory.producer
-        productlist = factory.product_set
+        productlist = factory.products()
         workers = factory.workers()
         address = factory.address
         if factory.location:

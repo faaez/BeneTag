@@ -1,23 +1,23 @@
+from google.appengine.ext import db, webapp
+from google.appengine.ext.webapp import template
+import bene_util
+import entities
 import os
 
-from google.appengine.ext import db
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp import template
 
-from entities import Worker
 
 """
 View a Worker Page
 """
 class ViewWorker(webapp.RequestHandler):
     def get(self):
-        '''if no id is sent, defaults to last factory'''
         ID = self.request.get('id')
-        workerlist = Worker.all()
-        worker = workerlist[workerlist.count() -1]
-        if(ID):
-            worker = db.get(ID)
+        worker = db.get(ID)
         if not worker:
+            '''
+            TODO: if no id is sent, defaults to a page with all workers? 
+            '''
+            #workerlist = entities.Worker.all()
             template_values = {}
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
@@ -27,6 +27,7 @@ class ViewWorker(webapp.RequestHandler):
         factory = worker.factory
         profile = worker.profile
         picture = worker.picture
+        producer = worker.producer
         if worker.factory.location:
             latitude = worker.factory.location.lat
             longitude = worker.factory.location.lon
@@ -42,6 +43,8 @@ class ViewWorker(webapp.RequestHandler):
         template_values['latitude'] = latitude
         template_values['longitude'] = longitude
         template_values['url'] = self.request.url
+        ''' TODO: display information about producer (employer) of worker: '''
+        template_values['producer'] = producer  
         if worker.picture:
             template_values['has_image'] = True
         else:

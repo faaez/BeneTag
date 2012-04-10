@@ -14,9 +14,11 @@ class Producer(db.Model):
        
     #hierarchical information    
     def factories(self):
-        return Factory.all().filter('producer =', self)
+        return self.factory_set
     def workers(self):
-        return Worker.all().filter('producer =', self)
+        return self.worker_set
+    def products(self):
+        return self.product_set
  
 """
 Data type representing a factory
@@ -30,7 +32,9 @@ class Factory(db.Model):
     #hierarchical information
     producer = db.ReferenceProperty(Producer)
     def workers(self):
-        return Worker.all().filter('factory =', self)
+        return self.worker_set
+    def products(self):
+        return self.product_set
     
 """
 Data type representing a worker
