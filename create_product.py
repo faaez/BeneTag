@@ -67,13 +67,7 @@ class StoreProductPage(webapp.RequestHandler):
                     _factoryMade = _producer.factories().filter('name = ', _factoryName).get()
                     '''
                     XXX: Assumes factory name is unique for a producer. This is enforced when creating factories
-                    '''
-                    _workers = _producer.workers().filter('name =', _workerNames)
-                    ''' ADD PRODUCT KEY TO WORKERS '''
-                    
-                    
-                    
-                    
+                    '''                   
                     p = entities.Product(name=_name, 
                                          producer=_producer, 
                                          factory=_factoryMade,
@@ -85,6 +79,11 @@ class StoreProductPage(webapp.RequestHandler):
                     
                     if bene_util.doesProductExist(p) == False: 
                         p.put()
+                        ''' add product key to workers who worked on it '''
+                        workers = _producer.workers().filter('name =', _workerNames)
+                        key = db.Key(p)
+                        for worker in workers:
+                            worker.products.append(key)
                         self.redirect('/createproduct?%s' % urllib.urlencode({'added': True}))
                     else:
                         self.redirect('/createproduct?%s' % urllib.urlencode({'repeat': True}))
