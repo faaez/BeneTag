@@ -153,7 +153,9 @@ Does the product already exist under the current producer?
 """
 def doesProductExist(product_add):
     '''Does the product already exist under the current producer? Use to warn user.'''
-    return doesExactProductExist(product_add) or doesSimilarProductExist(product_add)
+    return doesExactProductExist(product_add)
+    # XXX: note that here we don't use doesSimilarProductExist() because lots of product units can be similar to each other.
+    # However, doesSimilarProductExist() can be used to figure out repeated product lines (since lines should have unique names)
 
 
 #---------------------------------
