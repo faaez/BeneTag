@@ -4,23 +4,21 @@ from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 
-from entities import Product
-
 """
 View a Product's Page
 """
 class ViewProduct(webapp.RequestHandler):
     def get(self):
         # Get the id from the get parameter
-        id = self.request.get('id')
+        ID = self.request.get('id')
         # Fetch the data for this product
-        product = db.get(id)
+        product = db.get(ID)
         # Display error if product ID not found
         if not product:
-          template_values = {}
-          path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-          self.response.out.write(template.render(path, template_values))
-          return
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return
         
         if product.factoryMade and product.factoryMade.location:
             latitude = product.factoryMade.location.lat
@@ -30,7 +28,7 @@ class ViewProduct(webapp.RequestHandler):
             longitude = None
         # Make a dictionary for template
         template_values = {}
-        template_values['id'] = id
+        template_values['id'] = ID
         template_values['name'] = product.name
         template_values['producer'] = product.producerName
         template_values['latitude'] = latitude
@@ -48,8 +46,8 @@ class ViewProduct(webapp.RequestHandler):
 class ProductImage(webapp.RequestHandler):
     def get(self):
         # Get the id from the get parameter
-        id = self.request.get('id')
+        ID = self.request.get('id') 
         # Fetch the image for this product
-        product = db.get(id)
+        product = db.get(ID)
         self.response.headers['Content-Type'] = 'image'
         self.response.out.write(product.picture)
