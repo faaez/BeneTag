@@ -153,7 +153,7 @@
                 
                 <p id="producername">{{producer}} </p>
                 <h1 id="productname"> {{ name }} </h1>
-                
+                {%if has_badges%}
                 <hr id="separator-line">
                 
                 <table id="badges">
@@ -164,6 +164,7 @@
                     {%if forloop.counter1|divisibleby:3%} </tr> {%endif%}
                     {%endfor%}
                 </table>
+                {%endif%}
                 <hr id="separator-line">
                 <p id="section-heading">Manufactured at:</p>
                 <table id="factory-table">

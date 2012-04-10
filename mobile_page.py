@@ -37,10 +37,14 @@ class ViewProduct(webapp.RequestHandler):
         template_values['longitude'] = longitude
         template_values['url'] = self.request.url
         template_values['qr_url'] = self.request.url.replace('view','qr')
-        template_values['factory_id'] = product.factory.key
+        template_values['factory_id'] = product.factory.key()
         template_values['factory_name'] = product.factory.name
         template_values['factory_address'] = product.factory.address
-        template_values['badges'] = product.badges
+        if (len(product.badges) > 0):
+            template_values['badges'] = product.badges
+            template_values['has_badges'] = True
+        else:
+            template_values['has_badges'] = False
         if product.picture:
             template_values['has_image'] = True
         else:

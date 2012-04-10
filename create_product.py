@@ -46,7 +46,7 @@ class StoreProductPage(webapp.RequestHandler):
                 self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'storeproduct', 'msg': True}))
             else: # if producer page exists, store new product
                 _name = self.request.get('name')
-                _producer = entities.Producer.gql("WHERE name = :1", self.request.get('producerName')).get()
+                _producer = entities.Producer.gql("WHERE email = :1", user.nickname()).get()
                 _factoryName = self.request.get('factoryName')
                 _badges = self.request.get_all('badges')
                 _picture = self.request.get('picture')
