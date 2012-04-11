@@ -20,9 +20,9 @@ class ViewProduct(webapp.RequestHandler):
             self.response.out.write(template.render(path, template_values))
             return
         
-        if product.factoryMade and product.factoryMade.location:
-            latitude = product.factoryMade.location.lat
-            longitude = product.factoryMade.location.lon
+        if product.factory and product.factory.location:
+            latitude = product.factory.location.lat
+            longitude = product.factory.location.lon
         else:
             latitude = None
             longitude = None
@@ -30,12 +30,17 @@ class ViewProduct(webapp.RequestHandler):
         template_values = {}
         template_values['id'] = ID
         template_values['name'] = product.name
-        template_values['producer'] = product.producerName
+        template_values['producer'] = product.producer.name
         template_values['latitude'] = latitude
         template_values['longitude'] = longitude
         template_values['url'] = self.request.url
         template_values['qr_url'] = self.request.url.replace('view','qr')
-        template_values['factory_id'] = product.factoryMade.key()
+        template_values['factory_id'] = product.factory.key()
+        template_values['factory_name'] = product.factory.name
+        template_values['factory_address'] = product.factory.address
+        template_values['badges'] = product.badges
+        template_values['rating'] = product.rating
+        template_values['workers'] = product.workers()
         if product.picture:
             template_values['has_image'] = True
         else:
