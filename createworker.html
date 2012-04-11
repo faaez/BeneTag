@@ -22,7 +22,11 @@
     {% endif %}
     <form action="/storeworker" enctype="multipart/formdata" method="post">
       <div>Name: <input name="name" id="name"></input></div>
-	  <div>Factory: <input id="factoryName" name="factoryName"></input></div>
+      <div>Factories: 
+	{% for factory in factories %}
+	    <input type="radio" name="factory" value ="{{factory.key}}">{{factory.name}} {% if factory.unique %} ({{factory.unique}}) {% endif %} </input><br/>			
+	{% endfor %}
+      </div><br />
       <div>Picture:<input type="file" name="picture"/></div>
       <div>Profile: <textarea name="profile" id="profile"></textarea></div>
       <div>Unique ID (optional): <input name="unique"></input></div><br />

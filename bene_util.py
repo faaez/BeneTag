@@ -23,7 +23,7 @@ def doesSimilarProducerExist(producer_add):
     ''' Does a similar producer already exist? Use to warn the user. '''
     producers = entities.Producer.all().filter('name =', producer_add.name)
     for producer in producers:
-        if producer != None:
+        if producer:
             return True
     return False   
 
@@ -36,12 +36,12 @@ Does the factory already exist under the current producer?
 """
 def doesExactFactoryExist(factory_add):
     ''' DON'T USE THIS. Use doesFactoryExist() '''
-    if factory_add.unique == None: return False
-    producer = getCurrentProducer()
-    if producer:
-        factories = producer.factories().filter('unique = ', factory_add.unique)
-        for factory in factories:
-            if factory != None: return True
+    if factory_add.unique:
+        producer = getCurrentProducer()
+        if producer:
+            factories = producer.factories().filter('unique = ', factory_add.unique)
+            for factory in factories:
+                if factory: return True
     return False
 
 """
@@ -54,7 +54,7 @@ def doesSimilarFactoryExist(factory_add):
     if producer:
         factories = producer.factories().filter('name = ', factory_add.name)
         for factory in factories:
-            if factory != None: return True
+            if factory : return True
     return False
 
 """
@@ -62,9 +62,9 @@ Does the factory exist under the current producer?
 """
 def doesFactoryExist(factory_add):
     ''' Does the factory exist under the current producer? Use to warn user. '''
-    if factory_add.unique == None: # if no unique ID, then need factory name to be unique
-        return doesSimilarFactoryExist(factory_add)
-    return doesExactFactoryExist(factory_add) 
+    if factory_add.unique: # if no unique ID, then need factory name to be unique
+        return doesExactFactoryExist(factory_add)
+    return doesSimilarFactoryExist(factory_add) 
 
 #---------------------------------
 #---------- BADGES ---------------
@@ -78,7 +78,7 @@ def doesBadgeExist(badge_add):
     # checks for same badge name
     badges = entities.Badge.all().filter('name =', badge_add.name)
     for badge in badges:
-        if badge != None: return True    
+        if badge: return True    
     return False
 
 #---------------------------------
@@ -90,12 +90,12 @@ Does the exact worker already exist under the current producer?
 """
 def doesExactWorkerExist(worker_add):
     ''' DON'T USE THIS. Use doesWorkerExist() '''
-    if worker_add.unique == None: return False
-    producer = getCurrentProducer()
-    if producer:
-        workers = producer.workers().filter('unique =', worker_add.unique)
-        for worker in workers:
-            if worker != None: return True
+    if worker_add.unique: 
+        producer = getCurrentProducer()
+        if producer:
+            workers = producer.workers().filter('unique =', worker_add.unique)
+            for worker in workers:
+                if worker: return True
     return False
 
 """
@@ -108,7 +108,7 @@ def doesSimilarWorkerExist(worker_add):
     if producer:
         workers = producer.workers().filter('name =', worker_add.name)
         for worker in workers:
-            if worker != None: return True    
+            if worker: return True    
     return False
 
 """ 
@@ -116,9 +116,9 @@ Does the worker exist under the current producer?
 """
 def doesWorkerExist(worker_add):
     ''' Does the worker exist under the current producer? Use to warn user. ''' 
-    if worker_add.unique == None: # if no unique ID, then need unique names in factory
-        doesSimilarWorkerExist(worker_add)
-    return doesExactWorkerExist(worker_add) 
+    if worker_add.unique: # if no unique ID, then need unique names in factory
+        return doesExactWorkerExist(worker_add)
+    return doesSimilarWorkerExist(worker_add) 
 
 #---------------------------------
 #---------- PRODUCT --------------
@@ -129,12 +129,12 @@ Does the exact product already exist under the current producer?
 """
 def doesExactProductExist(product_add):
     ''' DON'T USE THIS. Use doesProductExist() '''
-    if product_add.unique == None: return False
-    producer = getCurrentProducer()
-    if producer:
-        products = producer.products().filter('unique =', product_add.unique)
-        for product in products:
-            if product != None: return True
+    if product_add.unique:
+        producer = getCurrentProducer()
+        if producer:
+            products = producer.products().filter('unique =', product_add.unique)
+            for product in products:
+                if product: return True
     return False   
 
 """
@@ -147,7 +147,7 @@ def doesSimilarProductExist(product_add):
     if producer:
         products = getCurrentProducer().products().filter('name =', product_add.name)
         for product in products:
-            if product != None: return True    
+            if product: return True    
     return False
 
 """ 
@@ -155,9 +155,9 @@ Does the product already exist under the current producer?
 """
 def doesProductExist(product_add):
     '''Does the product already exist under the current producer? Use to warn user.'''
-    if product_add.unique == None: # if no unique ID, then need products to have different names
-        return doesSimilarProductExist(product_add)
-    return doesExactProductExist(product_add)
+    if product_add.unique: # if no unique ID, then need products to have different names
+        return doesExactProductExist(product_add)
+    return doesSimilarProductExist(product_add)
     # XXX: note that here we don't use doesSimilarProductExist() because lots of product units can be similar to each other.
     # However, doesSimilarProductExist() can be used to figure out repeated product lines (since lines should have unique names)
 

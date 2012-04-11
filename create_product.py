@@ -49,14 +49,14 @@ class StoreProductPage(webapp.RequestHandler):
             else: # if producer page exists
                 if _producer.verified: # if producer is verified, then store
                     _name = self.request.get('name')
-                    _factoryName = self.request.get('factoryName')
-                    _workerNames = self.request.get('workerNames')
+                    _factory = self.request.get('factory')
+                    _workers = self.request.get_all('workers')
                     _badges = self.request.get_all('badges')
                     _picture = self.request.get('picture')
                     _unique = self.request.get('unique')
                     if isinstance(_picture, unicode):
                         _picture = _picture.encode('utf-8', 'replace')
-                    _factoryMade = _producer.factories().filter('name = ', _factoryName).get()
+                    _factoryMade = db.get(_factory)
                     '''
                     XXX: Assumes factory name is unique for a producer. This is enforced when creating factories
                     '''                   
@@ -69,13 +69,15 @@ class StoreProductPage(webapp.RequestHandler):
                         p.badges.append(db.Key(_badge))
                     p.picture = db.Blob(_picture)
                     
-                    if bene_util.doesProductExist(p) == False: 
+                    if bene_util.doesProductExist(p) == False:
                         p.put()
                         ''' add product key to workers who worked on it '''
-                        workers = _producer.workers().filter('name =', _workerNames)
-                        key = db.Key(p)
-                        for worker in workers:
-                            worker.products.append(key)
+                        if _workers:
+                            key = p.key()
+                            for _worker in _workers:
+                                worker = db.get(_worker)
+                                worker.product.append(key)
+                                worker.put()
                         self.redirect('/createproduct?%s' % urllib.urlencode({'added': True}))
                     else:
                         self.redirect('/createproduct?%s' % urllib.urlencode({'repeat': True}))

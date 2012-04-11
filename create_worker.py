@@ -20,12 +20,8 @@ class CreateWorkerPage(webapp.RequestHandler):
                 self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'createworker', 'msg': True}))
             else: # if producer page exists
                 if _producer.verified: # if producer is verified, display form to create new worker
-                    factory_names = []
-                    factories = bene_util.getCurrentProducer().factories()
-                    for factory in factories:
-                        factory_names.append(factory.name)
                     template_values = bene_util.decodeURL(self.request.uri)
-                    template_values['factory_names'] = factory_names
+                    template_values['factories'] = bene_util.getCurrentProducer().factories()
                 
                     path = os.path.join(os.path.dirname(__file__), 'createworker.html')
                     self.response.out.write(template.render(path, template_values))
@@ -46,13 +42,14 @@ class StoreWorkerPage(webapp.RequestHandler):
             else: # if producer page exists
                 if _producer.verified: # if producer is verified, then store
                     _name = self.request.get('name')
-                    _factoryName = self.request.get('factoryName')
+                    _factory = self.request.get('factory')
                     _picture = self.request.get('picture')
                     _profile = self.request.get('profile')
                     _unique = self.request.get('unique')
                     if isinstance(_picture, unicode):
                         _picture = _picture.encode('utf-8', 'replace')
-                    _factoryMade = _producer.factories().filter("name = ", _factoryName).get()
+                    if _factory:
+                        _factoryMade = db.get(_factory)
         
                     f = entities.Worker(name=_name, 
                                         producer = _producer, 

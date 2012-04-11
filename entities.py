@@ -79,9 +79,14 @@ class Worker(db.Model):
     producer = db.ReferenceProperty(Producer)
     factory = db.ReferenceProperty(Factory)
     ''' don't use products, use function products() instead '''
-    products = db.ListProperty(db.Key) 
+    product = db.ListProperty(db.Key) 
     def products(self):
-        return db.get(self.products)
+        _products = db.get(self.products)
+        return [product for product in _products if product] # return non-None products
+        ''' 
+        None products appear if a certain product was created by the worker, but was then deleted from
+        datastore manually
+        '''
 
 """
 Data type representing a product with a BeneTag
