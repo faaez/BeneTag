@@ -1,7 +1,5 @@
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
-import bene_util
-import entities
 import os
 
 
@@ -28,6 +26,7 @@ class ViewWorker(webapp.RequestHandler):
         profile = worker.profile
         picture = worker.picture
         producer = worker.producer
+        products = worker.products()
         if worker.factory.location:
             latitude = worker.factory.location.lat
             longitude = worker.factory.location.lon
@@ -37,14 +36,16 @@ class ViewWorker(webapp.RequestHandler):
         template_values = {}
         template_values['id'] = ID
         template_values['name'] = name
-        template_values['factory'] = factory
         template_values['picture'] = picture
         template_values['profile'] = profile
+        template_values['factory'] = factory
+        ''' TODO: show producer and products on HTML '''
+        template_values['producer'] = producer 
+        template_values['products'] = products 
         template_values['latitude'] = latitude
         template_values['longitude'] = longitude
-        template_values['url'] = self.request.url
-        ''' TODO: display information about producer (employer) of worker: '''
-        template_values['producer'] = producer  
+        template_values['url'] = self.request.url  
+        
         if worker.picture:
             template_values['has_image'] = True
         else:

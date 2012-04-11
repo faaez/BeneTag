@@ -17,23 +17,40 @@
      {% if repeat %}
        <p>Product already exists</p>
      {% endif %}
+     {% if verify %}
+       <p>You are not yet verified as a producer.</p>
+     {% endif %}
      <form action="/storeproduct" enctype="multipart/formdata" method="post">
-      <div>Name: <input name="name" id="name"></input></div>
-	  <div>Factory: <input id="factoryName" name="factoryName"></input></div>
+      <div>Name: <input name="name" id="name"></input></div><br />
+	  <div>Factories: 
+	  {% for factory in factories %}
+		<input type="radio" name="factory" value ="{{factory.key}}">{{factory.name}} {% if factory.unique %} ({{factory.unique}}) {% endif %} </input><br/>			
+	  {% endfor %}
+	  </div><br />
+	  <div>Workers: 
+	  {% for worker in workers %}
+		<input type="checkbox" name="workers" value ="{{worker.key}}">{{worker.name}} {% if worker.unique %} ({{worker.unique}}) {% endif %} </input><br/>
+	  {% endfor %}
+	  </div><br />
 	  <div>Badges:
 	  {% for badge in badges %}
 		<input type="checkbox" name="badges" value ="{{badge.key}}">{{badge.name}}</input><br/>
 	  {%endfor%}
-	  </div>
+	  </div><br />
       <div>Picture:<input type="file" name="picture"/></div></br>
+      <div>Unique ID (optional): <input name="unique"></input></div><br />
       <div><input type="submit" value="Create product" a class='span4 btn medium'></div>
     </form></h2>
   </body>
   <script type="text/javascript">
     function initialize() {
         var factory_names = new Array();
-        {% for name in factory_names %}
-            factory_names.push('{{name}}');
+        {% for factory in factories %}
+            {% if factory.unique %}
+            	factory_names.push('{{factory.name}} ({{factory.unique}})');
+            {% else %}
+            	factory_names.push('{{factory.name}}');
+            {% endif %}
         {% endfor %}
         $('#factoryName').autocomplete({
             source: factory_names

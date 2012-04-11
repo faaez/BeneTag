@@ -17,11 +17,19 @@
     {% if repeat %}
       <p>Worker already exists</p>
     {% endif %}
+    {% if verify %}
+      <p>You are not yet verified as a producer.</p>
+    {% endif %}
     <form action="/storeworker" enctype="multipart/formdata" method="post">
       <div>Name: <input name="name" id="name"></input></div>
-	  <div>Factory: <input id="factoryName" name="factoryName"></input></div>
+      <div>Factories: 
+	{% for factory in factories %}
+	    <input type="radio" name="factory" value ="{{factory.key}}">{{factory.name}} {% if factory.unique %} ({{factory.unique}}) {% endif %} </input><br/>			
+	{% endfor %}
+      </div><br />
       <div>Picture:<input type="file" name="picture"/></div>
-      <div>Profile: <textarea name="profile" id="profile"></textarea></div></br>
+      <div>Profile: <textarea name="profile" id="profile"></textarea></div>
+      <div>Unique ID (optional): <input name="unique"></input></div><br />
       <div><input type="submit" value="Create worker" a class="span4 btn medium"></div>
     </form></h2>
   </body>

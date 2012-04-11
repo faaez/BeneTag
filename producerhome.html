@@ -2,23 +2,29 @@
   <head>
     <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="stylesheets/home.css" />
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <title>BeneTag</title>
   </head>
   <body>
     <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
+    <h2>
+    {% if verify %}
+      <p>You are not yet verified as a producer</p>
+    {% endif %}
     </br><h2><form action="/productsearchresult" method="post">
       <div><input name="query" type="search" placeholder="Search product by name"></input></div></br>
-      <div><input type="submit" value="Search" a class='span4 btn medium'></div>
+      <div><input type="submit" value="Search" a class='span4 btn large'></div>
     </form></h2>
     
     <div class="column show-grid"id="buttons">
-    <a class='span4 btn large' width='100%' align='center' href='/createproduct'>Create product</a>
-    <a class='span4 btn large' align='center' href='/createfactory'>Create factory</a>
-    <a class='span4 btn large' align='center' href='/createbadge' >Create badge</a>
-    <a class='span4 btn large' align='center' href='/createworker' >Create worker</a>
+    <a class='span3 btn large' width='100%' align='center' href='/createproduct'>Create product</a>
+    <a class='span3 btn large' align='center' href='/createfactory'>Create factory</a>
+    <a class='span3 btn large' align='center' href='/createworker' >Create worker</a>
     </br></br></br>
     </div>
-  </body>
+
+</body>
   <footer>
   <div><a align='center' href='/about'>About BeneTag</a></div>
   <div>Copyright BeneTag 2011</div>

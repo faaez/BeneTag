@@ -53,7 +53,7 @@ class StoreProducerPage(webapp.RequestHandler):
                                       owner=user,
                                       description=_description,
                                       logo=db.Blob(_logo),
-                                      verified=True)
+                                      verified=False)
                 p.put()
                         
             self.redirect('/'+self.request.get('redirect'))

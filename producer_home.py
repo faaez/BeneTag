@@ -1,8 +1,7 @@
 from google.appengine.api import users
-from google.appengine.ext import db, webapp
+from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 import bene_util
-import entities
 import os
 import urllib
 
@@ -19,7 +18,7 @@ class HomePage(webapp.RequestHandler):
             if bene_util.getCurrentProducer() == None: # if producer page doesn't exist, need to create one
                 self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'producerhome', 'msg': True}))
             else: # if setup done, then show home page
-                template_values = {}
+                template_values = bene_util.decodeURL(self.request.uri)
                 path = os.path.join(os.path.dirname(__file__), 'producerhome.html')
                 self.response.out.write(template.render(path, template_values))
         else:
