@@ -46,7 +46,7 @@ class StoreProductPage(webapp.RequestHandler):
         if user: # if user signed in
             _producer = bene_util.getCurrentProducer()
             if _producer == None: # if producer page doesn't exist, need to create one
-                self.redirect('/signup?%s' % urllib.urlencode({'redirect':
+                self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'storeproduct', 'msg': True}))
             else: # if producer page exists
                 if _producer.verified: # if producer is verified, then store
                     _name = self.request.get('name')
