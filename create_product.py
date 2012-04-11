@@ -5,6 +5,7 @@ import bene_util
 import entities
 import os
 import urllib
+import logging
 
 '''
 TODO: Add self loops to products. Too sleepy now to figure out why it's not showing
@@ -50,6 +51,8 @@ class StoreProductPage(webapp.RequestHandler):
                 _factoryName = self.request.get('factoryName')
                 _badges = self.request.get_all('badges')
                 _picture = self.request.get('picture')
+                logging.error("right here")
+                logging.error(_picture)
                 if isinstance(_picture, unicode):
                     _picture = _picture.encode('utf-8', 'replace')
                 _factoryMade = _producer.factories().filter("name = ", _factoryName).get()
