@@ -1,0 +1,104 @@
+table td {
+padding: 0px 20px 9px;
+line-height: 18px;
+text-align: left;
+border-top: 0;
+}
+
+table {
+    margin-bottom: 0px;
+}
+
+table#social-buttons {
+    width: 50%;
+}
+img#badgeimage {
+    width: 80px;
+}
+
+p#brand {
+    text-align: right;
+    padding-right: 10px;
+    padding-top: 4px;
+}
+p#section-heading {
+    text-align: left;
+    padding-left: 20px;
+}
+hr#top-line {
+    margin: 0px 0px 0px;
+}
+hr#separator-line {
+    margin: 20px 40px 20px;
+    class: dotted;
+}
+div#distance-div {
+    width: 90px;
+    height: 65px;
+    border: 1px dotted black;
+    border-radius: 3px;
+    padding-top: 30px;
+ }
+div#distance-value {
+    font-size: 18px;
+    text-align: center;
+}
+p#away {
+    text-align: center;
+    padding-top: 2px;
+    }
+    
+h1#productname {
+    font-weight: 300;
+    text-align: left;
+    padding-left: 20px;
+    margin-bottom: 0px;
+    font-size: 20px;
+    line-height: 20px;
+}
+p#producername {
+    text-align:left;
+    padding-left:20px;
+    margin-bottom:0px;
+}
+div#map_canvas {
+    margin:0px;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+    width:200px;
+    height:200px;
+    padding:20px;
+}
+
+div#factory_link {
+    text-align:center;
+    display:block;
+}
+div#scrollable-panel {
+    class: "scrollable panel";
+}
+button#fbshare {
+    margin-left:auto;
+    margin-right:auto;
+    width:150px;
+    text-align:center;
+    display:block;
+    margin-bottom: 6px;
+}
+div#productimagecontainer {
+    text-align:left;
+    margin-top:0px;
+    margin-bottom:0px;
+    padding-left:20px;
+}
+img#productimage {
+    width:150px;
+    height:200px;
+}
+
+div#social-row {
+    margin-left: 40px;
+    margin-top: 2px;
+    text-align: center;
+}
