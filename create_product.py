@@ -53,7 +53,7 @@ class StoreProductPage(webapp.RequestHandler):
                     _factory = self.request.get('factory')
                     _workers = self.request.get_all('workers')
                     _badges = self.request.get_all('badges')
-                    _picture = self.request.POST['picture']
+                    _picture = self.request.POST["picture"]
                     _unique = self.request.get('unique')
                     if isinstance(_picture, unicode):
                         _picture = _picture.encode('utf-8', 'replace')
