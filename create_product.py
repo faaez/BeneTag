@@ -53,11 +53,11 @@ class StoreProductPage(webapp.RequestHandler):
                     _factory = self.request.get('factory')
                     _workers = self.request.get_all('workers')
                     _badges = self.request.get_all('badges')
-                    _picture = self.request.get('picture')
-                    _unique = self.request.POST['unique']
+                    _picture = self.request.POST['picture']
+                    _unique = self.request.get('unique')
                     if isinstance(_picture, unicode):
                         _picture = _picture.encode('utf-8', 'replace')
-                    _factoryMade = db.get(_factory.value)
+                    _factoryMade = db.get(_factory)
                     '''
                     XXX: Assumes factory name is unique for a producer. This is enforced when creating factories
                     '''                   
@@ -68,7 +68,7 @@ class StoreProductPage(webapp.RequestHandler):
                                          owner=user)
                     for _badge in _badges:
                         p.badges.append(db.Key(_badge))
-                    p.picture = db.Blob(_picture)
+                    p.picture = db.Blob(_picture.value)
                     
                     if bene_util.doesProductExist(p) == False:
                         p.put()
