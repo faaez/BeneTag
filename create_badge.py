@@ -38,14 +38,12 @@ class StoreBadgePage(webapp.RequestHandler):
                 if users.is_current_user_admin(): # if admin, then add badge
                     _name = self.request.get('name')
                     _description = self.request.get('description')
-                    _icon = self.request.POST.get("icon")
-                    #if isinstance(_icon,unicode):
-                    #    _icon = _icon.encode('utf-8', 'replace')
-                    self.response.out.write("<html><body>2: %s</body></html>" % str(_icon))
-                    return
+                    _icon = self.request.POST["icon"]
+                    if isinstance(_icon,unicode):
+                        _icon = _icon.encode('utf-8', 'replace')
         
                     b = entities.Badge(name=_name, description=_description)
-                    b.icon = db.Blob(_icon.file.read())
+                    b.icon = db.Blob(_icon.value)
                     
                     if bene_util.doesBadgeExist(b) == False: 
                         b.put()
