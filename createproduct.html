@@ -20,7 +20,7 @@
      {% if verify %}
        <p>You are not yet verified as a producer.</p>
      {% endif %}
-     <form action="/storeproduct" enctype="multipart/formdata" method="post">
+     <form action="/storeproduct" enctype="multipart/form-data" method="post">
       <div>Name: <input name="name" id="name"></input></div><br />
 	  <div>Factories: 
 	  {% for factory in factories %}
