@@ -170,9 +170,13 @@
                 <table id="badges">
                     
                     {% for badge in badges %}
-                    {%if forloop.counter0|divisibleby:3%} <tr> {%endif%}
+                        {%if forloop.counter0|divisibleby:3 %} 
+                            <tr> 
+                        {%endif%}
                             <td><img id="badgeimage" src="badgeimage?key={{badge}}"></img </td>
-                    {%if forloop.counter1|divisibleby:3%} </tr> {%endif%}
+                        {%if forloop.counter|divisibleby:3 %} 
+                            </tr> 
+                        {%endif%}
                     {%endfor%}
                 </table>
                 {%endif%}
