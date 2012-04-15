@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/fb/benetag#">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">        <meta property="fb:app_id"      content="286512274727203" /> 
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">
+    	<meta property="fb:app_id"      content="286512274727203" /> 
         <meta property="og:type"        content="website" /> 
         <meta property="og:url"         content="{{url}}" /> 
         <meta property="og:title"       content="{{name}}" /> 
@@ -11,7 +12,7 @@
         <link rel="apple-touch-icon" href="icon.png"/>
         
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-        <title>{{name}} by {{producer}}</title>
+        <title>{{name}} by {{producer}} - BeneTag</title>
         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
         <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="stylesheets/mobilepage.css" />
@@ -148,9 +149,11 @@
             
             <!-- SCROLLABLE PANEL -->
             <div id="scrollable-panel">
-                <p id="brand"> BeneTag </p>
-                <!-- scrollable and panel styles are new styles -->
+            	
+            	<!-- scrollable and panel styles are new styles -->
                 <!-- here, content -->
+            
+                <p id="brand"><a href="./"> Zeerak's Test </a></p>
                 <hr id="top-line">
                 
                 <table id="productinfo">
@@ -163,8 +166,9 @@
                 </table>
                 
                 <p id="producername">{{producer}} </p>
-                <h1 id="productname"> {{ name }} </h1>
+                <p id="productname"> {{ name }} </p>
                 {%if has_badges%}
+                
                 <hr id="separator-line">
                 
                 <table id="badges">
@@ -176,22 +180,47 @@
                     {%endfor%}
                 </table>
                 {%endif%}
+                
+                
                 <hr id="separator-line">
+                <p id="section-heading">Other info:</p>
+                <p id="price"> $25.00 </p>
+                
+                <table id="buy-buttons">
+                <tr>
+                <td><button class="btn buy" id="sugretailer">Cheapest at Amazon</button></td>
+                <td><button class="btn buy" id="other">11 others</button></td>
+                </tr>
+                </table>
+               
+                <p id="info"> super soft tri-blend fabric <br> sizes S-XXL </p>
+                
+                <hr id="separator-line">
+                
                 <p id="section-heading">Manufactured at:</p>
+                
                 <table id="factory-table">
                     {% if latitude and longitude %}
                     <td id="distance"> </td>
+                    <td id="info" class ="spaced">{{factory_name}} <br> {{factory_address}}</td>
+                    {%else%}
+                    <td id="info">{{factory_name}} <br> {{factory_address}}</td>
                     {%endif%}
-                    <td> <p>{{factory_name}}</br>
-                        {{factory_address}}</p></td>
                 </table>
-                <div id="factory_link"> <a href="viewfactory?id={{factory_id}}">see more info ></a></div>
-                </br>
-                {% if latitude and longitude %}
+                <p id="moreinfo"> <a href="viewfactory?id={{factory_id}}">see more info ></a></p>
                 
+               <!-- {% if latitude and longitude %}
                 <div id="map_canvas"></div>
-                {% endif %}
-                <hr id="separator-line">
+                {% endif %} --> 
+               
+               
+               <hr id="separator-line">
+               <p id="section-heading">Made by:</p>
+               <p id="workerstory">Dave and his 10 robot friends.</p>
+               <p id="moreinfo"> <a href="viewfactory?id={{factory_id}}">see more info ></a></p>
+               
+               <hr id="separator-line">
+               
                 <div id="social-buttons">
                     <div><button class="btn secondary" id="fbshare" onclick="fbshare()">Share on Facebook</img></button></div>
                     <div id="social-row"><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-hashtags="BeneTag">Tweet</a>
@@ -201,10 +230,16 @@
                 </div>
                 
                 <div id="fb-root"></div>
+                
                 <hr id="separator-line">
+                
+                <p id = "comments-link"> 59 comments > </p>
+                
                 <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
                 <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+                
                 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+            
             </div>
         </div>
     </body>
