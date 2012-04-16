@@ -1,13 +1,20 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/home.css" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/mobilepage.css" />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>BeneTag</title>
+    
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <title>BeneTag</title>
+    
   </head>
   <body>
-    <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
+    
+    <p id = "logo"> BeneTag </div>
+	<hr id="top-line">
+    
     <h2>
     {% if verify %}
       <p>You are not yet verified as a producer</p>

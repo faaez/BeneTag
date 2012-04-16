@@ -23,7 +23,7 @@
             function initialize() {
                 {% if latitude and longitude %}
                 var latlng = new google.maps.LatLng({{latitude}}, {{longitude}});
-                var myOptions = {
+                /*var myOptions = {
                     zoom: 8,
                     center: latlng,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -33,11 +33,14 @@
                 var marker = new google.maps.Marker({
                                                     position: latlng,
                                                     map: map,
-                                                    });
+                                                    }); */
                 
                 
                 var userLat;
                 var userLong;
+                var factName = '{{factory_name}}';
+                var factAdd = '{{factory_address}}';
+                
                 if (navigator.geolocation) // check if browser support this feature or not
                 {
                     navigator.geolocation.getCurrentPosition(function(position)
@@ -55,11 +58,20 @@
                                                              var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
                                                              var d = R * c;
                                                              
-                                                             document.getElementById('distance').innerHTML = '<div id="distance-div"> <div id="distance-value">' + d.toFixed(1) + ' mi </div> <p id="away"> away</p></div>';
+                                                             document.getElementById('distance').innerHTML = '<td><div id="distance-div"> <div id="distance-value">' + d.toFixed(1) + ' mi </div> <p id="away"> away</p></div></td> <td id="info" class = "spaced">' + factName + '<br>' + factAdd + '</td>';
+                                                           
+                                                             }, function()
+                                                             {
+                                                             	document.getElementById('distance').innerHTML = '<td id="info">' + factName + '<br>' + factAdd + '</td>';
                                                              });
                 }
                 
+                else {
+                	document.getElementById('distance').innerHTML = '<td id="info">' + factName + '<br>' + factAdd + '</td>';
+                }
+                
                 {% endif %}
+                
                 FB.init({
                         appId      : '286512274727203', // App ID
                         channelUrl : 'benetag.com/view', // Channel File
@@ -86,61 +98,6 @@
             </script>
             
             <!--this style for new properties in iOS 5 could be moved to css file if need be -->
-            <style type="text/css">
-                
-                @media all {
-                    .panel {
-                        overflow                    : hidden;
-                        position                    : absolute;
-                        display                     : block;
-                        width                       : 100%;
-                        padding-top                 : 5px;
-                        padding-bottom              : 5px;
-                        top                         : 0;
-                        /*height: 100%; */ /* uncomment if desktop */
-                    }
-                    
-                    .scrollable {
-                        overflow                    : scroll;
-                        -webkit-overflow-scrolling  : touch;
-                    }
-                    
-                    .insideScrollablePanel {
-                        margin-left                 : 5%;
-                        margin-right                : 5%;
-                        width                       : 90%;
-                    }
-                    
-                } /* end of medial all */
-                
-                /*--- ipad ---*/
-                /*--- full screen mode ---*/
-                @media (device-width: 768px) and (orientation: portrait) {
-                    .panel {
-                        height                       : 934px; /*1004-80*/
-                    }
-                }
-                /*--- browser mode ---*/
-                @media (device-width: 768px) and (orientation: landscape) {
-                    .panel {
-                        height                       : 668px; /*748-80*/
-                    }
-                }
-                
-                /*--- iphone ---*/
-                /*--- full screen mode ---*/
-                @media (max-width: 480px) and (orientation: portrait) {
-                    .panel {
-                        height                       : 380px; /*460-80*/
-                    }
-                }
-                /*--- browser mode ---*/
-                @media (max-width: 480px) and (orientation: landscape) {
-                    .panel {
-                        height                       : 220px; /*300-80*/
-                    }
-                }
-                </style>
     </head>
     <body onload="initialize()">
         <!-- MAIN PANEL -->
@@ -153,7 +110,7 @@
             	<!-- scrollable and panel styles are new styles -->
                 <!-- here, content -->
             
-                <p id="brand"><a href="./"> Zeerak's Test </a></p>
+                <p id="brand"><a href="./"> BeneTag 4/16 </a></p>
                 <hr id="top-line">
                 
                 <table id="productinfo">
@@ -199,15 +156,13 @@
                 
                 <p id="section-heading">Manufactured at:</p>
                 
+                {% if latitude and longitude %}
                 <table id="factory-table">
-                    {% if latitude and longitude %}
-                    <td id="distance"> </td>
-                    <td id="info" class ="spaced">{{factory_name}} <br> {{factory_address}}</td>
-                    {%else%}
-                    <td id="info">{{factory_name}} <br> {{factory_address}}</td>
-                    {%endif%}
+                    <tr id = "distance"> 
+                    </tr>
                 </table>
                 <p id="moreinfo"> <a href="viewfactory?id={{factory_id}}">see more info ></a></p>
+                {% endif %}
                 
                <!-- {% if latitude and longitude %}
                 <div id="map_canvas"></div>

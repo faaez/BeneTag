@@ -1,6 +1,69 @@
+@media all {
+	.panel {
+		overflow                    : hidden;
+		position                    : absolute;
+		display                     : block;
+		width                       : 100%;
+		padding-top                 : 5px;
+		padding-bottom              : 5px;
+		top                         : 0;
+		/*height: 100%; */ /* uncomment if desktop */
+	}
+	
+	.scrollable {
+		overflow                    : scroll;
+		-webkit-overflow-scrolling  : touch;
+	}
+	
+	.insideScrollablePanel {
+		margin-left                 : 5%;
+		margin-right                : 5%;
+		width                       : 90%;
+	}
+	
+} /* end of medial all */
+
+/*--- ipad ---*/
+/*--- full screen mode ---*/
+@media (device-width: 768px) and (orientation: portrait) {
+	.panel {
+		height                       : 934px; /*1004-80*/
+	}
+}
+/*--- browser mode ---*/
+@media (device-width: 768px) and (orientation: landscape) {
+	.panel {
+		height                       : 668px; /*748-80*/
+	}
+}
+
+/*--- iphone ---*/
+/*--- full screen mode ---*/
+@media (max-width: 480px) and (orientation: portrait) {
+	.panel {
+		height                       : 380px; /*460-80*/
+	}
+}
+/*--- browser mode ---*/
+@media (max-width: 480px) and (orientation: landscape) {
+	.panel {
+		height                       : 220px; /*300-80*/
+	}
+}
+
 body {
 	background-color: #fff;
  	background: url("/static/bgtexture.png");
+}
+
+p#logo{
+	font-size:40px;
+	color: #bbb;
+	font-weight:300;
+	text-align:center;
+	margin-top: 85px;
+	margin-bottom: 25px;
+	/*text-shadow: 1px 1px #000, -1px -1px #aaa;*/
 }
 
 table {
@@ -30,7 +93,6 @@ img#badgeimage {
 }
 
 .btn.buy{
-	padding:8px;
 	margin-right: 10px;
 }
 p {
@@ -77,7 +139,7 @@ p#info, td#info {
 	color: #000;
 }
 td#info.spaced {
-	padding-left: 15px;
+	padding-left: 20px;
 }
 p#workerstory {
 	font-size: 18px;
@@ -93,10 +155,12 @@ p#comments-link{
 hr#top-line {
     margin: 0px;
     width:100%;
+   	border-style: dotted;
+  	border-color: #ddd;
 }
 hr#separator-line {
     margin: 40px 85px;
-  	border-style: solid;
+  	border-style: dotted;
   	border-color: #ddd;
 }
 div#distance-div {
