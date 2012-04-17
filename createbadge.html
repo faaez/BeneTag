@@ -13,7 +13,7 @@
       <p>Badge already exists</p>
     {% endif %}
 
-    <form action="/storebadge" enctype="multipart/formdata" method="post">
+    <form action="/storebadge" enctype="multipart/form-data" method="post">
       <div>Name: <input name="name"></input></div>
 	  <div>Description: <textarea name="description"></textarea></div>
       <div>Badge Icon:<input type="file" name="icon"></div></br>
