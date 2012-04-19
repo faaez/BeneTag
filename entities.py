@@ -30,6 +30,7 @@ class Factory(db.Model):
     name = db.StringProperty()
     address = db.PostalAddressProperty()
     location = db.GeoPtProperty()
+    picture = db.BlobProperty()
     
     #security
     owner = db.UserProperty()

@@ -40,11 +40,13 @@ class StoreBadgePage(webapp.RequestHandler):
                     _name = self.request.get('name')
                     _description = self.request.get('description')
                     _icon = self.request.POST["icon"]
-                    if isinstance(_icon,unicode):
-                        _icon = _icon.encode('utf-8', 'replace')
-        
+                    
                     b = entities.Badge(name=_name, description=_description)
-                    b.icon = db.Blob(_icon.value)
+                    
+                    if _icon:
+                        if isinstance(_icon,unicode):
+                            _icon = _icon.encode('utf-8', 'replace')
+                        b.icon = db.Blob(_icon.value)
                     
                     if bene_util.doesBadgeExist(b) == False: 
                         b.put()

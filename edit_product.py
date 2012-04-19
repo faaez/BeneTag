@@ -104,6 +104,7 @@ class StoreEditedProductPage(webapp.RequestHandler):
                         _product.name = self.request.get('name')
                         _factory = self.request.get('factory')
                         _product.factory = db.get(_factory)
+                        _unique_save = _product.unique
                         _product.unique = self.request.get('unique')
                         
                         # picture
@@ -121,28 +122,32 @@ class StoreEditedProductPage(webapp.RequestHandler):
                             _badges_add.append(db.Key(_badge))
                         _product.badges = _badges_add
                         
-                        _product.put()         
-                        
-                        # workers
-                        ''' 
-                        TODO: Find better way to do below. Shouldn't need to delete product from all old workers
-                        and then re-add
-                        '''
-                        _workers = self.request.get_all('workers')
-                        _workers_old = _product.workers()
-                        key = _product.key()
-                        if _workers_old:
-                            for worker in _workers_old:
-                                worker.product.remove(key)
-                                worker.put()
-                        if _workers:
-                            for _worker in _workers:
-                                worker = db.get(_worker)
-                                worker.product.append(key)
-                                worker.put()
-                        
-                        self.redirect('/mobilepage?%s' % urllib.urlencode({'id': ID}))          
-                        
+                        if bene_util.doesProductExist(_product) and _unique_save != _product.unique: # if product already exists
+                            self.redirect('/editproduct?%s' % (urllib.urlencode({'id' : ID, 'repeatedit': True})))
+                            return
+                        else:
+                            _product.put()                                 
+                            # workers
+                            ''' 
+                            TODO: Find better way to do below. Shouldn't need to delete product from all old workers
+                            and then re-add
+                            '''
+                            _workers = self.request.get_all('workers')
+                            _workers_old = _product.workers()
+                            key = _product.key()
+                            if _workers_old:
+                                for worker in _workers_old:
+                                    worker.product.remove(key)
+                                    worker.put()
+                            if _workers:
+                                for _worker in _workers:
+                                    worker = db.get(_worker)
+                                    worker.product.append(key)
+                                    worker.put()
+                            
+                            self.redirect('/mobilepage?%s' % urllib.urlencode({'id': ID}))
+                            return
+                                                
                     else: # if user doesn't own product
                         self.redirect('/producerhome?%s' % urllib.urlencode({'not_owner': True, 'realowner': _product.owner, 'user': user}))
                         return

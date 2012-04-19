@@ -46,6 +46,7 @@ class StoreFactoryPage(webapp.RequestHandler):
                     _address = self.request.get('address')
                     _location = self.request.get('location')
                     _unique = self.request.get('unique')
+                    _picture = self.request.get('picture')
                                                                                
                     fields = _location.split(',')
                     if len(fields) == 2:
@@ -63,6 +64,10 @@ class StoreFactoryPage(webapp.RequestHandler):
                                          location=gp,
                                          unique=_unique,
                                          owner=user)
+                    if _picture:
+                        if isinstance(_picture, unicode):
+                            _picture = _picture.encode('utf-8', 'replace')
+                        f.picture = db.Blob(_picture.value)
                     if bene_util.doesFactoryExist(f) == False: 
                         f.put()
                         self.redirect('/createfactory?%s' % urllib.urlencode({'added': True}))

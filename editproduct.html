@@ -12,6 +12,10 @@
   <body onload="initialize()">
     <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
     <h2>
+     {% if repeatedit %}
+	The unique ID already exists
+     {% endif %}
+
      {% if redirect %}
       	<form action="/storeeditedproduct?id={{id}}&redirect={{redirect}}" enctype="multipart/form-data" method="post">
       {% else %}
