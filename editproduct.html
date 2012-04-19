@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/> 
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <script src="/js/ifinlist.js"></script>
+    <title>BeneTag</title>
+  </head>
+  <body>
+
+  <body onload="initialize()">
+    <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
+    <h2>
+     {% if redirect %}
+      	<form action="/storeeditedproduct?id={{id}}&redirect={{redirect}}" enctype="multipart/form-data" method="post">
+      {% else %}
+        <form action="/storeeditedproduct?id={{id}}" enctype="multipart/form-data" method="post">
+      {% endif %}
+      <div>Name: <input name="name" id="name" value="{{name_old}}"></input></div><br />
+	  <div>Factories: 
+	  {% for factory in factories_old %}
+		<input type="radio" name="factory" value ="{{factory.key}}" checked="checked">{{factory.name}} {% if factory.unique %} ({{factory.unique}}) {% endif %} </input><br/>			
+	  {% endfor %}
+	  {% for factory in factories %}
+		<input type="radio" name="factory" value ="{{factory.key}}">{{factory.name}} {% if factory.unique %} ({{factory.unique}}) {% endif %} </input><br/>						
+	  {% endfor %}
+	  </div><br />
+	  <div>Workers: 
+	  {% for worker in workers_old %}
+		<input type="checkbox" name="workers" value ="{{worker.key}}" checked="checked">{{worker.name}} {% if worker.unique %} ({{worker.unique}}) {% endif %} </input><br/>
+	  {% endfor %}
+	  {% for worker in workers %}
+		<input type="checkbox" name="workers" value ="{{worker.key}}">{{worker.name}} {% if worker.unique %} ({{worker.unique}}) {% endif %} </input><br/>
+	  {% endfor %}
+	  </div><br />
+	  <div>Badges:
+	  {% for badge in badges_old %}
+		<input type="checkbox" name="badges" value ="{{badge.key}}" checked="checked">{{badge.name}}</input><br/>
+	  {% endfor %}
+	  {% for badge in badges %}
+		<input type="checkbox" name="badges" value ="{{badge.key}}">{{badge.name}}</input><br/>
+	  {%endfor%}
+	  </div><br />
+      <div>Picture:<input type="file" name="picture"/></div></br>
+      <div>Unique ID (optional): <input name="unique" value="{{unique_old}}"></input></div><br />
+      <div><input type="submit" value="Save" a class='span4 btn medium'></div>
+    </form></h2>
+  </body>
+  <script type="text/javascript">
+    function initialize() {
+        var factory_names = new Array();
+        {% for factory in factories %}
+            {% if factory.unique %}
+            	factory_names.push('{{factory.name}} ({{factory.unique}})');
+            {% else %}
+            	factory_names.push('{{factory.name}}');
+            {% endif %}
+        {% endfor %}
+        $('#factoryName').autocomplete({
+            source: factory_names
+        });
+    }
+  </script>
+
+</html>
