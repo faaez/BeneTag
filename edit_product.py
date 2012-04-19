@@ -123,7 +123,7 @@ class StoreEditedProductPage(webapp.RequestHandler):
                         _product.badges = _badges_add
                         
                         if bene_util.doesProductExist(_product) and _unique_save != _product.unique: # if product already exists
-                            self.redirect('/editproduct?%s' % (urllib.urlencode({'id' : ID, 'repeatedit': True})))
+                            self.redirect('/editproduct?%s' % (urllib.urlencode({'id' : ID, 'repeatedit' : True})))
                             return
                         else:
                             _product.put()                                 
@@ -149,7 +149,7 @@ class StoreEditedProductPage(webapp.RequestHandler):
                             return
                                                 
                     else: # if user doesn't own product
-                        self.redirect('/producerhome?%s' % urllib.urlencode({'not_owner': True, 'realowner': _product.owner, 'user': user}))
+                        self.redirect('/producerhome?%s' % urllib.urlencode({'not_owner': True}))
                         return
                     #self.redirect('/mobilepage?id=' + str(p.key()))
                 else: # if not verified

@@ -19,15 +19,19 @@ class CreateFactoryPage(webapp.RequestHandler):
             _producer = bene_util.getCurrentProducer()
             if _producer  == None: # no producer signed up, so ask to sign up
                 self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'createfactory', 'msg': True}))
+                return
             else: #if producer signed up
                 if _producer.verified: # if producer is verified
                     template_values = bene_util.decodeURL(self.request.uri)
                     path = os.path.join(os.path.dirname(__file__), 'createfactory.html')
                     self.response.out.write(template.render(path, template_values))
+                    return
                 else: # if producer is not verified
                     self.redirect('/producerhome?%s' % urllib.urlencode({'verify': True}))
+                    return
         else: # ask to sign in
             self.redirect(users.create_login_url(self.request.uri))
+            return
 
 """
 Page that stores Factory in datastore
@@ -40,6 +44,7 @@ class StoreFactoryPage(webapp.RequestHandler):
             _producer = bene_util.getCurrentProducer()
             if _producer == None: # no producer signed up, so ask to sign up
                 self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'storefactory', 'msg': True}))
+                return
             else: # if producer signed up
                 if _producer.verified: # if producer is verified
                     _name = self.request.get('name')
@@ -71,9 +76,13 @@ class StoreFactoryPage(webapp.RequestHandler):
                     if bene_util.doesFactoryExist(f) == False: 
                         f.put()
                         self.redirect('/createfactory?%s' % urllib.urlencode({'added': True}))
+                        return
                     else:
                         self.redirect('/createfactory?%s' % urllib.urlencode({'repeat': True}))
+                        return
                 else: # if not verified
-                    self.redirect('/createfactory?%s' % urllib.urlencode({'verify': True}))
+                    self.redirect('/producerhome?%s' % urllib.urlencode({'verify': True}))
+                    return
         else: # user not signed in
             self.redirect(users.create_login_url(self.request.uri))
+            return

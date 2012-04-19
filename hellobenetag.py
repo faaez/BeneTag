@@ -6,6 +6,7 @@ import create_factory
 import create_product
 import create_qr
 import create_worker
+import edit_factory
 import edit_producer
 import edit_product
 import home
@@ -34,6 +35,8 @@ application = webapp.WSGIApplication([
   # create and edit factory
   ('/createfactory', create_factory.CreateFactoryPage),
   ('/storefactory', create_factory.StoreFactoryPage),
+  ('/editfactory', edit_factory.EditFactoryPage),
+  ('/storeeditedfactory', edit_factory.StoreEditedFactoryPage),
   # create and edit worker
   ('/createworker', create_worker.CreateWorkerPage),
   ('/storeworker', create_worker.StoreWorkerPage),
