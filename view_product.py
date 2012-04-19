@@ -1,8 +1,8 @@
-import os
-
-from google.appengine.ext import db
-from google.appengine.ext import webapp
+from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
+import os
+import urllib
+
 
 """
 View a Product's Page
@@ -15,9 +15,7 @@ class ViewProduct(webapp.RequestHandler):
         product = db.get(ID)
         # Display error if product ID not found
         if not product:
-            template_values = {}
-            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-            self.response.out.write(template.render(path, template_values))
+            self.redirect('/producerhome?%s' % urllib.urlencode({'not_exist': True}))
             return
         
         if product.factory and product.factory.location:

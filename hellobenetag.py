@@ -1,34 +1,46 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
-
-import home
-import producer_home
 import about
-import signup
-import create_product
 import create_badge
-import view_product 
-import create_qr
 import create_factory
-import view_factory
-import search_product
+import create_product
+import create_qr
 import create_worker
+import edit_producer
+import edit_product
+import home
 import mobile_page
+import producer_home
+import search_product
+import signup
+import view_factory
+import view_product
+
 
 application = webapp.WSGIApplication([
   ('/', home.HomePage),
   ('/producerhome', producer_home.HomePage),
   ('/about', about.AboutPage),
+  # create and edit producer page
   ('/signup', signup.CreateProducerPage),
   ('/storeproducer', signup.StoreProducerPage),
+  ('/editproducer', edit_producer.EditProducerPage),
+  ('/storeeditedproducer', edit_producer.StoreEditedProducerPage),
+  # create and edit product
   ('/createproduct', create_product.CreateProductPage),
   ('/storeproduct', create_product.StoreProductPage),
+  ('/editproduct', edit_product.EditProductPage),
+  ('/storeeditedproduct', edit_product.StoreEditedProductPage),
+  # create and edit factory
   ('/createfactory', create_factory.CreateFactoryPage),
   ('/storefactory', create_factory.StoreFactoryPage),
-  ('/createbadge', create_badge.CreateBadgePage),
-  ('/storebadge', create_badge.StoreBadgePage),
+  # create and edit worker
   ('/createworker', create_worker.CreateWorkerPage),
   ('/storeworker', create_worker.StoreWorkerPage),
+  # create badge
+  ('/createbadge', create_badge.CreateBadgePage),
+  ('/storebadge', create_badge.StoreBadgePage),
+  
   ('/view', view_product.ViewProduct),
   ('/productimage', view_product.ProductImage),
   ('/badgeimage', mobile_page.BadgeImage),                          

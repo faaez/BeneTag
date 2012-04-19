@@ -19,6 +19,13 @@
     {% if verify %}
       <p>You are not yet verified as a producer</p>
     {% endif %}
+    {% if not_owner %}
+      <p>You cannot edit that item as you do not own it</p>
+    {% endif %}
+    {% if not_exist %}
+      <p>That item does not exist</p>
+    {% endif %}
+
     </br><h2><form action="/productsearchresult" method="post">
       <div><input name="query" type="search" placeholder="Search product by name"></input></div></br>
       <div><input type="submit" value="Search" a class='span4 btn large'></div>
