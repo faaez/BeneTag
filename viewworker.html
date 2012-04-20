@@ -31,11 +31,17 @@
 <h4>His Story</h4>
 <h4>{{profile}}</h4>
 <hr></hr>
-<h4>Factory : {{factory}}</h4>
+<h4>Employer: <a href="/viewproducer?id={{producer.key}}">{{producer.name}}</a></h4>
+<h4>Factory : <a href="/viewfactory?id={{factory.key}}">{{factory.name}}</a></h4>
 <hr></hr>
     {% if latitude and longitude %}
         <div id="map_canvas"></div>
     {% endif %}
 
   </body>
+<p>Products:</p>
+    {% for product in products %}
+	<p><a href="/mobilepage?id={{product.key}}">{{product.name}}</a></p>
+    {% endfor %}
+
 </html>

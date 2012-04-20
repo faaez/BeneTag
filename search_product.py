@@ -15,6 +15,7 @@ class CreateProductSearchPage(webapp.RequestHandler):
         template_values = {}
         path = os.path.join(os.path.dirname(__file__), 'searchproduct.html')
         self.response.out.write(template.render(path, template_values))
+        return
 
 """
 Page that stores Factory in datastore

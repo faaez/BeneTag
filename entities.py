@@ -30,6 +30,7 @@ class Factory(db.Model):
     name = db.StringProperty()
     address = db.PostalAddressProperty()
     location = db.GeoPtProperty()
+    picture = db.BlobProperty()
     
     #security
     owner = db.UserProperty()
@@ -81,7 +82,7 @@ class Worker(db.Model):
     ''' don't use products, use function products() instead '''
     product = db.ListProperty(db.Key) 
     def products(self):
-        _products = db.get(self.products)
+        _products = db.get(self.product)
         return [product for product in _products if product] # return non-None products
         ''' 
         None products appear if a certain product was created by the worker, but was then deleted from
@@ -116,7 +117,7 @@ class Product(db.Model):
     badges = db.ListProperty(db.Key)
     rating = db.FloatProperty()
     def workers(self):
-        return Worker.all().filter('products =', self)
+        return Worker.all().filter('product =', self)
 
 """
 Data type representing a badge

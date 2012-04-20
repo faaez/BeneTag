@@ -11,7 +11,7 @@ Get the current producer entity
 def getCurrentProducer():
     ''' Get the current producer entity '''
     user = users.get_current_user()
-    producers = entities.Producer.all().filter('email =', user.nickname())
+    producers = entities.Producer.all().filter('owner =', user)
     for producer in producers: 
         return producer
     return None
@@ -39,9 +39,15 @@ def doesExactFactoryExist(factory_add):
     if factory_add.unique:
         producer = getCurrentProducer()
         if producer:
+            # if two have same unique ID
             factories = producer.factories().filter('unique = ', factory_add.unique)
             for factory in factories:
                 if factory: return True
+            # if other factory has no unique ID but same name
+            factories = producer.factories().filter('name = ', factory_add.name)
+            for factory in factories:
+                if factory : 
+                    if not factory.unique: return True
     return False
 
 """
@@ -93,9 +99,15 @@ def doesExactWorkerExist(worker_add):
     if worker_add.unique: 
         producer = getCurrentProducer()
         if producer:
+            # if two workers have same unique ID
             workers = producer.workers().filter('unique =', worker_add.unique)
             for worker in workers:
                 if worker: return True
+            # if other worker has no unique ID but same name
+            workers = producer.workers().filter('name =', worker_add.name)
+            for worker in workers:
+                if worker: 
+                    if not worker.unique: return True   
     return False
 
 """

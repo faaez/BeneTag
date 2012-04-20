@@ -35,9 +35,8 @@ class ViewProduct(webapp.RequestHandler):
         template_values['longitude'] = longitude
         template_values['url'] = self.request.url
         template_values['qr_url'] = self.request.url.replace('view','qr')
-        template_values['factory_id'] = product.factory.key()
-        template_values['factory_name'] = product.factory.name
-        template_values['factory_address'] = product.factory.address
+        template_values['factory'] = product.factory
+        template_values['badges'] = product.badges
         template_values['rating'] = product.rating
         template_values['workers'] = product.workers()
         if product.badges:

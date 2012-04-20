@@ -1,6 +1,5 @@
 <html>
   <head>
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
      <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <link rel="stylesheet" type="text/css" href="stylesheets/viewfactory.css" />
@@ -25,30 +24,13 @@
 </script>
 </head>
 <body onload="initialize()">
-<div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
-<h1 id="factoryname">Factory : {{ name }}</h1>
-<h4>Address: {{address}}</h4>
-<hr></hr>
-
-<h4>Products</h4>
-<div>
-{% for product in products%}
-   {{index}}<a href="/mobilepage?id={{product.key}}">{{product.name}}</a> <br/>
-{% endfor %}
-</div>
-<div>
-  <p>Producer: <a href="/viewproducer?id={{producer.key}}">{{producer.name}}</a></p>
-</div>
-<div>
-<p>Workers:</p>
+<h1>Workers on <a href="/mobilepage?id={{product.key}}">{{product.name}}</a></h1>
+<p>Employer: <a href="/viewproducer?id={{producer.key}}">{{producer.name}}</a></p>
 {% for worker in workers %}
-  <p><a href="/viewworker?id={{worker.key}}">{{worker.name}}</a></p>
+    <p><a href="/viewworker?id={{worker.key}}">{{worker.name}}</a></p>
+    {% if has_image %}
+	<img id="workerimage" src="workerimage?id={{worker.id}}"></img>
+    {% endif %}   
 {% endfor %}
-</div>
-<hr></hr>
-    {% if latitude and longitude %}
-        <div id="map_canvas"></div>
-    {% endif %}
 
-  </body>
 </html>

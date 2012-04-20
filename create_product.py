@@ -5,12 +5,7 @@ import bene_util
 import entities
 import os
 import urllib
-import logging
 
-'''
-TODO: Add self loops to products. Too sleepy now to figure out why it's not showing
-
-'''
 
 """
 Creates a form for Producers to enter information 
@@ -26,8 +21,8 @@ class CreateProductPage(webapp.RequestHandler):
             else: # if producer page exists
                 if _producer.verified: # if verified, create form to get new product        
                     template_values = bene_util.decodeURL(self.request.uri)
-                    template_values['factories'] = bene_util.getCurrentProducer().factories()
-                    template_values['workers'] = bene_util.getCurrentProducer().workers()
+                    template_values['factories'] = _producer.factories()
+                    template_values['workers'] = _producer.workers()
                     template_values['badges'] = entities.Badge.all()
                     path = os.path.join(os.path.dirname(__file__), 'createproduct.html')
                     self.response.out.write(template.render(path, template_values))
@@ -55,8 +50,6 @@ class StoreProductPage(webapp.RequestHandler):
                     _badges = self.request.get_all('badges')
                     _picture = self.request.POST["picture"]
                     _unique = self.request.get('unique')
-                    if isinstance(_picture, unicode):
-                        _picture = _picture.encode('utf-8', 'replace')
                     _factoryMade = db.get(_factory)
                     '''
                     XXX: Assumes factory name is unique for a producer. This is enforced when creating factories
@@ -66,9 +59,14 @@ class StoreProductPage(webapp.RequestHandler):
                                          factory=_factoryMade,
                                          unique=_unique,
                                          owner=user)
+                    _badges_add = []
                     for _badge in _badges:
-                        p.badges.append(db.Key(_badge))
-                    p.picture = db.Blob(_picture.value)
+                        _badges_add.append(db.Key(_badge))
+                    p.badges = _badges_add
+                    if _picture:
+                        if isinstance(_picture, unicode):
+                            _picture = _picture.encode('utf-8', 'replace')
+                        p.picture = db.Blob(_picture.value)
                     
                     if bene_util.doesProductExist(p) == False:
                         p.put()
@@ -84,6 +82,6 @@ class StoreProductPage(webapp.RequestHandler):
                         self.redirect('/createproduct?%s' % urllib.urlencode({'repeat': True}))
                     #self.redirect('/mobilepage?id=' + str(p.key()))
                 else: # if not verified
-                    self.redirect('/createproduct?%s' % urllib.urlencode({'verify': True}))
+                    self.redirect('/producerhome?%s' % urllib.urlencode({'verify': True}))
         else: # if not logged in
             self.redirect(users.create_login_url(self.request.uri))

@@ -46,8 +46,7 @@ class StoreWorkerPage(webapp.RequestHandler):
                     _picture = self.request.get('picture')
                     _profile = self.request.get('profile')
                     _unique = self.request.get('unique')
-                    if isinstance(_picture, unicode):
-                        _picture = _picture.encode('utf-8', 'replace')
+                    
                     if _factory:
                         _factoryMade = db.get(_factory)
         
@@ -57,7 +56,10 @@ class StoreWorkerPage(webapp.RequestHandler):
                                         profile=_profile,
                                         unique=_unique,
                                         owner=user)
-                    f.picture = db.Blob(_picture)
+                    if _picture:
+                        if isinstance(_picture, unicode):
+                            _picture = _picture.encode('utf-8', 'replace')
+                        f.picture = db.Blob(_picture)
                     if bene_util.doesWorkerExist(f) == False: 
                         f.put()
                         self.redirect('/createworker?%s' % urllib.urlencode({'added': True}))

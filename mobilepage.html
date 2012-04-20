@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/fb/benetag#">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">        <meta property="fb:app_id"      content="286512274727203" /> 
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">
+    	<meta property="fb:app_id"      content="286512274727203" /> 
         <meta property="og:type"        content="website" /> 
         <meta property="og:url"         content="{{url}}" /> 
         <meta property="og:title"       content="{{name}}" /> 
@@ -9,9 +10,8 @@
         <meta property="og:image"       content="{{qr_url}}" />
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="apple-touch-icon" href="icon.png"/>
-        
         <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <title>{{name}} by {{producer}}</title>
+        <title>{{name}} by {{producer}} - BeneTag</title>
         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
         <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="stylesheets/mobilepage.css" />
@@ -22,7 +22,7 @@
             function initialize() {
                 {% if latitude and longitude %}
                 var latlng = new google.maps.LatLng({{latitude}}, {{longitude}});
-                var myOptions = {
+                /*var myOptions = {
                     zoom: 8,
                     center: latlng,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -32,11 +32,14 @@
                 var marker = new google.maps.Marker({
                                                     position: latlng,
                                                     map: map,
-                                                    });
+                                                    }); */
                 
                 
                 var userLat;
                 var userLong;
+                var factName = '{{factory_name}}';
+                var factAdd = '{{factory_address}}';
+                
                 if (navigator.geolocation) // check if browser support this feature or not
                 {
                     navigator.geolocation.getCurrentPosition(function(position)
@@ -54,11 +57,20 @@
                                                              var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
                                                              var d = R * c;
                                                              
-                                                             document.getElementById('distance').innerHTML = '<div id="distance-div"> <div id="distance-value">' + d.toFixed(1) + ' mi </div> <p id="away"> away</p></div>';
+                                                             document.getElementById('distance').innerHTML = '<td><div id="distance-div"> <div id="distance-value">' + d.toFixed(1) + ' mi </div> <p id="away"> away</p></div></td> <td id="info" class = "spaced">' + factName + '<br>' + factAdd + '</td>';
+                                                           
+                                                             }, function()
+                                                             {
+                                                             	document.getElementById('distance').innerHTML = '<td id="info">' + factName + '<br>' + factAdd + '</td>';
                                                              });
                 }
                 
+                else {
+                	document.getElementById('distance').innerHTML = '<td id="info">' + factName + '<br>' + factAdd + '</td>';
+                }
+                
                 {% endif %}
+                
                 FB.init({
                         appId      : '286512274727203', // App ID
                         channelUrl : 'benetag.com/view', // Channel File
@@ -83,37 +95,7 @@
                          }, {scope : 'publish_actions'});
             }
             </script>
-            
-            <!--this style for new properties in iOS 5 could be moved to css file if need be -->
-            <style type="text/css">
-                
-                @media all {
-                    .panel {
-                        overflow                    : hidden;
-                        position                    : absolute;
-                        display                     : block;
-                        width                       : 100%;
-                        padding-top                 : 5px;
-                        padding-bottom              : 5px;
-                        top                         : 0;
-                        /*height: 100%; */ /* uncomment if desktop */
-                    }
-                    
-                    .scrollable {
-                        overflow                    : scroll;
-                        -webkit-overflow-scrolling  : touch;
-                    }
-                    
-                    .insideScrollablePanel {
-                        margin-left                 : 5%;
-                        margin-right                : 5%;
-                        width                       : 90%;
-                    }
-                    
-                } /* end of medial all */
-                
-                
-                </style>
+
     </head>
     <body onload="initialize()">
         <!-- MAIN PANEL -->
@@ -122,9 +104,11 @@
             
             <!-- SCROLLABLE PANEL -->
             <div id="scrollable-panel">
-                <p id="brand"> BeneTag </p>
-                <!-- scrollable and panel styles are new styles -->
+            	
+            	<!-- scrollable and panel styles are new styles -->
                 <!-- here, content -->
+            
+                <p id="brand"><a href="./"> BeneTag 4/16 </a></p>
                 <hr id="top-line">
                 
                 <table id="productinfo">
@@ -136,9 +120,10 @@
                     </td>
                 </table>
                 
-                <p id="producername">{{producer}} </p>
-                <h1 id="productname"> {{ name }} </h1>
+                <p id="producername"><a href="/viewproducer?id={{producer.key}}">{{producer}}</a> </p>
+                <p id="productname"> {{ name }} </p>
                 {%if has_badges%}
+                
                 <hr id="separator-line">
                 
                 <table id="badges">
@@ -154,22 +139,45 @@
                     {%endfor%}
                 </table>
                 {%endif%}
-                <hr id="separator-line">
-                <p id="section-heading">Manufactured at:</p>
-                <table id="factory-table">
-                    {% if latitude and longitude %}
-                    <td id="distance"> </td>
-                    {%endif%}
-                    <td> <p>{{factory_name}}</br>
-                        {{factory_address}}</p></td>
-                </table>
-                <div id="factory_link"> <a href="viewfactory?id={{factory_id}}">see more info ></a></div>
-                </br>
-                {% if latitude and longitude %}
                 
-                <div id="map_canvas"></div>
-                {% endif %}
+                
                 <hr id="separator-line">
+                <p id="section-heading">Other info:</p>
+                <p id="price"> $25.00 </p>
+                
+                <table id="buy-buttons">
+                <tr>
+                <td><button class="btn buy" id="sugretailer">Cheapest at Amazon</button></td>
+                <td><button class="btn buy" id="other">11 others</button></td>
+                </tr>
+                </table>
+               
+                <p id="info"> super soft tri-blend fabric <br> sizes S-XXL </p>
+                
+                <hr id="separator-line">
+                
+                <p id="section-heading">Manufactured at:</p>
+                
+                {% if factory %}
+                <table id="factory-table">
+                    <tr id = "distance"> 
+                    </tr>
+                </table>
+                <p id="moreinfo"> <a href="/viewfactory?id={{factory.key}}">see more info ></a></p>
+                {% endif %}
+                
+               <!-- {% if latitude and longitude %}
+                <div id="map_canvas"></div>
+                {% endif %} --> 
+               
+               
+               <hr id="separator-line">
+               <p id="section-heading">Made by:</p>
+               <p id="workerstory">Dave and his 10 robot friends.</p>
+               <p id="moreinfo"> <a href="/viewproductworkers?id={{id}}">see more info ></a></p>
+               
+               <hr id="separator-line">
+               
                 <div id="social-buttons">
                     <div><button class="btn secondary" id="fbshare" onclick="fbshare()">Share on Facebook</img></button></div>
                     <div id="social-row"><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-hashtags="BeneTag">Tweet</a>
@@ -179,10 +187,16 @@
                 </div>
                 
                 <div id="fb-root"></div>
+                
                 <hr id="separator-line">
+                
+                <p id = "comments-link"> 59 comments > </p>
+                
                 <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
                 <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+                
                 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+            
             </div>
         </div>
     </body>

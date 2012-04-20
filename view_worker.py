@@ -39,7 +39,6 @@ class ViewWorker(webapp.RequestHandler):
         template_values['picture'] = picture
         template_values['profile'] = profile
         template_values['factory'] = factory
-        ''' TODO: show producer and products on HTML '''
         template_values['producer'] = producer 
         template_values['products'] = products 
         template_values['latitude'] = latitude
