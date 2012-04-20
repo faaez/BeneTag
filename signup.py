@@ -19,7 +19,7 @@ class Signup(webapp.RequestHandler):
                                       isConsumer=False,
                                       isProducer=True)
                     u.put()
-                    self.redirect('/')
+                    self.redirect('/createproducer')
                     return
                 else: # all other cases, make consumer
                     u = entities.User(email=user.nickname(),
@@ -27,19 +27,19 @@ class Signup(webapp.RequestHandler):
                                       isConsumer=True,
                                       isProducer=False)
                     u.put()
-                    self.redirect('/')
+                    self.redirect('/createconsumer')
                     return
                 
             
             if bene_util.getCurrentUser().isProducer: # signed in producer
-                if not bene_util.getCurrentProducer(): # no producer page, so create one 
+                if bene_util.getCurrentProducer() == None: # no producer page, so create one 
                     self.redirect('/createproducer')
                     return
                 else: # already has producer page, so redirect
                     self.redirect('/producerhome')
                     return
             else: # signed in consumer
-                if not bene_util.getCurrentConsumer(): # no consumer page, so create on
+                if bene_util.getCurrentConsumer() == None: # no consumer page, so create on
                     self.redirect('/createconsumer')
                     return
                 else: # already has consumer page, so redirect

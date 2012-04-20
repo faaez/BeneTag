@@ -27,5 +27,5 @@ class HomePage(webapp.RequestHandler):
                 self.response.out.write(template.render(path, template_values))
                 return
         else:
-            self.redirect(users.create_login_url(self.request.uri))
+            self.redirect('/?signin=True')
             return

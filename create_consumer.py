@@ -24,7 +24,7 @@ class CreateConsumerPage(webapp.RequestHandler):
                 self.redirect('/consumerhome')
                 return
         else: # user not signed in
-            self.redirect(users.create_login_url(self.request.uri))
+            self.redirect('/?signin=True')
             return
 
 """
@@ -61,4 +61,4 @@ class StoreConsumerPage(webapp.RequestHandler):
                         
             self.redirect('/'+self.request.get('redirect'))
         else:
-            self.redirect(users.create_login_url(self.request.uri))
+            self.redirect('/?signin=True')

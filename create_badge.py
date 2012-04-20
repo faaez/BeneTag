@@ -25,7 +25,7 @@ class CreateBadgePage(webapp.RequestHandler):
             self.response.out.write(template.render(path, template_values))
             return
         else:
-            self.redirect(users.create_login_url(self.request.uri))
+            self.redirect('/?signin=True')
             return
 
 """
@@ -56,5 +56,5 @@ class StoreBadgePage(webapp.RequestHandler):
                 self.redirect('/createbadge?%s' % urllib.urlencode({'repeat': True}))
                     
         else: # otherwise, needs to sign in 
-            self.redirect(users.create_login_url(self.request.uri))
+            self.redirect('/?signin=True')
             

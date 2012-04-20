@@ -33,7 +33,7 @@ class CreateFactoryPage(webapp.RequestHandler):
                     self.redirect('/producerhome?%s' % urllib.urlencode({'verify': True}))
                     return
         else: # ask to sign in
-            self.redirect(users.create_login_url(self.request.uri))
+            self.redirect('/?signin=True')
             return
 
 """
@@ -90,5 +90,5 @@ class StoreFactoryPage(webapp.RequestHandler):
                     self.redirect('/producerhome?%s' % urllib.urlencode({'verify': True}))
                     return
         else: # user not signed in
-            self.redirect(users.create_login_url(self.request.uri))
+            self.redirect('/?signin=True')
             return

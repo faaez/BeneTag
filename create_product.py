@@ -35,7 +35,7 @@ class CreateProductPage(webapp.RequestHandler):
                     self.redirect('/producerhome?%s' % urllib.urlencode({'verify': True}))
                     return
         else: # otherwise, request sign in
-            self.redirect(users.create_login_url(self.request.uri))
+            self.redirect('/?signin=True')
             return
             
       
@@ -98,5 +98,5 @@ class StoreProductPage(webapp.RequestHandler):
                     self.redirect('/producerhome?%s' % urllib.urlencode({'verify': True}))
                     return
         else: # if not logged in
-            self.redirect(users.create_login_url(self.request.uri))
+            self.redirect('/?signin=True')
             return

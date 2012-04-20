@@ -57,7 +57,7 @@ class EditWorkerPage(webapp.RequestHandler):
                     self.redirect('/producerhome?%s' % urllib.urlencode({'verify': True}))
                     return
         else: # otherwise, request sign in
-            self.redirect(users.create_login_url(self.request.uri))
+            self.redirect('/?signin=True')
             return
 """
 Puts a worker in the database
@@ -115,5 +115,5 @@ class StoreEditedWorkerPage(webapp.RequestHandler):
                     return
                     
         else: # otherwise, request sign in
-            self.redirect(users.create_login_url(self.request.uri))
+            self.redirect('/?signin=True')
             return

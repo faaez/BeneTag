@@ -29,7 +29,7 @@ class EditProducerPage(webapp.RequestHandler):
                 self.response.out.write(template.render(path, template_values))
                 return
         else: # user not signed in
-            self.redirect(users.create_login_url(self.request.uri))
+            self.redirect('/?signin=True')
             return
 
 """
@@ -68,5 +68,5 @@ class StoreEditedProducerPage(webapp.RequestHandler):
             self.redirect('/'+self.request.get('redirect'))
             return
         else:
-            self.redirect(users.create_login_url(self.request.uri))
+            self.redirect('/?signin=True')
             return

@@ -19,11 +19,14 @@ class CreateProducerPage(webapp.RequestHandler):
                 template_values = bene_util.decodeURL(self.request.uri)
                 path = os.path.join(os.path.dirname(__file__), 'createproducer.html')
                 self.response.out.write(template.render(path, template_values))
+                return
             else: # already has producer page, so redirect
                 self.redirect('/producerhome')
+                return
         else: # user not signed in
-            self.redirect(users.create_login_url(self.request.uri))
-
+            self.redirect('/?signin=True')
+            return
+        
 """
 Puts a Producer in the database
 """
@@ -58,5 +61,7 @@ class StoreProducerPage(webapp.RequestHandler):
                 p.put()
                         
             self.redirect('/'+self.request.get('redirect'))
+            return
         else:
-            self.redirect(users.create_login_url(self.request.uri))
+            self.redirect('/?signin=True')
+            return
