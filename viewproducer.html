@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
+     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/viewfactory.css" />
+    <title>BeneTag</title>
+
+</head>
+<body onload="initialize()">
+<h1>{{producer.name}}</a></h1>
+
+Workers:
+{% for worker in workers %}
+    <p><a href="/viewworker?id={{worker.key}}">{{worker.name}}</a></p>
+{% endfor %}
+
+
+Factories:
+{% for factory in factories %}
+    <p><a href="/viewfactory?id={{factory.key}}">{{factory.name}}</a></p>
+{% endfor %}
+
+
+Products:
+{% for product in products %}
+    <p><a href="/mobilepage?id={{product.key}}">{{product.name}}</a></p>
+{% endfor %}
+
+</html>

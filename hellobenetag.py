@@ -16,6 +16,7 @@ import producer_home
 import search_product
 import signup
 import view_factory
+import view_producer
 import view_product
 import view_productworkers
 import view_worker
@@ -30,6 +31,7 @@ application = webapp.WSGIApplication([
   ('/storeproducer', signup.StoreProducerPage),
   ('/editproducer', edit_producer.EditProducerPage),
   ('/storeeditedproducer', edit_producer.StoreEditedProducerPage),
+  ('/viewproducer', view_producer.ViewProducer),
   # create and edit product
   ('/createproduct', create_product.CreateProductPage),
   ('/storeproduct', create_product.StoreProductPage),

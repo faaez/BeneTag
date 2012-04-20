@@ -30,7 +30,7 @@ class ViewProduct(webapp.RequestHandler):
         template_values = {}
         template_values['id'] = ID
         template_values['name'] = product.name
-        template_values['producer'] = product.producer.name
+        template_values['producer'] = product.producer
         template_values['latitude'] = latitude
         template_values['longitude'] = longitude
         template_values['url'] = self.request.url
