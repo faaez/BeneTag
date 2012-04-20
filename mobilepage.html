@@ -122,7 +122,7 @@
                     </td>
                 </table>
                 
-                <p id="producername">{{producer}} </p>
+                <p id="producername"><a href="/viewproducer?id={{producer.key}}">{{producer}}</a> </p>
                 <p id="productname"> {{ name }} </p>
                 {%if has_badges%}
                 
@@ -156,12 +156,12 @@
                 
                 <p id="section-heading">Manufactured at:</p>
                 
-                {% if latitude and longitude %}
+                {% if factory %}
                 <table id="factory-table">
                     <tr id = "distance"> 
                     </tr>
                 </table>
-                <p id="moreinfo"> <a href="viewfactory?id={{factory_id}}">see more info ></a></p>
+                <p id="moreinfo"> <a href="/viewfactory?id={{factory.key}}">see more info ></a></p>
                 {% endif %}
                 
                <!-- {% if latitude and longitude %}
@@ -172,7 +172,7 @@
                <hr id="separator-line">
                <p id="section-heading">Made by:</p>
                <p id="workerstory">Dave and his 10 robot friends.</p>
-               <p id="moreinfo"> <a href="viewfactory?id={{factory_id}}">see more info ></a></p>
+               <p id="moreinfo"> <a href="/viewfactory?id={{factory.key}}">see more info ></a></p>
                
                <hr id="separator-line">
                
