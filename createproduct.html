@@ -1,6 +1,11 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="stylesheets/mobilepage.css" />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">
+    
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/> 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
@@ -9,8 +14,11 @@
   <body>
 
   <body onload="initialize()">
-    <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
-    <h2>
+  
+    <p id = "logo"> <a href="./"> BeneTag </a></div>
+	<hr id="top-line">
+    
+    <p>
      {% if added %}
        <p>Product added successfully</p>
      {% endif %}
@@ -40,7 +48,13 @@
       <div>Picture:<input type="file" name="picture"/></div><br />
       <div>Unique ID (optional): <input name="unique"></input></div><br />
       <div><input type="submit" value="Create product" a class='span4 btn medium'></div>
-    </form></h2>
+    </form></p>
+    
+    <hr id="separator-line">
+	
+	<p id = "footer"> <a href='/about'>About BeneTag</a><br>
+	Copyright BeneTag 2011 </p>
+    
   </body>
   <script type="text/javascript">
     function initialize() {
