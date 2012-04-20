@@ -35,7 +35,7 @@ class EditFactoryPage(webapp.RequestHandler):
                         path = os.path.join(os.path.dirname(__file__), 'editfactory.html')
                         self.response.out.write(template.render(path, template_values))
                         return
-                    else: # if user doesn't own product
+                    else: # if user doesn't own factory
                         self.redirect('/producerhome?%s' % urllib.urlencode({'not_owner': True}))
                         return
                 else: # if producer is not verified

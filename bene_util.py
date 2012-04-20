@@ -11,7 +11,7 @@ Get the current producer entity
 def getCurrentProducer():
     ''' Get the current producer entity '''
     user = users.get_current_user()
-    producers = entities.Producer.all().filter('email =', user.nickname())
+    producers = entities.Producer.all().filter('owner =', user)
     for producer in producers: 
         return producer
     return None

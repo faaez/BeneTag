@@ -9,6 +9,7 @@ import create_worker
 import edit_factory
 import edit_producer
 import edit_product
+import edit_worker
 import home
 import mobile_page
 import producer_home
@@ -16,6 +17,7 @@ import search_product
 import signup
 import view_factory
 import view_product
+import view_worker
 
 
 application = webapp.WSGIApplication([
@@ -37,9 +39,13 @@ application = webapp.WSGIApplication([
   ('/storefactory', create_factory.StoreFactoryPage),
   ('/editfactory', edit_factory.EditFactoryPage),
   ('/storeeditedfactory', edit_factory.StoreEditedFactoryPage),
+  ('/viewfactory', view_factory.ViewFactory),
   # create and edit worker
   ('/createworker', create_worker.CreateWorkerPage),
   ('/storeworker', create_worker.StoreWorkerPage),
+  ('/editworker', edit_worker.EditWorkerPage),
+  ('/storeeditedworker', edit_worker.StoreEditedWorkerPage),
+  ('/viewworker', view_worker.ViewWorker),
   # create badge
   ('/createbadge', create_badge.CreateBadgePage),
   ('/storebadge', create_badge.StoreBadgePage),
@@ -49,7 +55,7 @@ application = webapp.WSGIApplication([
   ('/badgeimage', mobile_page.BadgeImage),                          
   ('/mobilepage', mobile_page.ViewProduct),
   ('/qr', create_qr.CreateQrPage),
-  ('/viewfactory', view_factory.ViewFactory),
+  
   ('/searchproduct', search_product.CreateProductSearchPage),
   ('/productsearchresult', search_product.SearchResultPage)
 ], debug=True)
