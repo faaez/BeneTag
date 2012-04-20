@@ -16,9 +16,9 @@
         <form action="/storeeditedconsumer" enctype="multipart/form-data" method="post">
       {% endif %}
       <div>Name: <input name="name" id="name" value="{{name_old}}"></input></div>
-      <div>Profile: <textarea name="profile"></textarea></div></br>
+      <div>Profile: <textarea name="profile">{{profile_old}}</textarea></div></br>
        <div>Picture:<input type="file" name="logo"/></div>
-      <div><input type="submit" value="Sign up" a class="span4 btn medium"></div>
+      <div><input type="submit" value="Save" a class="span4 btn medium"></div>
     </form></h2>
   </body>
 </html>

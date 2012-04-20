@@ -25,7 +25,9 @@ class EditConsumerPage(webapp.RequestHandler):
                 template_values = bene_util.decodeURL(self.request.uri)
                 template_values['name_old'] = _consumer.name
                 template_values['profile_old'] = _consumer.profile
-                path = os.path.join(os.path.dirname(__file__), 'editproducer.html')
+                #self.response.out.write('<html><body>%s</body></html>' % _consumer.profile)
+                #return
+                path = os.path.join(os.path.dirname(__file__), 'editconsumer.html')
                 self.response.out.write(template.render(path, template_values))
                 return
         else: # user not signed in

@@ -9,6 +9,7 @@ import create_producer
 import create_product
 import create_qr
 import create_worker
+import edit_consumer
 import edit_factory
 import edit_producer
 import edit_product
@@ -40,6 +41,8 @@ application = webapp.WSGIApplication([
   # create and edit consumer page
   ('/createconsumer', create_consumer.CreateConsumerPage),
   ('/storeconsumer', create_consumer.StoreConsumerPage),
+  ('/editconsumer', edit_consumer.EditConsumerPage),
+  ('/storeeditedconsumer', edit_consumer.StoreEditedConsumerPage),
   # create and edit product
   ('/createproduct', create_product.CreateProductPage),
   ('/storeproduct', create_product.StoreProductPage),
