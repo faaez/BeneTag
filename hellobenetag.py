@@ -17,6 +17,7 @@ import search_product
 import signup
 import view_factory
 import view_product
+import view_productworkers
 import view_worker
 
 
@@ -46,11 +47,13 @@ application = webapp.WSGIApplication([
   ('/editworker', edit_worker.EditWorkerPage),
   ('/storeeditedworker', edit_worker.StoreEditedWorkerPage),
   ('/viewworker', view_worker.ViewWorker),
+  
   # create badge
   ('/createbadge', create_badge.CreateBadgePage),
   ('/storebadge', create_badge.StoreBadgePage),
   
   ('/view', view_product.ViewProduct),
+  ('/viewproductworkers', view_productworkers.ViewProductWorkers),
   ('/productimage', view_product.ProductImage),
   ('/badgeimage', mobile_page.BadgeImage),                          
   ('/mobilepage', mobile_page.ViewProduct),

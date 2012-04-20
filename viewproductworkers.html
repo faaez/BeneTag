@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
+     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/viewfactory.css" />
+    <title>BeneTag</title>
+    <script type="text/javascript">
+        function initialize() {
+            {% if latitude and longitude %}
+                var latlng = new google.maps.LatLng({{latitude}}, {{longitude}});
+                var myOptions = {
+                    zoom: 8,
+                    center: latlng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+                document.getElementById("map_canvas").style.position="fixed";
+                var marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map,
+                });
+            {% endif %}
+}
+</script>
+</head>
+<body onload="initialize()">
+<h1>Workers on <a href="/mobilepage?id={{product.key}}">{{product.name}}</a></h1>
+<p>Employer: <a href="/viewproducer?id={{producer.key}}">{{producer.name}}</a></p>
+{% for worker in workers %}
+    <p><a href="/viewworker?id={{worker.key}}">{{worker.name}}</a></p>
+    {% if has_image %}
+	<img id="workerimage" src="workerimage?id={{worker.id}}"></img>
+    {% endif %}   
+{% endfor %}
+
+</html>
