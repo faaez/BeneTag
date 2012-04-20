@@ -1,3 +1,4 @@
+from google.appengine.api import users
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
 import os
@@ -10,6 +11,11 @@ View a Worker Page
 class ViewWorker(webapp.RequestHandler):
     def get(self):
         ID = self.request.get('id')
+        if not ID:
+            '''
+            TODO: if no id is sent, defaults to a page with all workers? 
+            '''
+            self.redirect('/')
         worker = db.get(ID)
         if not worker:
             '''
@@ -50,6 +56,12 @@ class ViewWorker(webapp.RequestHandler):
         else:
             template_values['has_image'] = False
     
+        template_values['can_edit'] = False
+        user = users.get_current_user()
+        if user:
+            if worker.owner == user:
+                template_values['can_edit'] = True
+    
         path = os.path.join(os.path.dirname(__file__), 'viewworker.html')
         self.response.out.write(template.render(path, template_values))
 
@@ -57,7 +69,17 @@ class WorkerImage(webapp.RequestHandler):
     def get(self):
         # Get the id from the get parameter
         ID = self.request.get('id') 
+        if not ID:
+            '''
+            TODO: what to do here?
+            '''
+            return
         # Fetch the image for this worker
         worker = db.get(ID)
+        if not worker:
+            '''
+            TODO: what to do here?
+            '''
+            return
         self.response.headers['Content-Type'] = 'image'
         self.response.out.write(worker.picture)

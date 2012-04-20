@@ -11,7 +11,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="apple-touch-icon" href="icon.png"/>
         <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <title>{{name}} by {{producer}} - BeneTag</title>
+        <title>{{name}} by {{producer.name}} - BeneTag</title>
         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
         <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="stylesheets/mobilepage.css" />
@@ -176,6 +176,10 @@
                <p id="workerstory">Dave and his 10 robot friends.</p>
                <p id="moreinfo"> <a href="/viewproductworkers?id={{id}}">see more info ></a></p>
                
+	{% if can_edit %}
+            <small><a href="/editproduct?id={{id}}">Edit your product's profile</a></small>
+        {% endif %}
+
                <hr id="separator-line">
                
                 <div id="social-buttons">

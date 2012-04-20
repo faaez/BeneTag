@@ -11,6 +11,12 @@ View workers who worked on a product
 class ViewProductWorkers(webapp.RequestHandler):
     def get(self):
         ID = self.request.get('id')
+        if not ID:
+            ''' 
+            TODO: If no ID sent, default to page with all products?
+            '''
+            self.redirect('/')
+            return
         _product = db.get(ID)
         if not _product:
             '''

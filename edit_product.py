@@ -25,6 +25,12 @@ class EditProductPage(webapp.RequestHandler):
             else: # if producer page exists
                 if _producer.verified: # if verified
                     ID = self.request.get('id')
+                    if not ID:
+                        '''
+                        TODO: If no ID sent, default to page with all factories?
+                        '''
+                        self.redirect('/')
+                        return
                     _product = db.get(ID)
                     if not _product: # product doesn't exist
                         self.redirect('/producerhome?%s' % urllib.urlencode({'not_exist': True}))
@@ -103,6 +109,12 @@ class StoreEditedProductPage(webapp.RequestHandler):
             else: # if producer page exists
                 if _producer.verified: # if producer is verified, then store
                     ID = self.request.get('id')
+                    if not ID:
+                        '''
+                        TODO: If no ID sent, default to page with all factories?
+                        '''
+                        self.redirect('/')
+                        return
                     _product = db.get(ID)
                     if not _product: # product doesn't exist
                         self.redirect('/producerhome?%s' % urllib.urlencode({'not_exist': True}))
@@ -110,7 +122,8 @@ class StoreEditedProductPage(webapp.RequestHandler):
                     if _product.owner == user: # if current user owns product
                         _product.name = self.request.get('name')
                         _factory = self.request.get('factory')
-                        _product.factory = db.get(_factory)
+                        if _factory:
+                            _product.factory = db.get(_factory)
                         _unique_save = _product.unique
                         _product.unique = self.request.get('unique')
                         
@@ -148,9 +161,10 @@ class StoreEditedProductPage(webapp.RequestHandler):
                                     worker.put()
                             if _workers:
                                 for _worker in _workers:
-                                    worker = db.get(_worker)
-                                    worker.product.append(key)
-                                    worker.put()
+                                    if _worker:
+                                        worker = db.get(_worker)
+                                        worker.product.append(key)
+                                        worker.put()
                             
                             self.redirect('/mobilepage?%s' % urllib.urlencode({'id': ID}))
                             return

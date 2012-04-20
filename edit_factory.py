@@ -24,6 +24,12 @@ class EditFactoryPage(webapp.RequestHandler):
             else: #if producer signed up
                 if _producer.verified: # if producer is verified
                     ID = self.request.get('id')
+                    if not ID:
+                        '''
+                        TODO: If no ID sent, default to page with all factories?
+                        '''
+                        self.redirect('/')
+                        return
                     _factory = db.get(ID)
                     if not _factory:
                         self.redirect('/producerhome?%s' % urllib.urlencode({'not_exist': True}))
@@ -66,6 +72,12 @@ class StoreEditedFactoryPage(webapp.RequestHandler):
             else: # if producer signed up
                 if _producer.verified: # if producer is verified
                     ID = self.request.get('id')
+                    if not ID:
+                        '''
+                        TODO: If no ID sent, default to page with all factories?
+                        '''
+                        self.redirect('/')
+                        return
                     _factory = db.get(ID)
                     if not _factory: # factory doesn't exist
                         self.redirect('/producerhome?%s' % urllib.urlencode({'not_exist': True}))

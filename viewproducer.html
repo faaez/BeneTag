@@ -9,21 +9,25 @@
 <body onload="initialize()">
 <h1>{{producer.name}}</a></h1>
 
-Workers:
+<p>Workers:</p>
 {% for worker in workers %}
     <p><a href="/viewworker?id={{worker.key}}">{{worker.name}}</a></p>
 {% endfor %}
+<br />
 
-
-Factories:
+<p>Factories:</p>
 {% for factory in factories %}
     <p><a href="/viewfactory?id={{factory.key}}">{{factory.name}}</a></p>
 {% endfor %}
+<br />
 
-
-Products:
+<p>Products:</p>
 {% for product in products %}
     <p><a href="/mobilepage?id={{product.key}}">{{product.name}}</a></p>
 {% endfor %}
+
+{% if can_edit %}
+    <small><a href="/editproducer">Edit your profile</a></small>
+{% endif %}
 
 </html>

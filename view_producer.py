@@ -1,5 +1,7 @@
+from google.appengine.api import users
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
+import bene_util
 import os
 
 
@@ -10,6 +12,12 @@ View a Producer Page
 class ViewProducer(webapp.RequestHandler):
     def get(self):
         ID = self.request.get('id')
+        if not ID:
+            '''
+            TODO: if no id is sent, defaults to a page with all producers? 
+            '''
+            self.redirect('/')
+            return
         producer = db.get(ID)
         if not producer:
             '''
@@ -37,6 +45,12 @@ class ViewProducer(webapp.RequestHandler):
         template_values['producer'] = producer
         template_values['workers'] = workers
         template_values['url'] = self.request.url  
+        
+        template_values['can_edit'] = False
+        user = users.get_current_user()
+        if user:
+            if producer.owner == user:
+                template_values['can_edit'] = True           
         
         if producer.logo:
             template_values['has_image'] = True

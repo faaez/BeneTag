@@ -102,8 +102,11 @@ class Worker(db.Model):
     ''' don't use products, use function products() instead '''
     product = db.ListProperty(db.Key) 
     def products(self):
-        _products = db.get(self.product)
-        return [product for product in _products if product] # return non-None products
+        if self.product:
+            _products = db.get(self.product)
+            return [product for product in _products if product] # return non-None products
+        else:
+            return None
         ''' 
         None products appear if a certain product was created by the worker, but was then deleted from
         datastore manually

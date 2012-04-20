@@ -44,4 +44,8 @@
 	<p><a href="/mobilepage?id={{product.key}}">{{product.name}}</a></p>
     {% endfor %}
 
+{% if can_edit %}
+    <small><a href="/editworker?id={{id}}">Edit your worker's profile</a></small>
+{% endif %}
+
 </html>

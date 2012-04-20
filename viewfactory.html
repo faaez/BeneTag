@@ -50,5 +50,9 @@
         <div id="map_canvas"></div>
     {% endif %}
 
+{% if can_edit %}
+    <small><a href="/editfactory?id={{id}}">Edit your factory profile</a></small>
+{% endif %}
+
   </body>
 </html>

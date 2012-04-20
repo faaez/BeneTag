@@ -61,7 +61,10 @@ class StoreProductPage(webapp.RequestHandler):
                     _badges = self.request.get_all('badges')
                     _picture = self.request.POST["picture"]
                     _unique = self.request.get('unique')
-                    _factoryMade = db.get(_factory)
+                    if _factory:
+                        _factoryMade = db.get(_factory)
+                    else:
+                        _factoryMade = None
                     '''
                     XXX: Assumes factory name is unique for a producer. This is enforced when creating factories
                     '''                   
@@ -85,9 +88,10 @@ class StoreProductPage(webapp.RequestHandler):
                         if _workers:
                             key = p.key()
                             for _worker in _workers:
-                                worker = db.get(_worker)
-                                worker.product.append(key)
-                                worker.put()
+                                if _worker:
+                                    worker = db.get(_worker)
+                                    worker.product.append(key)
+                                    worker.put()
                         self.redirect('/createproduct?%s' % urllib.urlencode({'added': True}))
                         return
                     else:

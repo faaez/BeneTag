@@ -1,9 +1,10 @@
 from google.appengine.api import users
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
+import bene_util
 import entities
 import os
-import bene_util
+import urllib
 
 
 
@@ -49,8 +50,6 @@ class StoreEditedProducerPage(webapp.RequestHandler):
             if _logo:
                 if isinstance(_logo, unicode):
                     _logo = _logo.encode('utf-8', 'replace')
-            else:
-                _logo = _producer.logo
             if _producer == None: # no producer page, so create one
                 p = entities.Producer(name = _name, 
                                       email=user.nickname(), 
@@ -62,10 +61,12 @@ class StoreEditedProducerPage(webapp.RequestHandler):
             else: # otherwise, edit                  
                 _producer.name = _name
                 _producer.description = _description
+                if not _logo:
+                    _logo = _producer.logo
                 _producer.logo = db.Blob(_logo)
                 _producer.put()
                         
-            self.redirect('/'+self.request.get('redirect'))
+            self.redirect('/viewproducer?%s' % urllib.urlencode({'id': _producer.key()}))
             return
         else:
             self.redirect('/?signin=True')

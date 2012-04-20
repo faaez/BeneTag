@@ -48,7 +48,7 @@ class StoreConsumerPage(webapp.RequestHandler):
                 _picture = self.request.get('picture')
                 _profile = self.request.get('profile')
                     
-                p = entities.Consumer(name = _name, 
+                c = entities.Consumer(name = _name, 
                                       email=user.nickname(), 
                                       owner=user,
                                       profile=_profile,                      
@@ -56,8 +56,8 @@ class StoreConsumerPage(webapp.RequestHandler):
                 if _picture:
                     if isinstance(_picture, unicode):
                         _picture = _picture.encode('utf-8', 'replace')
-                    p.logo=db.Blob(_picture),
-                p.put()
+                    c.picture=db.Blob(_picture),
+                c.put()
                         
             self.redirect('/'+self.request.get('redirect'))
         else:
