@@ -25,7 +25,7 @@
 
 body {
 	background-color: #fff;
- 	background: url("/static/bgtexture.png");
+ 	background: url(/static/bgtexture.png);
 }
 
 p#logo, p#logo a{
