@@ -33,15 +33,16 @@
 <h4>Products</h4>
 <div>
 {% for product in products%}
-   </br>{{index}}{{product.name}}
+   {{index}}<a href="/mobilepage?id={{product.key}}">{{product.name}}</a> <br/>
 {% endfor %}
 </div>
 <div>
-  <p>Producer :{{producer.name}}</p>
+  <p>Producer: <a href="/viewproducer?id={{producer.key}}">{{producer.name}}</a></p>
 </div>
 <div>
+<p>Workers:</p>
 {% for worker in workers %}
-  <p>Worker :{{worker.name}}</p>
+  <p><a href="/viewworker?id={{worker.key}}">{{worker.name}}</a></p>
 {% endfor %}
 </div>
 <hr></hr>
