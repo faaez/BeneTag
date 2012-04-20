@@ -19,8 +19,12 @@ import mobile_page
 import producer_home
 import search_product
 import signup
+import view_consumer
 import view_factory
 import view_producer
+import view_producerfactories
+import view_producerproducts
+import view_producerworkers
 import view_product
 import view_productworkers
 import view_worker
@@ -32,17 +36,21 @@ application = webapp.WSGIApplication([
   ('/producerhome', producer_home.HomePage),
   ('/consumerhome', consumer_home.HomePage), 
   ('/about', about.AboutPage),
-  # create and edit producer page
+  # create, edit and view producer page
   ('/createproducer', create_producer.CreateProducerPage),
   ('/storeproducer', create_producer.StoreProducerPage),
   ('/editproducer', edit_producer.EditProducerPage),
   ('/storeeditedproducer', edit_producer.StoreEditedProducerPage),
   ('/viewproducer', view_producer.ViewProducer),
-  # create and edit consumer page
+  ('/viewproducerworkers', view_producerworkers.ViewProducerWorkers),
+  ('/viewproducerfactories', view_producerfactories.ViewProducerFactories),
+  ('/viewproducerproducts', view_producerproducts.ViewProducerProducts),
+  # create, edit and view consumer page
   ('/createconsumer', create_consumer.CreateConsumerPage),
   ('/storeconsumer', create_consumer.StoreConsumerPage),
   ('/editconsumer', edit_consumer.EditConsumerPage),
   ('/storeeditedconsumer', edit_consumer.StoreEditedConsumerPage),
+  ('/viewconsumer', view_consumer.ViewConsumer),
   # create and edit product
   ('/createproduct', create_product.CreateProductPage),
   ('/storeproduct', create_product.StoreProductPage),

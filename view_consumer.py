@@ -1,15 +1,13 @@
-from google.appengine.api import users
+from google.appengine.api import users, datastore_errors
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
-import bene_util
 import os
 
 
-
 """
-View a Producer Page
+View a Consumer Page
 """
-class ViewProducer(webapp.RequestHandler):
+class ViewConsumer(webapp.RequestHandler):
     def get(self):
         ID = self.request.get('id')
         if not ID:
@@ -18,8 +16,8 @@ class ViewProducer(webapp.RequestHandler):
             '''
             self.redirect('/')
             return
-        producer = db.get(ID)
-        if not producer:
+        consumer = db.get(ID)
+        if not consumer:
             '''
             TODO: if no id is sent, defaults to a page with all workers? 
             '''
@@ -29,38 +27,33 @@ class ViewProducer(webapp.RequestHandler):
             self.response.out.write(template.render(path, template_values))
             return
         # Make a dictionary for template
-        name = producer.name
-        description = producer.description
-        
-        products = producer.products()
-        workers = producer.workers()
-        factories = producer.factories()
+        name = consumer.name
+        profile = consumer.profile
         
         template_values = {}
         template_values['id'] = ID
+        template_values['consumer'] = consumer
         template_values['name'] = name
-        template_values['description'] = description
-        template_values['factories'] = factories
-        template_values['products'] = products 
-        template_values['producer'] = producer
-        template_values['workers'] = workers
-        template_values['url'] = self.request.url  
+        template_values['profile'] = profile
         
         template_values['can_edit'] = False
         user = users.get_current_user()
         if user:
-            if producer.owner == user:
+            if consumer.owner == user:
                 template_values['can_edit'] = True           
         
-        if producer.logo:
-            template_values['has_image'] = True
-        else:
-            template_values['has_image'] = False
-    
-        path = os.path.join(os.path.dirname(__file__), 'viewproducer.html')
+        path = os.path.join(os.path.dirname(__file__), 'viewconsumer.html')
         self.response.out.write(template.render(path, template_values))
-
-class ProducerImage(webapp.RequestHandler):
+        return
+    
+    #def handle_exception(self, exception, debug_mode):
+        #if debug_mode:
+        #    super(ViewConsumer, self).handle_exception(exception, debug_mode)
+        #else:
+        #    self.response.out.write("<html></body>ERROR</body></html>")
+        #return
+        
+class ConsumerImage(webapp.RequestHandler):
     def get(self):
         # Get the id from the get parameter
         ID = self.request.get('id') 
@@ -70,11 +63,12 @@ class ProducerImage(webapp.RequestHandler):
             '''
             return
         # Fetch the image for this worker
-        producer = db.get(ID)
-        if not producer:
+        consumer = db.get(ID)
+        if not consumer:
             '''
             TODO: what to do here?
             '''
             return
         self.response.headers['Content-Type'] = 'image'
-        self.response.out.write(producer.logo) 
+        self.response.out.write(consumer.picture) 
+        return
