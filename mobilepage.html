@@ -10,7 +10,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="apple-touch-icon" href="icon.png"/>
         
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
         <title>{{name}} by {{producer}}</title>
         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
         <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
@@ -112,38 +112,12 @@
                     
                 } /* end of medial all */
                 
-                /*--- ipad ---*/
-                /*--- full screen mode ---*/
-                @media (device-width: 768px) and (orientation: portrait) {
-                    .panel {
-                        height                       : 934px; /*1004-80*/
-                    }
-                }
-                /*--- browser mode ---*/
-                @media (device-width: 768px) and (orientation: landscape) {
-                    .panel {
-                        height                       : 668px; /*748-80*/
-                    }
-                }
                 
-                /*--- iphone ---*/
-                /*--- full screen mode ---*/
-                @media (max-width: 480px) and (orientation: portrait) {
-                    .panel {
-                        height                       : 380px; /*460-80*/
-                    }
-                }
-                /*--- browser mode ---*/
-                @media (max-width: 480px) and (orientation: landscape) {
-                    .panel {
-                        height                       : 220px; /*300-80*/
-                    }
-                }
                 </style>
     </head>
     <body onload="initialize()">
         <!-- MAIN PANEL -->
-        <div >
+        <div>
             <!-- panel style is a twitter bootstrap style -->
             
             <!-- SCROLLABLE PANEL -->

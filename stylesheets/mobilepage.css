@@ -38,6 +38,7 @@ div#distance-div {
     border: 1px dotted black;
     border-radius: 3px;
     padding-top: 30px;
+    overflow: hidden;
  }
 div#distance-value {
     font-size: 18px;
