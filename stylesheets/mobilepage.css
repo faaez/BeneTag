@@ -23,34 +23,6 @@
 	
 } /* end of medial all */
 
-/*--- ipad ---*/
-/*--- full screen mode ---*/
-@media (device-width: 768px) and (orientation: portrait) {
-	.panel {
-		height                       : 934px; /*1004-80*/
-	}
-}
-/*--- browser mode ---*/
-@media (device-width: 768px) and (orientation: landscape) {
-	.panel {
-		height                       : 668px; /*748-80*/
-	}
-}
-
-/*--- iphone ---*/
-/*--- full screen mode ---*/
-@media (max-width: 480px) and (orientation: portrait) {
-	.panel {
-		height                       : 380px; /*460-80*/
-	}
-}
-/*--- browser mode ---*/
-@media (max-width: 480px) and (orientation: landscape) {
-	.panel {
-		height                       : 220px; /*300-80*/
-	}
-}
-
 body {
 	background-color: #fff;
  	background: url("/static/bgtexture.png");
@@ -182,6 +154,7 @@ div#distance-div {
     border: 1px dotted #000;
     border-radius: 3px;
     padding-top: 30px;
+    overflow: hidden;
  }
 div#distance-value {
     font-size: 18px;

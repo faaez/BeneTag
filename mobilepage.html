@@ -10,8 +10,7 @@
         <meta property="og:image"       content="{{qr_url}}" />
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="apple-touch-icon" href="icon.png"/>
-        
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
         <title>{{name}} by {{producer}} - BeneTag</title>
         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
         <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
@@ -96,12 +95,11 @@
                          }, {scope : 'publish_actions'});
             }
             </script>
-            
-            <!--this style for new properties in iOS 5 could be moved to css file if need be -->
+
     </head>
     <body onload="initialize()">
         <!-- MAIN PANEL -->
-        <div >
+        <div>
             <!-- panel style is a twitter bootstrap style -->
             
             <!-- SCROLLABLE PANEL -->
@@ -131,9 +129,13 @@
                 <table id="badges">
                     
                     {% for badge in badges %}
-                    {%if forloop.counter0|divisibleby:3%} <tr> {%endif%}
+                        {%if forloop.counter0|divisibleby:3 %} 
+                            <tr> 
+                        {%endif%}
                             <td><img id="badgeimage" src="badgeimage?key={{badge}}"></img </td>
-                    {%if forloop.counter1|divisibleby:3%} </tr> {%endif%}
+                        {%if forloop.counter|divisibleby:3 %} 
+                            </tr> 
+                        {%endif%}
                     {%endfor%}
                 </table>
                 {%endif%}

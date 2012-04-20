@@ -39,6 +39,9 @@ class ViewProduct(webapp.RequestHandler):
         template_values['badges'] = product.badges
         template_values['rating'] = product.rating
         template_values['workers'] = product.workers()
+        if product.badges:
+            template_values['badges'] = product.badges
+            template_values['has_badges'] = True
         if product.picture:
             template_values['has_image'] = True
         else:
