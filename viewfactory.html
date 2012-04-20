@@ -30,6 +30,7 @@
 <h4>Address: {{address}}</h4>
 <hr></hr>
 
+
 <h4>Products</h4>
 <div>
 {% for product in products%}
@@ -49,6 +50,7 @@
     {% if latitude and longitude %}
         <div id="map_canvas"></div>
     {% endif %}
+
 
 {% if can_edit %}
     <small><a href="/editfactory?id={{id}}">Edit your factory profile</a></small>
