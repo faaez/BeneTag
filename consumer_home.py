@@ -15,15 +15,15 @@ class HomePage(webapp.RequestHandler):
         user = users.get_current_user()
         
         if user:
-            if bene_util.getCurrentUser().isConsumer:
+            if bene_util.getCurrentUser().isProducer:
                 self.redirect('/')
                 return
-            if bene_util.getCurrentProducer() == None: # if producer page doesn't exist, need to create one
-                self.redirect('/createproducer?%s' % urllib.urlencode({'redirect': 'producerhome', 'msg': True}))
+            if bene_util.getCurrentConsumer() == None: # if producer page doesn't exist, need to create one
+                self.redirect('/createconsumer?%s' % urllib.urlencode({'redirect': 'consumerhome', 'msg': True}))
                 return
             else: # if setup done, then show home page
                 template_values = bene_util.decodeURL(self.request.uri)
-                path = os.path.join(os.path.dirname(__file__), 'producerhome.html')
+                path = os.path.join(os.path.dirname(__file__), 'consumerhome.html')
                 self.response.out.write(template.render(path, template_values))
                 return
         else:

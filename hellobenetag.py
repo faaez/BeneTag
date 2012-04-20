@@ -1,8 +1,11 @@
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 import about
+import consumer_home
 import create_badge
+import create_consumer
 import create_factory
+import create_producer
 import create_product
 import create_qr
 import create_worker
@@ -24,14 +27,19 @@ import view_worker
 
 application = webapp.WSGIApplication([
   ('/', home.HomePage),
+  ('/signup', signup.Signup), 
   ('/producerhome', producer_home.HomePage),
+  ('/consumerhome', consumer_home.HomePage), 
   ('/about', about.AboutPage),
   # create and edit producer page
-  ('/signup', signup.CreateProducerPage),
-  ('/storeproducer', signup.StoreProducerPage),
+  ('/createproducer', create_producer.CreateProducerPage),
+  ('/storeproducer', create_producer.StoreProducerPage),
   ('/editproducer', edit_producer.EditProducerPage),
   ('/storeeditedproducer', edit_producer.StoreEditedProducerPage),
   ('/viewproducer', view_producer.ViewProducer),
+  # create and edit consumer page
+  ('/createconsumer', create_consumer.CreateConsumerPage),
+  ('/storeconsumer', create_consumer.StoreConsumerPage),
   # create and edit product
   ('/createproduct', create_product.CreateProductPage),
   ('/storeproduct', create_product.StoreProductPage),

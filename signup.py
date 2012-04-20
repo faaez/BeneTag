@@ -6,56 +6,46 @@ import os
 import bene_util
 
 
-
-"""
-Creates a form to sign up as a Producer
-"""
-class CreateProducerPage(webapp.RequestHandler):
+class Signup(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        if user: # user signed in
-            if bene_util.getCurrentProducer() == None: # no producer page, so create one 
-                template_values = bene_util.decodeURL(self.request.uri)
-                path = os.path.join(os.path.dirname(__file__), 'signup.html')
-                self.response.out.write(template.render(path, template_values))
-            else: # already has producer page, so redirect
-                ''' 
-                TODO: Redirect to producer page here. Or have some indication of already signed in
-                If another redirect is specified, e.g. from createfactory, it wouldn't come into this else statement
-                (since redirect is specified only if producer page doesn't exist) 
-                '''
-                self.redirect('/')
-        else: # user not signed in
-            self.redirect(users.create_login_url(self.request.uri))
-
-"""
-Puts a Producer in the database
-"""
-class StoreProducerPage(webapp.RequestHandler):
-    def post(self):
-        user = users.get_current_user()
-        if user:
-            if bene_util.getCurrentProducer() == None: # no producer, so add to store
-                '''
-                TODO: If for some reason user refreshes store producer page, then they should get a warning of some sort?
-                Another way this could happen is if they store, and then press back to the signup page, and press store again.
-                What to do in that case? Warning or just ignore? Currently, we're just ignoring
-                Note that this could be deliberate attempt by user to change value
-                '''
-                _name = self.request.get('name')
-                _logo = self.request.get('logo')
-                _description = self.request.get('description')
-                if isinstance(_logo, unicode):
-                    _logo = _logo.encode('utf-8', 'replace')
-                    
-                p = entities.Producer(name = _name, 
-                                      email=user.nickname(), 
+        if user: # signed in
+            if not bene_util.getCurrentUser(): # no user exists
+                producer = self.request.get('producer')
+                consumer = self.request.get('consumer')
+                if producer and not consumer: # make person a producer only in most restricted case
+                    u = entities.User(email=user.nickname(),
                                       owner=user,
-                                      description=_description,
-                                      logo=db.Blob(_logo),
-                                      verified=False)
-                p.put()
-                        
-            self.redirect('/'+self.request.get('redirect'))
-        else:
+                                      isConsumer=False,
+                                      isProducer=True)
+                    u.put()
+                    self.redirect('/')
+                    return
+                else: # all other cases, make consumer
+                    u = entities.User(email=user.nickname(),
+                                      owner=user,
+                                      isConsumer=True,
+                                      isProducer=False)
+                    u.put()
+                    self.redirect('/')
+                    return
+                
+            
+            if bene_util.getCurrentUser().isProducer: # signed in producer
+                if not bene_util.getCurrentProducer(): # no producer page, so create one 
+                    self.redirect('/createproducer')
+                    return
+                else: # already has producer page, so redirect
+                    self.redirect('/producerhome')
+                    return
+            else: # signed in consumer
+                if not bene_util.getCurrentConsumer(): # no consumer page, so create on
+                    self.redirect('/createconsumer')
+                    return
+                else: # already has consumer page, so redirect
+                    self.redirect('/consumerhome')
+                    return
+        else: # need to sign in
             self.redirect(users.create_login_url(self.request.uri))
+            return
+

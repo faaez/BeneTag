@@ -1,5 +1,25 @@
 from google.appengine.ext import db
 
+class User(db.Model):
+    email = db.StringProperty()
+    isProducer = db.BooleanProperty()
+    isConsumer = db.BooleanProperty()
+    owner = db.UserProperty()
+
+class Consumer(db.Model):
+    #profile information
+    name = db.StringProperty()
+    email = db.StringProperty()
+    profile = db.TextProperty()
+    picture = db.BlobProperty()
+
+    #security
+    owner = db.UserProperty()
+    verified = db.BooleanProperty()
+    
+    #closet
+    
+
 """
 Data type representing a producer
 """
@@ -8,11 +28,11 @@ class Producer(db.Model):
     name = db.StringProperty(required=True)
     email = db.StringProperty(required=True)
     description = db.TextProperty()
-    verified = db.BooleanProperty()
     logo = db.BlobProperty()
     
     #security
     owner = db.UserProperty()
+    verified = db.BooleanProperty()
        
     #hierarchical information    
     def factories(self):

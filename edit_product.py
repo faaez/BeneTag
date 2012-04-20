@@ -15,9 +15,12 @@ class EditProductPage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user: # if user signed in
+            if bene_util.getCurrentUser().isConsumer:
+                self.redirect('/')
+                return
             _producer = bene_util.getCurrentProducer()
             if _producer == None: # if producer page doesn't exist, need to create one
-                self.redirect('/signup')
+                self.redirect('/createproducer')
                 return
             else: # if producer page exists
                 if _producer.verified: # if verified
@@ -80,6 +83,7 @@ class EditProductPage(webapp.RequestHandler):
                     return
         else: # otherwise, request sign in
             self.redirect(users.create_login_url(self.request.uri))
+            return
             
       
 """
@@ -89,9 +93,12 @@ class StoreEditedProductPage(webapp.RequestHandler):
     def post(self):
         user = users.get_current_user()
         if user: # if user signed in
+            if bene_util.getCurrentUser().isConsumer:
+                self.redirect('/')
+                return
             _producer = bene_util.getCurrentProducer()
             if _producer == None: # if producer page doesn't exist, need to create one
-                self.redirect('/signup')
+                self.redirect('/createproducer')
                 return
             else: # if producer page exists
                 if _producer.verified: # if producer is verified, then store

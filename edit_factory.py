@@ -14,9 +14,12 @@ class EditFactoryPage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user() 
         if user: # user signed in
+            if bene_util.getCurrentUser().isConsumer:
+                self.redirect('/')
+                return
             _producer = bene_util.getCurrentProducer()
             if _producer  == None: # no producer signed up, so ask to sign up
-                self.redirect('/signup')
+                self.redirect('/createproducer')
                 return
             else: #if producer signed up
                 if _producer.verified: # if producer is verified
@@ -53,9 +56,12 @@ class StoreEditedFactoryPage(webapp.RequestHandler):
         user = users.get_current_user()
         
         if user: # user signed in
+            if bene_util.getCurrentUser().isConsumer:
+                self.redirect('/')
+                return
             _producer = bene_util.getCurrentProducer()
             if _producer == None: # no producer signed up, so ask to sign up
-                self.redirect('/signup')
+                self.redirect('/createproducer')
                 return
             else: # if producer signed up
                 if _producer.verified: # if producer is verified

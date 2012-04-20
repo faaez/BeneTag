@@ -15,10 +15,17 @@ class HomePage(webapp.RequestHandler):
         user = users.get_current_user()
         
         if user: # if user signed in
-            if bene_util.getCurrentProducer() == None: # if producer page doesn't exist, need to create one
-                self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'producerhome', 'msg': True}))
-            else: # if setup done, then go to home page
-                self.redirect('/producerhome')
+            signed_in_user = bene_util.getCurrentUser()
+            if signed_in_user.isProducer:
+                if not bene_util.getCurrentProducer(): # if producer page doesn't exist, need to create one
+                    self.redirect('/createproducer?%s' % urllib.urlencode({'redirect': 'producerhome', 'msg': True}))
+                else: # if setup done, then go to home page
+                    self.redirect('/producerhome')
+            else:
+                if not bene_util.getCurrentConsumer():
+                    self.redirect('/createconsumer?%s' % urllib.urlencode({'redirect': 'consumerhome', 'msg': True}))
+                else:
+                    self.redirect('/consumerhome')
         else: # otherwise, show button for signing in and searching
             template_values = {}
             path = os.path.join(os.path.dirname(__file__), 'home.html')

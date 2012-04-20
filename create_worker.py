@@ -14,10 +14,14 @@ Creates a form to create a Worker
 class CreateWorkerPage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        if user: # if user not signed in
+        if user: # if user signed in
+            if bene_util.getCurrentUser().isConsumer:
+                self.redirect('/')
+                return
             _producer = bene_util.getCurrentProducer()
             if _producer == None: # if producer page doesn't exist, need to create one
-                self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'createworker', 'msg': True}))
+                self.redirect('/createproducer?%s' % urllib.urlencode({'redirect': 'createworker', 'msg': True}))
+                return
             else: # if producer page exists
                 if _producer.verified: # if producer is verified, display form to create new worker
                     template_values = bene_util.decodeURL(self.request.uri)
@@ -25,10 +29,13 @@ class CreateWorkerPage(webapp.RequestHandler):
                 
                     path = os.path.join(os.path.dirname(__file__), 'createworker.html')
                     self.response.out.write(template.render(path, template_values))
+                    return
                 else: # if not verified
                     self.redirect('/producerhome?%s' % urllib.urlencode({'verify': True}))
+                    return
         else: # otherwise, request sign in
             self.redirect(users.create_login_url(self.request.uri))
+            return
 """
 Puts a worker in the database
 """
@@ -36,9 +43,13 @@ class StoreWorkerPage(webapp.RequestHandler):
     def post(self):
         user = users.get_current_user()
         if user: # if user signed in
+            if bene_util.getCurrentUser().isConsumer:
+                self.redirect('/')
+                return
             _producer = bene_util.getCurrentProducer()
             if _producer == None: # if producer page doesn't exist, need to create one
-                self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'storeworker', 'msg': True}))
+                self.redirect('/createproducer?%s' % urllib.urlencode({'redirect': 'storeworker', 'msg': True}))
+                return
             else: # if producer page exists
                 if _producer.verified: # if producer is verified, then store
                     _name = self.request.get('name')
@@ -63,11 +74,15 @@ class StoreWorkerPage(webapp.RequestHandler):
                     if bene_util.doesWorkerExist(f) == False: 
                         f.put()
                         self.redirect('/createworker?%s' % urllib.urlencode({'added': True}))
+                        return
                     else:
                         self.redirect('/createworker?%s' % urllib.urlencode({'repeat': True}))
+                        return
                     #self.redirect('/')
                 else: # if not verified, then redirect to page with message saying they need to verify 
                     self.redirect('/createworker?%s' % urllib.urlencode({'verify': True}))
+                    return
                     
         else: # otherwise, request sign in
             self.redirect(users.create_login_url(self.request.uri))
+            return

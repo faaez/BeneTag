@@ -16,9 +16,12 @@ class EditWorkerPage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user: # if user not signed in
+            if bene_util.getCurrentUser().isConsumer:
+                self.redirect('/')
+                return
             _producer = bene_util.getCurrentProducer()
             if _producer == None: # if producer page doesn't exist, need to create one
-                self.redirect('/signup')
+                self.redirect('/createproducer')
                 return
             else: # if producer page exists
                 if _producer.verified: # if producer is verified 
@@ -63,9 +66,12 @@ class StoreEditedWorkerPage(webapp.RequestHandler):
     def post(self):
         user = users.get_current_user()
         if user: # if user signed in
+            if bene_util.getCurrentUser().isConsumer:
+                self.redirect('/')
+                return
             _producer = bene_util.getCurrentProducer()
             if _producer == None: # if producer page doesn't exist, need to create one
-                self.redirect('/signup')
+                self.redirect('/createproducer')
                 return
             else: # if producer page exists
                 if _producer.verified: # if producer is verified, then store

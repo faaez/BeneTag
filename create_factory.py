@@ -16,9 +16,12 @@ class CreateFactoryPage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user() 
         if user: # user signed in
+            if bene_util.getCurrentUser().isConsumer:
+                self.redirect('/')
+                return
             _producer = bene_util.getCurrentProducer()
             if _producer  == None: # no producer signed up, so ask to sign up
-                self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'createfactory', 'msg': True}))
+                self.redirect('/createproducer?%s' % urllib.urlencode({'redirect': 'createfactory', 'msg': True}))
                 return
             else: #if producer signed up
                 if _producer.verified: # if producer is verified
@@ -41,9 +44,12 @@ class StoreFactoryPage(webapp.RequestHandler):
         user = users.get_current_user()
         
         if user: # user signed in
+            if bene_util.getCurrentUser().isConsumer:
+                self.redirect('/signup')
+                return
             _producer = bene_util.getCurrentProducer()
             if _producer == None: # no producer signed up, so ask to sign up
-                self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'storefactory', 'msg': True}))
+                self.redirect('/createproducer?%s' % urllib.urlencode({'redirect': 'storefactory', 'msg': True}))
                 return
             else: # if producer signed up
                 if _producer.verified: # if producer is verified

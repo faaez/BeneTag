@@ -11,9 +11,9 @@
   <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
     <h2>
       {% if redirect %}
-      	<form action="/storeproducer?redirect={{redirect}}" enctype="multipart/formdata" method="post">
+      	<form action="/storeproducer?redirect={{redirect}}" enctype="multipart/form-data" method="post">
       {% else %}
-        <form action="/storeproducer" enctype="multipart/formdata" method="post">
+        <form action="/storeproducer" enctype="multipart/form-data" method="post">
       {% endif %}
       {% if msg %}
         You need to create a producer page first<br />

@@ -15,9 +15,13 @@ class CreateProductPage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user: # if user signed in
+            if bene_util.getCurrentUser().isConsumer:
+                self.redirect('/')
+                return
             _producer = bene_util.getCurrentProducer()
             if _producer == None: # if producer page doesn't exist, need to create one
-                self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'createproduct', 'msg': True}))
+                self.redirect('/createproducer?%s' % urllib.urlencode({'redirect': 'createproduct', 'msg': True}))
+                return
             else: # if producer page exists
                 if _producer.verified: # if verified, create form to get new product        
                     template_values = bene_util.decodeURL(self.request.uri)
@@ -26,10 +30,13 @@ class CreateProductPage(webapp.RequestHandler):
                     template_values['badges'] = entities.Badge.all()
                     path = os.path.join(os.path.dirname(__file__), 'createproduct.html')
                     self.response.out.write(template.render(path, template_values))
+                    return
                 else: # if not verified
                     self.redirect('/producerhome?%s' % urllib.urlencode({'verify': True}))
+                    return
         else: # otherwise, request sign in
             self.redirect(users.create_login_url(self.request.uri))
+            return
             
       
 """
@@ -39,9 +46,13 @@ class StoreProductPage(webapp.RequestHandler):
     def post(self):
         user = users.get_current_user()
         if user: # if user signed in
+            if bene_util.getCurrentUser().isConsumer:
+                self.redirect('/')
+                return
             _producer = bene_util.getCurrentProducer()
             if _producer == None: # if producer page doesn't exist, need to create one
-                self.redirect('/signup?%s' % urllib.urlencode({'redirect': 'storeproduct', 'msg': True}))
+                self.redirect('/createproducer?%s' % urllib.urlencode({'redirect': 'storeproduct', 'msg': True}))
+                return
             else: # if producer page exists
                 if _producer.verified: # if producer is verified, then store
                     _name = self.request.get('name')
@@ -78,10 +89,14 @@ class StoreProductPage(webapp.RequestHandler):
                                 worker.product.append(key)
                                 worker.put()
                         self.redirect('/createproduct?%s' % urllib.urlencode({'added': True}))
+                        return
                     else:
                         self.redirect('/createproduct?%s' % urllib.urlencode({'repeat': True}))
+                        return
                     #self.redirect('/mobilepage?id=' + str(p.key()))
                 else: # if not verified
                     self.redirect('/producerhome?%s' % urllib.urlencode({'verify': True}))
+                    return
         else: # if not logged in
             self.redirect(users.create_login_url(self.request.uri))
+            return
