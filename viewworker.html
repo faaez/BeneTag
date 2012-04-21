@@ -1,51 +1,55 @@
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
-     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <link rel="stylesheet" type="text/css" href="stylesheets/viewfactory.css" />
-    <title>BeneTag</title>
-    <script type="text/javascript">
-        function initialize() {
-            {% if latitude and longitude %}
-                var latlng = new google.maps.LatLng({{latitude}}, {{longitude}});
-                var myOptions = {
-                    zoom: 8,
-                    center: latlng,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-                document.getElementById("map_canvas").style.position="fixed";
-                var marker = new google.maps.Marker({
-                    position: latlng,
-                    map: map,
-                });
-            {% endif %}
-}
-</script>
-</head>
-<body onload="initialize()">
-<h1 id="workername">{{ name }}</h1>
-{% if has_image %}
-<img id="workerimage" src="workerimage?id={{id}}"></img>
-{% endif %}   
-<h4>His Story</h4>
-<h4>{{profile}}</h4>
-<hr></hr>
-<h4>Employer: <a href="/viewproducer?id={{producer.key}}">{{producer.name}}</a></h4>
-<h4>Factory : <a href="/viewfactory?id={{factory.key}}">{{factory.name}}</a></h4>
-<hr></hr>
-    {% if latitude and longitude %}
-        <div id="map_canvas"></div>
-    {% endif %}
+	<head>
+		{% include "styles.html" %}
+		<title>BeneTag</title>
+		
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+		
+		<script type="text/javascript">
+			function initialize() {
+				{% if latitude and longitude %}
+					var latlng = new google.maps.LatLng({{latitude}}, {{longitude}});
+					var myOptions = {
+						zoom: 8,
+						center: latlng,
+						mapTypeId: google.maps.MapTypeId.ROADMAP
+					};
+					var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+					document.getElementById("map_canvas").style.position="fixed";
+					var marker = new google.maps.Marker({
+						position: latlng,
+						map: map,
+					});
+				{% endif %}
+			}
+		</script>
+	</head>
 
-  </body>
-<p>Products:</p>
-    {% for product in products %}
-	<p><a href="/mobilepage?id={{product.key}}">{{product.name}}</a></p>
-    {% endfor %}
-
-{% if can_edit %}
-    <small><a href="/editworker?id={{id}}">Edit your worker's profile</a></small>
-{% endif %}
-
+	<body onload="initialize()">
+		{% include "headersmall.html" %}
+		<h1 id="workername">{{ name }}</h1>
+		{% if has_image %}
+		<img id="workerimage" src="workerimage?id={{id}}"></img>
+		{% endif %}   
+		<h4>His Story</h4>
+		<h4>{{profile}}</h4>
+		<hr></hr>
+		<h4>Employer: <a href="/viewproducer?id={{producer.key}}">{{producer.name}}</a></h4>
+		<h4>Factory : <a href="/viewfactory?id={{factory.key}}">{{factory.name}}</a></h4>
+		<hr></hr>
+			{% if latitude and longitude %}
+				<div id="map_canvas"></div>
+			{% endif %}
+		
+		  </body>
+		<p>Products:</p>
+			{% for product in products %}
+			<p><a href="/mobilepage?id={{product.key}}">{{product.name}}</a></p>
+			{% endfor %}
+		
+		{% if can_edit %}
+			<small><a href="/editworker?id={{id}}">Edit your worker's profile</a></small>
+		{% endif %}
+		{% include "footer.html" %}
+	</body>
 </html>

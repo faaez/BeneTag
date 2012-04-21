@@ -1,21 +1,37 @@
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="stylesheets/mobilepage.css" />
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	
+	{% include "styles.html" %}
+ 	<title>BeneTag</title>
     
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/> 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-    <title>BeneTag</title>
+    
   </head>
+  
+	<script type="text/javascript">
+		function initialize() {
+			var factory_names = new Array();
+			{% for factory in factories %}
+				{% if factory.unique %}
+					factory_names.push('{{factory.name}} ({{factory.unique}})');
+				{% else %}
+					factory_names.push('{{factory.name}}');
+				{% endif %}
+			{% endfor %}
+			$('#factoryName').autocomplete({
+				source: factory_names
+			});
+		}
+  	</script>
+  
+  
   <body>
 
   <body onload="initialize()">
   
-    <p id = "logo"> <a href="./"> BeneTag </a></div>
-	<hr id="top-line">
+	{% include "header.html" %}
     
     <p>
      {% if added %}
@@ -45,26 +61,8 @@
       <div>Unique ID (optional): <input name="unique"></input></div><br />
       <div><input type="submit" value="Create product" a class='span4 btn medium'></div>
     </form></p>
-    
-    <hr id="separator-line">
 	
-	<p id = "footer"> <a href='/about'>About BeneTag</a><br>
-	Copyright BeneTag 2011 </p>
+	{% include "footer.html" %}	
     
   </body>
-  <script type="text/javascript">
-    function initialize() {
-        var factory_names = new Array();
-        {% for factory in factories %}
-            {% if factory.unique %}
-            	factory_names.push('{{factory.name}} ({{factory.unique}})');
-            {% else %}
-            	factory_names.push('{{factory.name}}');
-            {% endif %}
-        {% endfor %}
-        $('#factoryName').autocomplete({
-            source: factory_names
-        });
-    }
-  </script>
 </html>

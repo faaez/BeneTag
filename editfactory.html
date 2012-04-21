@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
+	{% include "styles.html" %}
     <title> Edit Factory </title>
-    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/createfactory.css" />
+    
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  
   </head>
+  
   <script>
     var map;
     var marker;
@@ -54,28 +56,33 @@
         $('#location').val(lat+','+lng);
     }
   </script>
+  
   <body onload="initialize()">
-  <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
-  {% if repeatedit %}
-  <p>Unique ID already exists</p>
-  {% endif %}
-
-
-    <h2>
-      {% if redirect %}
-      	<form action="/storeeditedfactory?id={{id}}&redirect={{redirect}}" enctype="multipart/form-data" method="post">
-      {% else %}
-        <form action="/storeeditedfactory?id={{id}}" enctype="multipart/form-data" method="post">
-      {% endif %}
-      <div>Name: <input name="name" value="{{name_old}}"></input></div>
-      <div>Address: <input id="address" onchange="address_change()" name="address" value="{{address_old}}"></input></div>
-      <div>Picture:<input type="file" name="picture"/></div><br />
-      <div>Unique ID (optional): <input name="unique" value="{{unique_old}}"></input></div><br />
-	  <input id="location" name="location" type="hidden"></input><br />
-      <div><input type="submit" value="Save" a class='span4 btn medium'></div>
-    </form></h2>
-
-    <div id="map_canvas"></div>
+  
+	  {% include "header.html" %}
+	  
+	  {% if repeatedit %}
+	  <p>Unique ID already exists</p>
+	  {% endif %}
+	
+	
+		<h2>
+		  {% if redirect %}
+			<form action="/storeeditedfactory?id={{id}}&redirect={{redirect}}" enctype="multipart/form-data" method="post">
+		  {% else %}
+			<form action="/storeeditedfactory?id={{id}}" enctype="multipart/form-data" method="post">
+		  {% endif %}
+		  <div>Name: <input name="name" value="{{name_old}}"></input></div>
+		  <div>Address: <input id="address" onchange="address_change()" name="address" value="{{address_old}}"></input></div>
+		  <div>Picture:<input type="file" name="picture"/></div><br />
+		  <div>Unique ID (optional): <input name="unique" value="{{unique_old}}"></input></div><br />
+		  <input id="location" name="location" type="hidden"></input><br />
+		  <div><input type="submit" value="Save" a class='span4 btn medium'></div>
+		</form></h2>
+	
+		<div id="map_canvas"></div>
+		
+		{% include "footer.html" %}
 
   </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/fb/benetag#">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">
+    
     	<meta property="fb:app_id"      content="286512274727203" /> 
         <meta property="og:type"        content="website" /> 
         <meta property="og:url"         content="{{url}}" /> 
@@ -10,11 +10,12 @@
         <meta property="og:image"       content="{{qr_url}}" />
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="apple-touch-icon" href="icon.png"/>
-        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <title>{{name}} by {{producer.name}} - BeneTag</title>
+        
         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-        <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="stylesheets/mobilepage.css" />
+        
+        {% include "styles.html" %}
+        <title>{{name}} by {{producer.name}} - BeneTag</title>
+        
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script src="//connect.facebook.net/en_US/all.js"></script>
@@ -108,8 +109,7 @@
             	<!-- scrollable and panel styles are new styles -->
                 <!-- here, content -->
             
-                <p id="brand"><a href="./"> BeneTag 4/16 </a></p>
-                <hr id="top-line">
+                {% include "headersmall.html" %}
                 
                 <table id="productinfo">
                     {% if has_image %}
@@ -200,7 +200,7 @@
                 
                 <hr id="separator-line">
                 
-                <p id = "comments-link"> 59 comments > </p>
+                <p id = "comments-link"> 59 reviews > </p>
                 
                 <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
                 <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
@@ -209,5 +209,8 @@
             
             </div>
         </div>
+        
+        {% include "footer.html" %}
+        
     </body>
 </html>

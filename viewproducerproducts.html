@@ -1,21 +1,26 @@
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
-     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <link rel="stylesheet" type="text/css" href="stylesheets/viewfactory.css" />
-    <title>BeneTag</title>
-
-</head>
-<body onload="initialize()">
-<h1>{{producer.name}}</a></h1>
-
-<p>Products:</p>
-{% for product in products %}
-    <p><a href="/mobilepage?id={{product.key}}">{{product.name}}</a> 
-       {% if can_edit %} <small>(<a href="/editproduct?id={{product.key}}">Edit </a>)</small>{% endif %}
-    </p>
-{% endfor %}
-
-
+	<head>
+		{% include "styles.html" %}
+		<title>BeneTag</title>
+		
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	</head>
+	
+	<body onload="initialize()">
+		
+		{% include "headersmall.html" %}
+		
+		<h1>{{producer.name}}</a></h1>
+		
+		<p>Products:</p>
+		{% for product in products %}
+			<p><a href="/mobilepage?id={{product.key}}">{{product.name}}</a> 
+			   {% if can_edit %} <small>(<a href="/editproduct?id={{product.key}}">Edit </a>)</small>{% endif %}
+			</p>
+		{% endfor %}
+		
+		{% include "footer.html" %}
+	
+	</body>
 
 </html>

@@ -1,17 +1,19 @@
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
+    {% include "styles.html" %}
     <title>BeneTag</title>
   </head>
   <body>
-    <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
+  
+    {% include "header.html" %}
+    
     <h2>
-    {% if added %}
-      <p>Badge added successfully</p>
-    {% endif %}
-    {% if repeat %}
-      <p>Badge already exists</p>
-    {% endif %}
+    	{% if added %}
+      		<p>Badge added successfully</p>
+    	{% endif %}
+    	{% if repeat %}
+      		<p>Badge already exists</p>
+    	{% endif %}
 
     <form action="/storebadge" enctype="multipart/form-data" method="post">
       <div>Name: <input name="name"></input></div>
@@ -19,5 +21,8 @@
       <div>Badge Picture:<input type="file" name="picture"></div></br>
       <div><input type="submit" value="Create badge" a class='span4 btn medium'></div>
     </form></h2>
+    
+    {% include "footer.html" %}
+    
   </body>
 </html>
