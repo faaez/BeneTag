@@ -1,28 +1,34 @@
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
-     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <link rel="stylesheet" type="text/css" href="stylesheets/viewfactory.css" />
-    <title>BeneTag</title>
+	<head>
+		{% include "styles.html" %}
+		<title>BeneTag</title>
+		
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	</head>
 
-</head>
-<body onload="initialize()">
-<h1>{{producer.name}}</a></h1>
-
-<p>Description:</p>
-<p>{{producer.description}}</p>
-
-<p><a href="/viewproducerworkers?id={{id}}">Workers</a></p>
-<br />
-
-<p><a href="/viewproducerfactories?id={{id}}">Factories</a></p>
-<br />
-
-<p><a href="/viewproducerproducts?id={{id}}">Products</a></p>
-<br />
-
-{% if can_edit %}
-    <small><a href="/editproducer">Edit your profile</a></small>
-{% endif %}
-
+	<body onload="initialize()">
+		
+		{% include "headersmall.html" %}
+		
+		<h1>{{producer.name}}</a></h1>
+		
+		<p>Description:</p>
+		<p>{{producer.description}}</p>
+		
+		<p><a href="/viewproducerworkers?id={{id}}">Workers</a></p>
+		<br />
+		
+		<p><a href="/viewproducerfactories?id={{id}}">Factories</a></p>
+		<br />
+		
+		<p><a href="/viewproducerproducts?id={{id}}">Products</a></p>
+		<br />
+		
+		{% if can_edit %}
+			<small><a href="/editproducer">Edit your profile</a></small>
+		{% endif %}
+		
+		{% include "footer.html" %}
+		
+	</body>
 </html>

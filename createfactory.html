@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
+  	
+  	{% include "styles.html" %}
     <title> Create a Factory </title>
-    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="stylesheets/mobilepage.css" />
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     
-    <title>BeneTag</title>
   </head>
+ 
   <script>
     var map;
     var marker;
@@ -61,32 +59,27 @@
   </script>
   <body onload="initialize()">
 
-    <p id = "logo"> <a href="./"> BeneTag </a></div>
-	<hr id="top-line">
+   {% include "header.html" %}
 		
-  {% if added %}
-  <p>Factory added successfully</p>
-  {% endif %}
-  {% if repeat %}
-  <p>Factory already exists</p>
-  {% endif %}
-
-    <p><form action="/storefactory" enctype="multipart/form-data" method="post">
-      <div>Name: <input name="name"></input></div>
-      <div>Address: <input id="address" onchange="address_change()" name="address"></input></div>
-      <div>Picture:<input type="file" name="picture"/></div><br />
-      <div>Unique ID (optional): <input name="unique"></input></div><br />
-	  <input id="location" name="location" type="hidden"></input><br />
-      <div><input type="submit" value="Create factory" a class='span4 btn medium'></div>
-    </form></p>
-
-    <div id="map_canvas"></div>
-    
-    <hr id="separator-line">
+	  {% if added %}
+	  <p>Factory added successfully</p>
+	  {% endif %}
+	  {% if repeat %}
+	  <p>Factory already exists</p>
+	  {% endif %}
 	
-	<p id = "footer"> <a href='/about'>About BeneTag</a><br>
-	Copyright BeneTag 2011 </p>
-
+		<p><form action="/storefactory" enctype="multipart/form-data" method="post">
+		  <div>Name: <input name="name"></input></div>
+		  <div>Address: <input id="address" onchange="address_change()" name="address"></input></div>
+		  <div>Picture:<input type="file" name="picture"/></div><br />
+		  <div>Unique ID (optional): <input name="unique"></input></div><br />
+		  <input id="location" name="location" type="hidden"></input><br />
+		  <div><input type="submit" value="Create factory" a class='span4 btn medium'></div>
+		</form></p>
+	
+		<div id="map_canvas"></div>
+		
+	{% include "footer.html" %}
 
   </body>
 </html>

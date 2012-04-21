@@ -1,19 +1,23 @@
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
-     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <link rel="stylesheet" type="text/css" href="stylesheets/viewfactory.css" />
+    {% include "styles.html" %}
     <title>BeneTag</title>
-
-</head>
-<body onload="initialize()">
-<h1>{{consumer.name}}</a></h1>
-
-<p>Profile: </p>
-<p>{{consumer.profile}}</p>
-
-{% if can_edit %}
-    <small><a href="/editproducer">Edit your profile</a></small>
-{% endif %}
-
+    
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/viewfactory.css" />
+    
+	</head>
+	
+	<body onload="initialize()">
+		{% include "headersmall.html" %}
+		<h1>{{consumer.name}}</a></h1>
+		
+		<p>Profile: </p>
+		<p>{{consumer.profile}}</p>
+		
+		{% if can_edit %}
+			<small><a href="/editproducer">Edit your profile</a></small>
+		{% endif %}
+		{% include "footer.html" %}
+	</body>
 </html>

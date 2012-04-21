@@ -1,27 +1,34 @@
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
+  	{% include "styles.html" %}
+  	<title> BeneTag </title>
+  	
+  	
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/> 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
   </head>
+  
   <body>
 
-  <body>
-  <div id="header" width="100%"><img id="headerimg" src="static/header.png" width="100%"></img></div>
-    <h2>
-      {% if redirect %}
-      	<form action="/storeconsumer?redirect={{redirect}}" enctype="multipart/form-data" method="post">
-      {% else %}
-        <form action="/storeconsumer" enctype="multipart/form-data" method="post">
-      {% endif %}
-      {% if msg %}
-        You need to create a profile page first<br />
-      {% endif %}
-      <div>Name: <input name="name" id="name"></input></div>
-      <div>Profile: <textarea name="profile"></textarea></div></br>
-       <div>Picture:<input type="file" name="logo"/></div>
-      <div><input type="submit" value="Sign up" a class="span4 btn medium"></div>
-    </form></h2>
+	  {% include "header.html" %}
+	  
+		<h2>
+		  {% if redirect %}
+			<form action="/storeconsumer?redirect={{redirect}}" enctype="multipart/form-data" method="post">
+		  {% else %}
+			<form action="/storeconsumer" enctype="multipart/form-data" method="post">
+		  {% endif %}
+		  {% if msg %}
+			You need to create a profile page first<br />
+		  {% endif %}
+		  <div>Name: <input name="name" id="name"></input></div>
+		  <div>Profile: <textarea name="profile"></textarea></div></br>
+		   <div>Picture:<input type="file" name="logo"/></div>
+		  <div><input type="submit" value="Sign up" a class="span4 btn medium"></div>
+		</form></h2>
+  
+  	{% include "footer.html" %}
+  
   </body>
 </html>
