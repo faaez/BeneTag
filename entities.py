@@ -16,7 +16,7 @@ class Consumer(db.Model):
     #profile information
     name = db.StringProperty()
     email = db.StringProperty()
-    profileasd = db.TextProperty()
+    profile = db.TextProperty()
     picture = db.BlobProperty()
 
     #security
