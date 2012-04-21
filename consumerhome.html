@@ -11,13 +11,12 @@
     
 	{% include "header.html" %}
     
-    <h2>
-    </br><h2><form action="/productsearchresult" method="post">
-      <div><input name="query" type="search" placeholder="Search product by name"></input></div></br>
-      <div><input type="submit" value="Search" a class='span4 btn large'></div>
-    </form></h2>
+ 	<form action="/productsearchresult" method="post" align ="center">
+		  <input type="search" placeholder="Search product by name"><br>
+		  <button type="submit" class="btn"> Search </button>
+	</form>
     
-    <small><a href="/editconsumer">Edit your profile</a></small>
+    <p><a href="/editconsumer">Edit your profile</a><p>
 	
 	{% include "footer.html" %}
 

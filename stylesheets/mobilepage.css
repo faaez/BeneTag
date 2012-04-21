@@ -142,16 +142,14 @@ p#comments-link{
 hr#top-line {
     margin: 0px;
     width:100%;
-   	border-style: dotted;
-  	border-color: #ddd;
+	border-top: 1px dotted #ddd;
 }
 hr#top-line.spaced {
     margin-bottom: 20px;
 }
 hr#separator-line {
     margin: 40px 85px;
-  	border-style: dotted;
-  	border-color: #ddd;
+  	border-top: 1px dotted #ddd;
 }
 div#distance-div {
     width: 90px;
