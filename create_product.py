@@ -90,7 +90,7 @@ class StoreProductPage(webapp.RequestHandler):
                             for _worker in _workers:
                                 if _worker:
                                     worker = db.get(_worker)
-                                    worker.product.append(key)
+                                    worker.addProduct(key)
                                     worker.put()
                         self.redirect('/createproduct?%s' % urllib.urlencode({'added': True}))
                         return

@@ -157,13 +157,13 @@ class StoreEditedProductPage(webapp.RequestHandler):
                             key = _product.key()
                             if _workers_old:
                                 for worker in _workers_old:
-                                    worker.product.remove(key)
+                                    worker.remProduct(key)
                                     worker.put()
                             if _workers:
                                 for _worker in _workers:
                                     if _worker:
                                         worker = db.get(_worker)
-                                        worker.product.append(key)
+                                        worker.addProduct(key)
                                         worker.put()
                             
                             self.redirect('/mobilepage?%s' % urllib.urlencode({'id': ID}))
