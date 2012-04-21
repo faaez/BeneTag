@@ -82,6 +82,8 @@ img#badgeimage {
 }
 p {
 	font-size: 14px;
+	line-height: 20px;
+	color: #000;
 	margin-left: 25px;
 	margin-right: 25px;
 	text-align:left;
@@ -142,6 +144,9 @@ hr#top-line {
     width:100%;
    	border-style: dotted;
   	border-color: #ddd;
+}
+hr#top-line.spaced {
+    margin-bottom: 20px;
 }
 hr#separator-line {
     margin: 40px 85px;
