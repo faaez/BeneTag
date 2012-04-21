@@ -16,23 +16,32 @@ class Consumer(db.Model):
     #profile information
     name = db.StringProperty()
     email = db.StringProperty()
-    profileasd = db.TextProperty()
-    picture = db.BlobProperty()
-
+    profile = db.TextProperty()
+    
+    _picture = db.BlobProperty()
+    def addPicture(self, picture_add):
+        if picture_add:
+            ''' 
+            TODO: check for mimetype here. if not jpg/png/gif/etc. then don't add?
+            '''
+            if isinstance(picture_add, unicode):
+                self._picture = picture_add.encode('utf-8', 'replace')
+            else:
+                self._picture = picture_add
+        
     #security
     owner = db.UserProperty()
     verified = db.BooleanProperty()
     
     #closet
     _products = db.ListProperty(db.Key)
-    
     def addProduct(self, key):
         self._products.append(key) 
         return
     def remProduct(self, key):
         self._products.remove(key)
         return
-    def products(self):
+    def getProducts(self):
         if self._products:
             __products = db.get(self._products)
             return [product for product in __products if product] # return non-None products
@@ -49,18 +58,28 @@ class Producer(db.Model):
     name = db.StringProperty(required=True)
     email = db.StringProperty(required=True)
     description = db.TextProperty()
-    logo = db.BlobProperty()
+    
+    _picture = db.BlobProperty()
+    def addPicture(self, picture_add):
+        if picture_add:
+            ''' 
+            TODO: check for mimetype here
+            '''
+            if isinstance(picture_add, unicode):
+                self._picture = picture_add.encode('utf-8', 'replace')
+            else:
+                self._picture = picture_add
     
     #security
     owner = db.UserProperty()
     verified = db.BooleanProperty()
        
     #hierarchical information    
-    def factories(self):
+    def getFactories(self):
         return self.factory_set
-    def workers(self):
+    def getWorkers(self):
         return self.worker_set
-    def products(self):
+    def getProducts(self):
         return self.product_set
  
 """
@@ -71,27 +90,32 @@ class Factory(db.Model):
     name = db.StringProperty()
     address = db.PostalAddressProperty()
     location = db.GeoPtProperty()
-    picture = db.BlobProperty()
+    
+    _picture = db.BlobProperty()
+    def addPicture(self, picture_add):
+        if picture_add:
+            ''' 
+            TODO: check for mimetype here
+            '''
+            if isinstance(picture_add, unicode):
+                self._picture = picture_add.encode('utf-8', 'replace')
+            else:
+                self._picture = picture_add
     
     #security
     owner = db.UserProperty()
-    
-    #producer-defined identifier (only for producer)
     unique = db.StringProperty()
-#    def unique(self):
-#        '''
-#        Use this if you want to know any unique id for the entity. 
-#        A possible use of this would be if you want to get input from user about a specific factory, 
-#        and you want to uniquely identify it somehow
-#        '''
-#        if self.unique == None: return self.id
-#        return self.unique 
     
     #hierarchical information
-    producer = db.ReferenceProperty(Producer)
-    def workers(self):
+    _producer = db.ReferenceProperty(Producer)
+    def getProducer(self):
+        return self._producer
+    def addProducer(self, producer_add):
+        self._producer = producer_add
+        
+    def getWorkers(self):
         return self.worker_set
-    def products(self):
+    def getProducts(self):
         return self.product_set
     
 """
@@ -101,32 +125,41 @@ class Worker(db.Model):
     # profile information
     name = db.StringProperty()
     profile = db.TextProperty()
-    picture = db.BlobProperty()
+    
+    _picture = db.BlobProperty()
+    def addPicture(self, picture_add):
+        if picture_add:
+            ''' 
+            TODO: check for mimetype here
+            '''
+            if isinstance(picture_add, unicode):
+                self._picture = picture_add.encode('utf-8', 'replace')
+            else:
+                self._picture = picture_add
     
     # security
     owner = db.UserProperty()
-    
-    #producer-defined identifier (only for producer)
     unique = db.StringProperty()
-#    def unique(self):
-#        '''
-#        Use this if you want to know any unique id for the entity. 
-#        A possible use of this would be if you want to get input from user about a specific worker, 
-#        and you want to uniquely identify it somehow
-#        '''
-#        if self.unique == None: return self.id
-#        return self.unique
-    
+
     # hierarchical information
-    producer = db.ReferenceProperty(Producer)
-    factory = db.ReferenceProperty(Factory)
-    ''' don't use products, use function products() instead '''
+    _producer = db.ReferenceProperty(Producer)
+    def getProducer(self):
+        return self._producer
+    def addProducer(self, producer_add):
+        self._producer = producer_add
+        
+    _factory = db.ReferenceProperty(Factory)
+    def getFactory(self):
+        return self._factory
+    def addFactory(self, factory_add):
+        self._factory = factory_add
+        
     _products = db.ListProperty(db.Key)
     def addProduct(self, key):
         self._products.append(key) 
     def remProduct(self, key):
         self._products.remove(key) 
-    def products(self):
+    def getProducts(self):
         if self._products:
             __products = db.get(self._products)
             return [product for product in __products if product] # return non-None products
@@ -143,28 +176,48 @@ Data type representing a product with a BeneTag
 class Product(db.Model):
     # profile information
     name = db.StringProperty()
-    picture = db.BlobProperty()
+    rating = db.FloatProperty()
+    _picture = db.BlobProperty()
+    def addPicture(self, picture_add):
+        if picture_add:
+            ''' 
+            TODO: check for mimetype here
+            '''
+            if isinstance(picture_add, unicode):
+                self._picture = picture_add.encode('utf-8', 'replace')
+            else:
+                self._picture = picture_add
     
     # security
     owner = db.UserProperty()
-    
-    #producer-defined identifier (only for producer)
     unique = db.StringProperty()
-#    def unique(self): 
-#        '''
-#        Use this if you want to know any unique id for the entity. 
-#        A possible use of this would be if you want to get input from user about a specific product, 
-#        and you want to uniquely identify it somehow
-#        ''' 
-#        if self.unique == None: return self.id
-#        return self.unique
     
     # hierarchical information
-    producer = db.ReferenceProperty(Producer)
-    factory = db.ReferenceProperty(Factory)
-    badges = db.ListProperty(db.Key)
-    rating = db.FloatProperty()
-    def workers(self):
+    _producer = db.ReferenceProperty(Producer)
+    def getProducer(self):
+        return self._producer
+    def addProducer(self, producer_add):
+        self._producer = producer_add
+        
+    _factory = db.ReferenceProperty(Factory)
+    def getFactories(self):
+        return [self._factory]
+    def addFactory(self, factory_add):
+        self._factory = factory_add
+        
+    _badges = db.ListProperty(db.Key)
+    def addBadge(self, key):
+        self._badges.append(key) 
+    def remBadge(self, key):
+        self._badges.remove(key) 
+    def getBadges(self):
+        if self._badges:
+            __badges = db.get(self._badges)
+            return [badge for badge in __badges if badge] # return non-None badges
+        else:
+            return None
+    
+    def getWorkers(self):
         return Worker.all().filter('_products =', self)
 
 """
@@ -172,9 +225,19 @@ Data type representing a badge
 """
 class Badge(db.Model):
     name = db.StringProperty()
-    icon = db.BlobProperty()
-    description = db.StringProperty() 
+    description = db.StringProperty()
+    
+    _picture = db.BlobProperty()
+    def addPicture(self, picture_add):
+        if picture_add:
+            ''' 
+            TODO: check for mimetype here
+            '''
+            if isinstance(picture_add, unicode):
+                self._picture = picture_add.encode('utf-8', 'replace')
+            else:
+                self._picture = picture_add 
     
     # hierarchical information
-    def products(self):
+    def getProducts(self):
         return Product.all().filter('badges =', self)

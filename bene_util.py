@@ -1,42 +1,10 @@
 from google.appengine.api import users
+import bene_query
 import entities
 
 #---------------------------------
 #---------- PRODUCER -------------
 #---------------------------------
-
-"""
-Get the current User entity
-"""
-def getCurrentUser():
-    ''' Get the current producer entity '''
-    _user = users.get_current_user()
-    _users = entities.User.all().filter('owner =', _user)
-    for user in _users: 
-        return user
-    return None
-
-"""
-Get the current Consumer entity
-"""
-def getCurrentConsumer():
-    ''' Get the current producer entity '''
-    user = users.get_current_user()
-    consumers = entities.Consumer.all().filter('owner =', user)
-    for consumer in consumers: 
-        return consumer
-    return None
-
-"""
-Get the current Producer entity
-"""
-def getCurrentProducer():
-    ''' Get the current producer entity '''
-    user = users.get_current_user()
-    producers = entities.Producer.all().filter('owner =', user)
-    for producer in producers: 
-        return producer
-    return None
 
 """ 
 Does a similar producer already exist?
@@ -59,7 +27,7 @@ Does the factory already exist under the current producer?
 def doesExactFactoryExist(factory_add):
     ''' DON'T USE THIS. Use doesFactoryExist() '''
     if factory_add.unique:
-        producer = getCurrentProducer()
+        producer = bene_query.getCurrentProducer()
         if producer:
             # if two have same unique ID
             factories = producer.factories().filter('unique = ', factory_add.unique)
@@ -78,7 +46,7 @@ Does a similar factory already exist under the current producer?
 def doesSimilarFactoryExist(factory_add):
     ''' DON'T USE THIS. Use doesFactoryExist() '''
     # checks for same factory name
-    producer = getCurrentProducer()
+    producer = bene_query.getCurrentProducer()
     if producer:
         factories = producer.factories().filter('name = ', factory_add.name)
         for factory in factories:
@@ -119,7 +87,7 @@ Does the exact worker already exist under the current producer?
 def doesExactWorkerExist(worker_add):
     ''' DON'T USE THIS. Use doesWorkerExist() '''
     if worker_add.unique: 
-        producer = getCurrentProducer()
+        producer = bene_query.getCurrentProducer()
         if producer:
             # if two workers have same unique ID
             workers = producer.workers().filter('unique =', worker_add.unique)
@@ -138,7 +106,7 @@ Does a similar worker already exist under the current producer?
 def doesSimilarWorkerExist(worker_add):
     ''' DON'T USE THIS. Use doesWorkerExist() '''
     # checks for same worker name
-    producer = getCurrentProducer()
+    producer = bene_query.getCurrentProducer()
     if producer:
         workers = producer.workers().filter('name =', worker_add.name)
         for worker in workers:
@@ -164,7 +132,7 @@ Does the exact product already exist under the current producer?
 def doesExactProductExist(product_add):
     ''' DON'T USE THIS. Use doesProductExist() '''
     if product_add.unique:
-        producer = getCurrentProducer()
+        producer = bene_query.getCurrentProducer()
         if producer:
             products = producer.products().filter('unique =', product_add.unique)
             for product in products:
@@ -177,9 +145,9 @@ Does a similar product already exist?
 def doesSimilarProductExist(product_add):
     ''' DON'T USE THIS. Use doesProductExist() '''
     # checks for same product name 
-    producer = getCurrentProducer()
+    producer = bene_query.getCurrentProducer()
     if producer:
-        products = getCurrentProducer().products().filter('name =', product_add.name)
+        products = bene_query.getCurrentProducer().products().filter('name =', product_add.name)
         for product in products:
             if product: return True    
     return False
@@ -204,7 +172,7 @@ def doesProductExist(product_add):
 Decode a url into a dictionary of arguments
 Assumption: Only one value per argument
 """
-def decodeURL(url):
+def urldecode(url):
     ''' Decode a url into a dictionary of arguments. Assumption: Only one value per argument '''
     queries = url.split('?') 
     dictionary = {} 
@@ -215,3 +183,13 @@ def decodeURL(url):
                 key,val = arg.split('=') 
                 dictionary[key] = val
     return dictionary
+
+
+"""
+Get email for a user
+"""
+def getEmail(user):
+    ''' Get email for a user '''
+    if user:
+        return user.nickname()
+    return None

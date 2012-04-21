@@ -1,32 +1,45 @@
 from google.appengine.api import users
-from google.appengine.ext import webapp, db
-from google.appengine.ext.webapp import template, blobstore_handlers
+from google.appengine.ext import webapp
+from google.appengine.ext.webapp import template 
 import bene_util
 import entities
 import os
-import sys
 import urllib
 
 
 
 """
-Creates a form for Producers to enter information 
-about a Badge
+Form to create a Badge
 """
 class CreateBadgePage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        if user:
-            if not users.is_current_user_admin():
-                self.redirect('/')
-                return
-            template_values = bene_util.decodeURL(self.request.uri)
-            path = os.path.join(os.path.dirname(__file__), 'createbadge.html')
-            self.response.out.write(template.render(path, template_values))
-            return
-        else:
+        if not user: # need to signin first
             self.redirect('/?signin=True')
             return
+            
+        if not users.is_current_user_admin(): # need to be admin to create badge
+            self.redirect('/')
+            return
+            
+        # display form to create badge
+        template_values = bene_util.urldecode(self.request.uri)
+        path = os.path.join(os.path.dirname(__file__), 'createbadge.html')
+        self.response.out.write(template.render(path, template_values))
+        return
+    
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(CreateBadgePage, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return
+            
 
 """
 Page that stores badge in datastore
@@ -34,27 +47,37 @@ Page that stores badge in datastore
 class StoreBadgePage(webapp.RequestHandler):
     def post(self):
         user = users.get_current_user()
-        if user: # if user has signed in
-            if not users.is_current_user_admin():
-                self.redirect('/')
-                return
-            _name = self.request.get('name')
-            _description = self.request.get('description')
-            _icon = self.request.POST["icon"]
-                    
-            b = entities.Badge(name=_name, description=_description)
-                    
-            if _icon:
-                if isinstance(_icon,unicode):
-                    _icon = _icon.encode('utf-8', 'replace')
-                b.icon = db.Blob(_icon.value)
-            
-            if bene_util.doesBadgeExist(b) == False: 
-                b.put()
-                self.redirect('/createbadge?%s' % urllib.urlencode({'added': True}))
-            else:
-                self.redirect('/createbadge?%s' % urllib.urlencode({'repeat': True}))
-                    
-        else: # otherwise, needs to sign in 
+        if not user: # need to signin first
             self.redirect('/?signin=True')
+            return
+        
+        if not users.is_current_user_admin(): # need to be admin to create badge
+            self.redirect('/')
+            return
+        
+        # otherwise create badge
+        _name = self.request.get('name')
+        _description = self.request.get('description')
+        _picture = self.request.get('picture')
+                    
+        b = entities.Badge(name=_name, description=_description)
+        b.addPicture(_picture)
+                    
+        # add if doesn't already exist
+        if bene_util.doesBadgeExist(b) == False: 
+            b.put()
+            self.redirect('/createbadge?%s' % urllib.urlencode({'added': True}))
+        else:
+            self.redirect('/createbadge?%s' % urllib.urlencode({'repeat': True}))
             
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(StoreBadgePage, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return

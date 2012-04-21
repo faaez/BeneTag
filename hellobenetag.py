@@ -36,8 +36,8 @@ application = webapp.WSGIApplication([
   # home pages
   ('/', home.HomePage),
   ('/signup', signup.Signup), 
-  ('/producerhome', producer_home.HomePage),
-  ('/consumerhome', consumer_home.HomePage), 
+  ('/producerhome', producer_home.ProducerHomePage),
+  ('/consumerhome', consumer_home.ConsumerHomePage), 
   ('/about', about.AboutPage),
   
   # create, edit and view consumer page

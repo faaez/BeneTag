@@ -10,7 +10,7 @@ import urllib
 """
 Creates a page with links to each service
 """
-class HomePage(webapp.RequestHandler):
+class ProducerHomePage(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         
