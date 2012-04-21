@@ -1,5 +1,5 @@
 from google.appengine.api import users
-from google.appengine.ext import db, webapp
+from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 import bene_query
 import bene_util
@@ -54,20 +54,24 @@ class StoreConsumerPage(webapp.RequestHandler):
             self.redirect('/')
             return
         
-        if bene_query.getCurrentConsumer() == None: # no consumer, so add to store
-            _name = self.request.get('name')
-            _picture = self.request.get('picture')
-            _profile = self.request.get('profile')
+        if bene_query.getCurrentConsumer() != None: # already exists
+            self.redirect('/')
+            return
+            
+        # no consumer, so add to store
+        _name = self.request.get('name')
+        _picture = self.request.get('picture')
+        _profile = self.request.get('profile')
                 
-            c = entities.Consumer(name=_name, 
-                                  email=bene_util.getEmail(user), 
-                                  owner=user,
-                                  profile=_profile,                      
-                                  verified=False)
-            c.addPicture(_picture)
-            c.put()
-                        
-        self.redirect('/'+self.request.get('redirect'))
+        c = entities.Consumer(name=_name, 
+                              email=bene_util.getEmail(user), 
+                              owner=user,
+                              profile=_profile,                      
+                              verified=False)
+        c.addPicture(_picture)
+        c.put()                
+        self.redirect('/')
+        return
 
     '''
     Exception handler

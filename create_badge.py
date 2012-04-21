@@ -64,11 +64,19 @@ class StoreBadgePage(webapp.RequestHandler):
         b.addPicture(_picture)
                     
         # add if doesn't already exist
-        if bene_util.doesBadgeExist(b) == False: 
-            b.put()
-            self.redirect('/createbadge?%s' % urllib.urlencode({'added': True}))
-        else:
+        if bene_util.doesBadgeExist(b):
             self.redirect('/createbadge?%s' % urllib.urlencode({'repeat': True}))
+            return 
+        
+        b.put()
+        if self.request.get('more'): # want to add more
+            self.redirect('/createbadge?%s' % urllib.urlencode({'added': True}))
+            return
+        
+        # otherwise redirect to badge page
+        self.redirect('/viewbadge?%s' % urllib.urlencode({'id' : b.key()}))
+        return
+            
             
     '''
     Exception handler

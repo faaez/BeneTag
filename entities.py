@@ -36,11 +36,11 @@ class Consumer(db.Model):
     #closet
     _products = db.ListProperty(db.Key)
     def addProduct(self, key):
-        self._products.append(key) 
-        return
+        if key:
+            self._products.append(key) 
     def remProduct(self, key):
-        self._products.remove(key)
-        return
+        if key:
+            self._products.remove(key)
     def getProducts(self):
         if self._products:
             __products = db.get(self._products)
@@ -156,9 +156,11 @@ class Worker(db.Model):
         
     _products = db.ListProperty(db.Key)
     def addProduct(self, key):
-        self._products.append(key) 
+        if key:
+            self._products.append(key) 
     def remProduct(self, key):
-        self._products.remove(key) 
+        if key:
+            self._products.remove(key) 
     def getProducts(self):
         if self._products:
             __products = db.get(self._products)
@@ -207,9 +209,11 @@ class Product(db.Model):
         
     _badges = db.ListProperty(db.Key)
     def addBadge(self, key):
-        self._badges.append(key) 
+        if key:
+            self._badges.append(key) 
     def remBadge(self, key):
-        self._badges.remove(key) 
+        if key:
+            self._badges.remove(key) 
     def getBadges(self):
         if self._badges:
             __badges = db.get(self._badges)
