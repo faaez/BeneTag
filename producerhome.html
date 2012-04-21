@@ -22,12 +22,12 @@
       <p>That item does not exist</p>
     {% endif %}
 
-    </br><h2><form action="/productsearchresult" method="post">
-      <div><input name="query" type="search" placeholder="Search product by name"></input></div></br>
-      <div><input type="submit" value="Search" a class='span4 btn large'></div>
-    </form></h2>
+	<form action="/productsearchresult" method="post" align ="center">
+		  <input type="search" placeholder="Search product by name"><br>
+		  <button type="submit" class="btn"> Search </button>
+	</form>
     
-    <div class="column show-grid"id="buttons">
+    <div class="column show-grid"id="buttons" align = "center">
     <a class='span3 btn large' width='100%' align='center' href='/createproduct'>Create product</a>
     <a class='span3 btn large' align='center' href='/createfactory'>Create factory</a>
     <a class='span3 btn large' align='center' href='/createworker' >Create worker</a>

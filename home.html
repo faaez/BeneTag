@@ -11,13 +11,14 @@
     <div id="scrollable-panel">
     	
     	{% include "header.html" %}
+			
+		<form action="/productsearchresult" method="post" align ="center">
+		  <input type="search" placeholder="Search product by name"><br>
+		  <button type="submit" class="btn"> Search </button>
+		</form>
 		
-		</br><h2><form action="/productsearchresult" method="post">
-		  <div><input name="query" type="search" placeholder="Search product by name"></input></div></br>
-		  <div><input type="submit" value="Search" a class='span4 btn medium'></div>
-		</form></h2>
-		<div class="column show-grid" id="buttons"><a class='span4 btn large' width='100%' align='center' href='/signup?producer=True'>Log in as producer</a></div>
-		<div class="column show-grid" id="buttons"><a class='span4 btn large' width='100%' align='center' href='/signup?consumer=True'>Log in as consumer</a></div>
+		<div class="column show-grid" id="buttons" align="center"><a class='btn large' width='100%' href='/signup?producer=True'>Log in as producer</a></div>
+		<div class="column show-grid" id="buttons" align="center"><a class='btn large' width='100%' href='/signup?consumer=True'>Log in as consumer</a></div>
 	
 		{% include "footer.html" %}
 	
