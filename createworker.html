@@ -35,10 +35,7 @@
     {% if repeat %}
       <p>Worker already exists</p>
     {% endif %}
-    {% if verify %}
-      <p>You are not yet verified as a producer.</p>
-    {% endif %}
-    <form action="/storeworker" enctype="multipart/formdata" method="post">
+    <form action="/storeworker?more=True" enctype="multipart/formdata" method="post">
       <div>Name: <input name="name" id="name"></input></div>
       <div>Factories: 
 	{% for factory in factories %}

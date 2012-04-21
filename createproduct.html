@@ -40,7 +40,7 @@
      {% if repeat %}
        <p>Product already exists</p>
      {% endif %}
-     <form action="/storeproduct" enctype="multipart/form-data" method="post">
+     <form action="/storeproduct?more=True" enctype="multipart/form-data" method="post">
       <div>Name: <input name="name" id="name"></input></div><br />
 	  <div>Factories: 
 	  {% for factory in factories %}
