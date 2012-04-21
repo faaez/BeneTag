@@ -97,7 +97,7 @@
             </script>
 
     </head>
-    <body onload="initialize()">
+    <body>
         <!-- MAIN PANEL -->
         <div>
             <!-- panel style is a twitter bootstrap style -->
@@ -179,6 +179,12 @@
 	{% if can_edit %}
             <small><a href="/editproduct?id={{id}}">Edit your product's profile</a></small>
         {% endif %}
+	{% if in_closet %}
+	    <small>In your closet! (<a href="/removefromcloset?id={{id}}">Remove</a>)</small>
+	{% endif %}
+	{% if add_closet %}
+	    <small>(<a href="/addtocloset?id={{id}}">Add to closet</a>)</small>
+	{% endif %}
 
                <hr id="separator-line">
                

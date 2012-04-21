@@ -1,6 +1,7 @@
 from google.appengine.api import users
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
+import bene_util
 import os
 
 
@@ -67,6 +68,17 @@ class ViewProduct(webapp.RequestHandler):
         if user:
             if product.owner == user:
                 template_values['can_edit'] = True
+                
+        template_values['in_closet'] = False
+        template_values['add_closet'] = False
+        if user:
+            if bene_util.getCurrentUser().isConsumer:
+                consumer = bene_util.getCurrentConsumer()
+                if consumer:
+                    if consumer.hasProduct(product.key()):
+                        template_values['in_closet'] = True
+                    else:
+                        template_values['add_closet'] = True
             
         path = os.path.join(os.path.dirname(__file__), 'mobilepage.html')
         self.response.out.write(template.render(path, template_values))

@@ -1,16 +1,22 @@
 from google.appengine.ext import db
 
+"""
+Data type representing a user
+"""
 class User(db.Model):
     email = db.StringProperty()
     isProducer = db.BooleanProperty()
     isConsumer = db.BooleanProperty()
     owner = db.UserProperty()
 
+"""
+Data type representing a consumer
+"""
 class Consumer(db.Model):
     #profile information
     name = db.StringProperty()
     email = db.StringProperty()
-    profile = db.TextProperty()
+    profileasd = db.TextProperty()
     picture = db.BlobProperty()
 
     #security
@@ -18,7 +24,22 @@ class Consumer(db.Model):
     verified = db.BooleanProperty()
     
     #closet
+    _products = db.ListProperty(db.Key)
     
+    def addProduct(self, key):
+        self._products.append(key) 
+        return
+    def remProduct(self, key):
+        self._products.remove(key)
+        return
+    def products(self):
+        if self._products:
+            __products = db.get(self._products)
+            return [product for product in __products if product] # return non-None products
+        else:
+            return None
+    def hasProduct(self, key):
+        return key in self._products
 
 """
 Data type representing a producer
@@ -100,11 +121,15 @@ class Worker(db.Model):
     producer = db.ReferenceProperty(Producer)
     factory = db.ReferenceProperty(Factory)
     ''' don't use products, use function products() instead '''
-    product = db.ListProperty(db.Key) 
+    _products = db.ListProperty(db.Key)
+    def addProduct(self, key):
+        self._products.append(key) 
+    def remProduct(self, key):
+        self._products.remove(key) 
     def products(self):
-        if self.product:
-            _products = db.get(self.product)
-            return [product for product in _products if product] # return non-None products
+        if self._products:
+            __products = db.get(self._products)
+            return [product for product in __products if product] # return non-None products
         else:
             return None
         ''' 
@@ -140,7 +165,7 @@ class Product(db.Model):
     badges = db.ListProperty(db.Key)
     rating = db.FloatProperty()
     def workers(self):
-        return Worker.all().filter('product =', self)
+        return Worker.all().filter('_products =', self)
 
 """
 Data type representing a badge
