@@ -23,6 +23,7 @@
             function initialize() {
                 {% if latitude and longitude %}
                 var latlng = new google.maps.LatLng({{latitude}}, {{longitude}});
+                
                 /*var myOptions = {
                     zoom: 8,
                     center: latlng,
@@ -53,8 +54,7 @@
                                                              var lat1 = {{latitude}}*(Math.PI/180);
                                                              var lat2 = userLat*(Math.PI/180);
                                                              
-                                                             var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                                                             Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+                                                             var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
                                                              var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
                                                              var d = R * c;
                                                              
@@ -154,11 +154,10 @@
                
                 <p id="info"> super soft tri-blend fabric <br> sizes S-XXL </p>
                 
+                {% if factory %}
                 <hr id="separator-line">
-                
                 <p id="section-heading">Manufactured at:</p>
                 
-                {% if factory %}
                 <table id="factory-table">
                     <tr id = "distance"> 
                     </tr>
