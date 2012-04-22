@@ -1,5 +1,15 @@
 <html>
 	<body>    	
+		{% if signedinconsumer %} 
+			<a href="/myprofile">My profile</a> | <a href="/mycloset">Closet</a> | <a href="/">Home</a> | <a href="/logout">Logout</a><br />
+		{% endif %}
+		{% if signedinproducer %} 
+			<a href="/myprofile">My profile</a> | <a href="/myworkers">Workers</a> | <a href="/myfactories">Factories</a> | <a href="/myproducts">Products</a> | <a href="/">Home</a> | <a href="/logout">Logout</a><br />
+		{% endif %}
+		{% if notsignedin %} 
+			<a href="/">Home</a> | <a href='/signup?producer=True'>Producer sign-in</a> | <a href='/signup?consumer=True'>Consumer sign-in</a><br/>
+		{% endif %}
+
 	    <p id="brand"><a href="./"> BeneTag 4/22 </a></p>
         <hr id="top-line">
 	</body> 

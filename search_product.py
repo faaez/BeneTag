@@ -12,7 +12,7 @@ Creates a form to search for a Product
 """
 class CreateProductSearchPage(webapp.RequestHandler):
     def get(self):
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         path = os.path.join(os.path.dirname(__file__), 'searchproduct.html')
         self.response.out.write(template.render(path, template_values))
         return
@@ -26,7 +26,7 @@ class SearchResultPage(webapp.RequestHandler):
         productlist = entities.Product.all()
 
         matches = [p for p in productlist if query.lower() in p.name.lower()]
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['matches'] = matches
         path = os.path.join(os.path.dirname(__file__), 'searchresult.html')
         self.response.out.write(template.render(path, template_values))

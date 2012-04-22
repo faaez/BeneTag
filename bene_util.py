@@ -1,5 +1,23 @@
+from google.appengine.api import users
 import bene_query
 import entities
+
+#---------------------------------
+#---------- SIGNED IN ------------
+#---------------------------------
+def isSignedInProducer(user):
+    ''' is the user a signed-in producer'''
+    if user:
+        if bene_query.getCurrentUser().isProducer:
+            return True
+    return False
+
+def isSignedInConsumer(user):
+    ''' is the user a signed in consumer '''
+    if user:
+        if bene_query.getCurrentUser().isConsumer:
+            return True
+    return False     
 
 #---------------------------------
 #---------- PRODUCER -------------
@@ -166,6 +184,23 @@ def doesProductExist(product_add):
 #---------------------------------
 #-------------- MISC -------------
 #---------------------------------
+
+"""
+Initialize the template for each page with the consumer/producer/not-signed-in dashboard
+Also puts in values from the URL
+"""
+def initTemplate(url):
+    '''Initialize the template for each page with the consumer/producer/not-signed-in dashboard. Also puts in values from the URL'''
+    dictionary = urldecode(url)
+    user = users.get_current_user()
+    
+    # Exactly one of these three will be true
+    dictionary['signedinconsumer'] = isSignedInConsumer(user)
+    dictionary['signedinproducer'] = isSignedInProducer(user)
+    dictionary['notsignedin'] = False
+    if not user:
+        dictionary['notsignedin'] = True
+    return dictionary         
 
 """
 Decode a url into a dictionary of arguments

@@ -39,7 +39,7 @@ class EditFactoryPage(webapp.RequestHandler):
             return
         _factory = db.get(ID)
         if not _factory:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -48,7 +48,7 @@ class EditFactoryPage(webapp.RequestHandler):
             self.redirect('/producerhome?%s' % urllib.urlencode({'not_owner': True}))
             return
         
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['id'] = ID
         template_values['name_old'] = _factory.name
         template_values['address_old'] = _factory.address
@@ -65,7 +65,7 @@ class EditFactoryPage(webapp.RequestHandler):
         if debug_mode:
             super(EditFactoryPage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -104,7 +104,7 @@ class StoreEditedFactoryPage(webapp.RequestHandler):
             return
         _factory = db.get(ID)
         if not _factory:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -148,7 +148,7 @@ class StoreEditedFactoryPage(webapp.RequestHandler):
         if debug_mode:
             super(StoreEditedFactoryPage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

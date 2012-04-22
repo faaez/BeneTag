@@ -1,7 +1,8 @@
-from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.ext import webapp
+from google.appengine.ext.webapp import template
 import bene_query
+import bene_util
 import entities
 import os
 
@@ -57,7 +58,7 @@ class Signup(webapp.RequestHandler):
         if debug_mode:
             super(Signup, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

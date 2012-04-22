@@ -27,7 +27,7 @@ class EditConsumerPage(webapp.RequestHandler):
             self.redirect('/')
             return
         
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['name_old'] = _consumer.name
         template_values['profile_old'] = _consumer.profile
         
@@ -42,7 +42,7 @@ class EditConsumerPage(webapp.RequestHandler):
         if debug_mode:
             super(EditConsumerPage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -86,7 +86,7 @@ class StoreEditedConsumerPage(webapp.RequestHandler):
         if debug_mode:
             super(StoreEditedConsumerPage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

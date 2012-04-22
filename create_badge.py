@@ -23,7 +23,7 @@ class CreateBadgePage(webapp.RequestHandler):
             return
             
         # display form to create badge
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         path = os.path.join(os.path.dirname(__file__), 'createbadge.html')
         self.response.out.write(template.render(path, template_values))
         return
@@ -35,7 +35,7 @@ class CreateBadgePage(webapp.RequestHandler):
         if debug_mode:
             super(CreateBadgePage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -85,7 +85,7 @@ class StoreBadgePage(webapp.RequestHandler):
         if debug_mode:
             super(StoreBadgePage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
