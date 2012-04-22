@@ -140,16 +140,18 @@ p#comments-link{
 	margin-bottom: 40px;
 }
 hr#top-line {
-    margin: 0px;
+	margin: 0px;
+	height: 0px;
     width:100%;
-	border-top: 1px dotted #ddd;
+	border-bottom: 1px dotted #ddd;
 }
 hr#top-line.spaced {
     margin-bottom: 20px;
 }
 hr#separator-line {
+    height: 0px;
     margin: 40px 85px;
-  	border-top: 1px dotted #ddd;
+  	border-bottom: 1px dotted #ddd;
 }
 div#distance-div {
     width: 90px;
