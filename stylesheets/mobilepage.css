@@ -141,9 +141,9 @@ p#comments-link{
 }
 hr#top-line {
 	margin: 0px;
-	height: 0px;
     width:100%;
-	border-bottom: 1px dotted #ddd;
+    height: 0px;
+	border-top: 1px dotted #ddd;
 }
 hr#top-line.spaced {
     margin-bottom: 20px;
@@ -151,7 +151,7 @@ hr#top-line.spaced {
 hr#separator-line {
     height: 0px;
     margin: 40px 85px;
-  	border-bottom: 1px dotted #ddd;
+  	border-top: 1px dotted #ddd;
 }
 div#distance-div {
     width: 90px;

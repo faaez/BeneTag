@@ -24,19 +24,6 @@
                 {% if latitude and longitude %}
                 var latlng = new google.maps.LatLng({{latitude}}, {{longitude}});
                 
-                /*var myOptions = {
-                    zoom: 8,
-                    center: latlng,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-                document.getElementById("map_canvas").style.position="fixed";
-                var marker = new google.maps.Marker({
-                                                    position: latlng,
-                                                    map: map,
-                                                    }); */
-                
-                
                 var userLat;
                 var userLong;
                 var factName = '{{factory_name}}';
