@@ -17,6 +17,7 @@ import edit_producer
 import edit_product
 import edit_worker
 import home
+import logout
 import mobile_page
 import producer_home
 import search_product
@@ -36,6 +37,7 @@ application = webapp.WSGIApplication([
   # home pages
   ('/', home.HomePage),
   ('/signup', signup.Signup), 
+  ('/logout', logout.Logout),
   ('/producerhome', producer_home.ProducerHomePage),
   ('/consumerhome', consumer_home.ConsumerHomePage), 
   ('/about', about.AboutPage),
