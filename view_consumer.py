@@ -1,4 +1,4 @@
-from google.appengine.api import users, datastore_errors
+from google.appengine.api import users
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
 import os
@@ -46,12 +46,17 @@ class ViewConsumer(webapp.RequestHandler):
         self.response.out.write(template.render(path, template_values))
         return
     
-    #def handle_exception(self, exception, debug_mode):
-        #if debug_mode:
-        #    super(ViewConsumer, self).handle_exception(exception, debug_mode)
-        #else:
-        #    self.response.out.write("<html></body>ERROR</body></html>")
-        #return
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(ViewConsumer, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return
         
 class ConsumerImage(webapp.RequestHandler):
     def get(self):
@@ -70,5 +75,17 @@ class ConsumerImage(webapp.RequestHandler):
             '''
             return
         self.response.headers['Content-Type'] = 'image'
-        self.response.out.write(consumer.picture) 
+        self.response.out.write(consumer.getPicture()) 
         return
+    
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(ConsumerImage, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return

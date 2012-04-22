@@ -3,9 +3,7 @@ from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
 import bene_query
 import bene_util
-import entities
 import os
-import sys
 import urllib
 
 
@@ -59,8 +57,15 @@ class EditWorkerPage(webapp.RequestHandler):
         _factories_old = [_worker.getFactory()]
         template_values['factories_old'] = _factories_old
         template_values['factories'] = []
-        for factory in _producer.getFactories():
-            if factory not in _factories_old:
+        '''
+        TODO: Make this more efficient. For some reason, 'factory not in _factories_old' doesn't work
+        '''
+        for factory in _producer.getFactories(): 
+            add = True
+            for factory_old in _factories_old:
+                if factory_old.key() == factory.key():
+                    add = False
+            if add:
                 template_values['factories'].append(factory)
                                             
         path = os.path.join(os.path.dirname(__file__), 'editworker.html')

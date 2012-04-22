@@ -77,7 +77,7 @@ class StoreProductPage(webapp.RequestHandler):
             return
         
         _name = self.request.get('name')
-        _factory = self.request.get_all('factory')
+        _factory = self.request.get('factory')
         _workers = self.request.get_all('workers')
         _badges = self.request.get_all('badges')
         _picture = self.request.get('picture')

@@ -34,7 +34,7 @@ class ViewProducerProducts(webapp.RequestHandler):
         template_values = {}
         template_values['id'] = ID
         template_values['producer'] = producer
-        template_values['products'] = producer.products()
+        template_values['products'] = producer.getProducts()
         
         template_values['can_edit'] = False
         user = users.get_current_user()
@@ -45,3 +45,15 @@ class ViewProducerProducts(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'viewproducerproducts.html')
         self.response.out.write(template.render(path, template_values))
         return
+    
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(ViewProducerProducts, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return

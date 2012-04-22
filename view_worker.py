@@ -28,14 +28,14 @@ class ViewWorker(webapp.RequestHandler):
             return
         # Make a dictionary for template
         name = worker.name
-        factory = worker.factory
+        factory = worker.getFactory()
         profile = worker.profile
-        picture = worker.picture
-        producer = worker.producer
-        products = worker.products()
-        if worker.factory.location:
-            latitude = worker.factory.location.lat
-            longitude = worker.factory.location.lon
+        picture = worker.getPicture()
+        producer = worker.getProducer()
+        products = worker.getProducts()
+        if factory.location:
+            latitude = factory.location.lat
+            longitude = factory.location.lon
         else:
             latitude = None
             longitude = None
@@ -51,7 +51,7 @@ class ViewWorker(webapp.RequestHandler):
         template_values['longitude'] = longitude
         template_values['url'] = self.request.url  
         
-        if worker.picture:
+        if worker.getPicture():
             template_values['has_image'] = True
         else:
             template_values['has_image'] = False
@@ -64,6 +64,20 @@ class ViewWorker(webapp.RequestHandler):
     
         path = os.path.join(os.path.dirname(__file__), 'viewworker.html')
         self.response.out.write(template.render(path, template_values))
+        return
+    
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(ViewWorker, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return
+        
 
 class WorkerImage(webapp.RequestHandler):
     def get(self):
@@ -82,4 +96,17 @@ class WorkerImage(webapp.RequestHandler):
             '''
             return
         self.response.headers['Content-Type'] = 'image'
-        self.response.out.write(worker.picture)
+        self.response.out.write(worker.getPicture())
+        return
+    
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(WorkerImage, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return

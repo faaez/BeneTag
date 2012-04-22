@@ -1,6 +1,7 @@
 from google.appengine.api import users
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
+import bene_query
 import bene_util
 import os
 
@@ -21,15 +22,6 @@ class ViewProduct(webapp.RequestHandler):
             return
         # Fetch the data for this product
         product = db.get(ID)
-        if not product:
-            '''
-            TODO: if no id is sent, defaults to page with all factories?
-            '''
-            #factorylist = entities.Factory.all()
-            template_values = {}
-            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-            self.response.out.write(template.render(path, template_values))
-            return
         # Display error if product ID not found
         if not product:
             template_values = {}
@@ -37,28 +29,31 @@ class ViewProduct(webapp.RequestHandler):
             self.response.out.write(template.render(path, template_values))
             return
         # Make a dictionary for template
-        if product.factory and product.factory.location:
-            latitude = product.factory.location.lat
-            longitude = product.factory.location.lon
+        _factory = product.getFactory()
+        if _factory and _factory.location:
+            latitude = _factory.location.lat
+            longitude = _factory.location.lon
         else:
             latitude = None
             longitude = None
-        template_values = {}
+        template_values = bene_util.urldecode(self.request.uri)
         template_values['id'] = ID
         template_values['name'] = product.name
-        template_values['producer'] = product.producer
+        template_values['producer'] = product.getProducer()
         template_values['latitude'] = latitude
         template_values['longitude'] = longitude
         template_values['url'] = self.request.url
         template_values['qr_url'] = self.request.url.replace('view','qr')
-        template_values['factory'] = product.factory
-        template_values['badges'] = product.badges
+        template_values['factory'] = product.getFactory()
         template_values['rating'] = product.rating
-        template_values['workers'] = product.workers()
-        if product.badges:
-            template_values['badges'] = product.badges
+        template_values['workers'] = product.getWorkers()
+        _badges = product.getBadges()
+        if _badges:
+            template_values['badges'] = _badges
             template_values['has_badges'] = True
-        if product.picture:
+        else:
+            template_values['has_badges'] = False
+        if product.getPicture():
             template_values['has_image'] = True
         else:
             template_values['has_image'] = False
@@ -72,8 +67,8 @@ class ViewProduct(webapp.RequestHandler):
         template_values['in_closet'] = False
         template_values['add_closet'] = False
         if user:
-            if bene_util.getCurrentUser().isConsumer:
-                consumer = bene_util.getCurrentConsumer()
+            if bene_query.getCurrentUser().isConsumer:
+                consumer = bene_query.getCurrentConsumer()
                 if consumer:
                     if consumer.hasProduct(product.key()):
                         template_values['in_closet'] = True
@@ -82,6 +77,18 @@ class ViewProduct(webapp.RequestHandler):
             
         path = os.path.join(os.path.dirname(__file__), 'mobilepage.html')
         self.response.out.write(template.render(path, template_values))
+        return
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(ViewProduct, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return
 
 class ProductImage(webapp.RequestHandler):
     def get(self):
@@ -100,7 +107,20 @@ class ProductImage(webapp.RequestHandler):
             '''
             return
         self.response.headers['Content-Type'] = 'image'
-        self.response.out.write(product.picture)
+        self.response.out.write(product.getPicture())
+        return
+    
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(ProductImage, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return
 
 class BadgeImage(webapp.RequestHandler):
     def get(self):
@@ -117,4 +137,17 @@ class BadgeImage(webapp.RequestHandler):
             '''
             return
         self.response.headers['Content-Type'] = 'image'
-        self.response.out.write(badge.icon)
+        self.response.out.write(badge.getPicture())
+        return
+    
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(BadgeImage, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return

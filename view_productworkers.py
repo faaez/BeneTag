@@ -29,9 +29,9 @@ class ViewProductWorkers(webapp.RequestHandler):
             return
         # Make a dictionary for template
         name = _product.name
-        producer = _product.producer
-        workers = _product.workers()
-        factory = _product.factory
+        producer = _product.getProducer()
+        workers = _product.getWorkers()
+        factory = _product.getFactory()
         template_values = {}
         template_values['id'] = ID
         template_values['product'] = _product
@@ -42,3 +42,16 @@ class ViewProductWorkers(webapp.RequestHandler):
         template_values['qr_url'] = self.request.url.replace('view','qr')
         path = os.path.join(os.path.dirname(__file__), 'viewproductworkers.html')
         self.response.out.write(template.render(path, template_values))
+        return
+    
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(ViewProductWorkers, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return

@@ -67,17 +67,29 @@ class EditProductPage(webapp.RequestHandler):
         '''
         template_values['factories'] = []
         for factory in _producer.getFactories():
-            if factory not in _factories_old:
+            add = True
+            for factory_old in _factories_old:
+                if factory_old.key() == factory.key():
+                    add = False
+            if add:
                 template_values['factories'].append(factory)
                         
         template_values['workers'] = []
         for worker in _producer.getWorkers():
-            if worker not in _workers_old:
+            add = True
+            for worker_old in _workers_old:
+                if worker_old.key() == worker.key():
+                    add = False
+            if add:
                 template_values['workers'].append(worker)
                                 
         template_values['badges'] = []
         for badge in entities.Badge.all():
-            if badge not in _badges_old:
+            add = True
+            for badge_old in _badges_old:
+                if badge_old.key() == badge.key():
+                    add = False
+            if add:
                 template_values['badges'].append(badge)
                     
         path = os.path.join(os.path.dirname(__file__), 'editproduct.html')
@@ -148,7 +160,7 @@ class StoreEditedProductPage(webapp.RequestHandler):
         if _factory:
             _product.addFactory(db.get(_factory))      
         
-        _picture = self.request.POST('picture')
+        _picture = self.request.get('picture')
         _product.addPicture(_picture)
         
         # badges
@@ -174,7 +186,7 @@ class StoreEditedProductPage(webapp.RequestHandler):
         TODO: FIX THIS. Make it more efficient
         '''
         _workers = self.request.get_all('workers')
-        _workers_old = _product.workers()
+        _workers_old = _product.getWorkers()
         key = _product.key()
         if _workers_old:
             for worker in _workers_old:

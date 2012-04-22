@@ -31,9 +31,10 @@ class ViewProduct(webapp.RequestHandler):
             self.response.out.write(template.render(path, template_values))
             return
         
-        if product.factory and product.factory.location:
-            latitude = product.factory.location.lat
-            longitude = product.factory.location.lon
+        _factory = product.getFactory()
+        if _factory and _factory.location:
+            latitude = _factory.location.lat
+            longitude = _factory.location.lon
         else:
             latitude = None
             longitude = None
@@ -41,17 +42,15 @@ class ViewProduct(webapp.RequestHandler):
         template_values = {}
         template_values['id'] = ID
         template_values['name'] = product.name
-        template_values['producer'] = product.producer.name
+        template_values['producer'] = product.getProducer()
         template_values['latitude'] = latitude
         template_values['longitude'] = longitude
         template_values['url'] = self.request.url
         template_values['qr_url'] = self.request.url.replace('view','qr')
-        template_values['factory_id'] = product.factory.key()
-        template_values['factory_name'] = product.factory.name
-        template_values['factory_address'] = product.factory.address
-        template_values['badges'] = product.badges
+        template_values['factory'] = _factory
+        template_values['badges'] = product.getBadges()
         template_values['rating'] = product.rating
-        template_values['workers'] = product.workers()
+        template_values['workers'] = product.getWorkers()
         if product.picture:
             template_values['has_image'] = True
         else:
@@ -65,6 +64,20 @@ class ViewProduct(webapp.RequestHandler):
             
         path = os.path.join(os.path.dirname(__file__), 'viewproduct.html')
         self.response.out.write(template.render(path, template_values))
+        return
+    
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(ViewProduct, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return
+        
 
 class ProductImage(webapp.RequestHandler):
     def get(self):
@@ -83,4 +96,18 @@ class ProductImage(webapp.RequestHandler):
             '''
             return
         self.response.headers['Content-Type'] = 'image'
-        self.response.out.write(product.picture)
+        self.response.out.write(product.getPicture())
+        return
+    
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(ProductImage, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return
+        

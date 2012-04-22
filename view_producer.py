@@ -1,7 +1,6 @@
 from google.appengine.api import users
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
-import bene_util
 import os
 
 
@@ -32,9 +31,9 @@ class ViewProducer(webapp.RequestHandler):
         name = producer.name
         description = producer.description
         
-        products = producer.products()
-        workers = producer.workers()
-        factories = producer.factories()
+        products = producer.getProducts()
+        workers = producer.getWorkers()
+        factories = producer.getFactories()
         
         template_values = {}
         template_values['id'] = ID
@@ -52,13 +51,26 @@ class ViewProducer(webapp.RequestHandler):
             if producer.owner == user:
                 template_values['can_edit'] = True           
         
-        if producer.logo:
+        if producer.getPicture():
             template_values['has_image'] = True
         else:
             template_values['has_image'] = False
     
         path = os.path.join(os.path.dirname(__file__), 'viewproducer.html')
         self.response.out.write(template.render(path, template_values))
+        return
+    
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(ViewProducer, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return
 
 class ProducerImage(webapp.RequestHandler):
     def get(self):
@@ -77,4 +89,16 @@ class ProducerImage(webapp.RequestHandler):
             '''
             return
         self.response.headers['Content-Type'] = 'image'
-        self.response.out.write(producer.logo) 
+        self.response.out.write(producer.getPicture()) 
+        return
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(ProducerImage, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return

@@ -28,6 +28,10 @@ class Consumer(db.Model):
                 self._picture = picture_add.encode('utf-8', 'replace')
             else:
                 self._picture = picture_add
+    def getPicture(self):
+        if self._picture:
+            return self._picture
+        return None
         
     #security
     owner = db.UserProperty()
@@ -69,6 +73,10 @@ class Producer(db.Model):
                 self._picture = picture_add.encode('utf-8', 'replace')
             else:
                 self._picture = picture_add
+    def getPicture(self):
+        if self._picture:
+            return self._picture
+        return None
     
     #security
     owner = db.UserProperty()
@@ -101,6 +109,10 @@ class Factory(db.Model):
                 self._picture = picture_add.encode('utf-8', 'replace')
             else:
                 self._picture = picture_add
+    def getPicture(self):
+        if self._picture:
+            return self._picture
+        return None
     
     #security
     owner = db.UserProperty()
@@ -136,6 +148,10 @@ class Worker(db.Model):
                 self._picture = picture_add.encode('utf-8', 'replace')
             else:
                 self._picture = picture_add
+    def getPicture(self):
+        if self._picture:
+            return self._picture
+        return None
     
     # security
     owner = db.UserProperty()
@@ -189,6 +205,10 @@ class Product(db.Model):
                 self._picture = picture_add.encode('utf-8', 'replace')
             else:
                 self._picture = picture_add
+    def getPicture(self):
+        if self._picture:
+            return self._picture
+        return None
     
     # security
     owner = db.UserProperty()
@@ -204,6 +224,8 @@ class Product(db.Model):
     _factory = db.ReferenceProperty(Factory)
     def getFactories(self):
         return [self._factory]
+    def getFactory(self):
+        return self._factory
     def addFactory(self, factory_add):
         self._factory = factory_add
         
@@ -241,6 +263,10 @@ class Badge(db.Model):
                 self._picture = picture_add.encode('utf-8', 'replace')
             else:
                 self._picture = picture_add 
+    def getPicture(self):
+        if self._picture:
+            return self._picture
+        return None
     
     # hierarchical information
     def getProducts(self):

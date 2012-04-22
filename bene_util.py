@@ -1,4 +1,3 @@
-from google.appengine.api import users
 import bene_query
 import entities
 
@@ -30,11 +29,11 @@ def doesExactFactoryExist(factory_add):
         producer = bene_query.getCurrentProducer()
         if producer:
             # if two have same unique ID
-            factories = producer.factories().filter('unique = ', factory_add.unique)
+            factories = producer.getFactories().filter('unique = ', factory_add.unique)
             for factory in factories:
                 if factory: return True
             # if other factory has no unique ID but same name
-            factories = producer.factories().filter('name = ', factory_add.name)
+            factories = producer.getFactories().filter('name = ', factory_add.name)
             for factory in factories:
                 if factory : 
                     if not factory.unique: return True
@@ -48,7 +47,7 @@ def doesSimilarFactoryExist(factory_add):
     # checks for same factory name
     producer = bene_query.getCurrentProducer()
     if producer:
-        factories = producer.factories().filter('name = ', factory_add.name)
+        factories = producer.getFactories().filter('name = ', factory_add.name)
         for factory in factories:
             if factory : return True
     return False
@@ -90,11 +89,11 @@ def doesExactWorkerExist(worker_add):
         producer = bene_query.getCurrentProducer()
         if producer:
             # if two workers have same unique ID
-            workers = producer.workers().filter('unique =', worker_add.unique)
+            workers = producer.getWorkers().filter('unique =', worker_add.unique)
             for worker in workers:
                 if worker: return True
             # if other worker has no unique ID but same name
-            workers = producer.workers().filter('name =', worker_add.name)
+            workers = producer.getWorkers().filter('name =', worker_add.name)
             for worker in workers:
                 if worker: 
                     if not worker.unique: return True   
@@ -108,7 +107,7 @@ def doesSimilarWorkerExist(worker_add):
     # checks for same worker name
     producer = bene_query.getCurrentProducer()
     if producer:
-        workers = producer.workers().filter('name =', worker_add.name)
+        workers = producer.getWorkers().filter('name =', worker_add.name)
         for worker in workers:
             if worker: return True    
     return False
@@ -134,7 +133,7 @@ def doesExactProductExist(product_add):
     if product_add.unique:
         producer = bene_query.getCurrentProducer()
         if producer:
-            products = producer.products().filter('unique =', product_add.unique)
+            products = producer.getProducts().filter('unique =', product_add.unique)
             for product in products:
                 if product: return True
     return False   
@@ -147,7 +146,7 @@ def doesSimilarProductExist(product_add):
     # checks for same product name 
     producer = bene_query.getCurrentProducer()
     if producer:
-        products = bene_query.getCurrentProducer().products().filter('name =', product_add.name)
+        products = bene_query.getCurrentProducer().getProducts().filter('name =', product_add.name)
         for product in products:
             if product: return True    
     return False

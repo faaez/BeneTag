@@ -30,9 +30,9 @@ class ViewFactory(webapp.RequestHandler):
             return
         # Make a dictionary for template
         name = factory.name
-        producer = factory.producer
-        productlist = factory.products()
-        workers = factory.workers()
+        producer = factory.getProducer()
+        productlist = factory.getProducts()
+        workers = factory.getWorkers()
         address = factory.address
         if factory.location:
             latitude = factory.location.lat
@@ -60,3 +60,16 @@ class ViewFactory(webapp.RequestHandler):
         
         path = os.path.join(os.path.dirname(__file__), 'viewfactory.html')
         self.response.out.write(template.render(path, template_values))
+        return
+    
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(ViewFactory, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = {}
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return
