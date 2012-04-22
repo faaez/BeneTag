@@ -223,7 +223,9 @@ class Product(db.Model):
         
     _factory = db.ReferenceProperty(Factory)
     def getFactories(self):
-        return [self._factory]
+        if self._factory:
+            return [self._factory]
+        return None
     def getFactory(self):
         return self._factory
     def addFactory(self, factory_add):
