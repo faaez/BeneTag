@@ -20,7 +20,21 @@
 			});
 		}
   	</script>
-  
+  <script type="text/javascript">
+function onsubmitform()
+{
+  if(document.pressed == 'more')
+  {
+   document.creatework.action ="/storeworker?more=True";
+  }
+  else
+  if(document.pressed == 'exit')
+  {
+    document.creatework.action ="/storeworker";
+  }
+  return true;
+}
+</script>
   
   <body>
 
@@ -35,7 +49,7 @@
     {% if repeat %}
       <p>Worker already exists</p>
     {% endif %}
-    <form action="/storeworker?more=True" enctype="multipart/formdata" method="post">
+    <form name="creatework" onsubmit="return onsubmitform();" enctype="multipart/formdata" method="post">
       <div>Name: <input name="name" id="name"></input></div>
       <div>Factories: 
 	{% for factory in factories %}
@@ -45,7 +59,8 @@
       <div>Picture:<input type="file" name="picture"/></div>
       <div>Profile: <textarea name="profile" id="profile"></textarea></div>
       <div>Unique ID (optional): <input name="unique"></input></div><br />
-      <div><input type="submit" value="Create worker" a class="span4 btn medium"></div>
+      <div><input type="submit" name="more" value="Save and create another" onclick="document.pressed=this.name" a class='span4 btn medium'></div>
+      <div><input type="submit" name="exit" value="Save and view worker" onclick="document.pressed=this.name" a class='span4 btn medium'></div>
     </form></p>
   
   	 <hr id="separator-line">

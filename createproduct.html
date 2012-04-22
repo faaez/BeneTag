@@ -26,8 +26,21 @@
 		}
   	</script>
   
-  
-  <body>
+<script type="text/javascript">
+function onsubmitform()
+{
+  if(document.pressed == 'more')
+  {
+   document.createprod.action ="/storeproduct?more=True";
+  }
+  else
+  if(document.pressed == 'exit')
+  {
+    document.createprod.action ="/storeproduct";
+  }
+  return true;
+}
+</script>
 
   <body onload="initialize()">
   
@@ -40,7 +53,7 @@
      {% if repeat %}
        <p>Product already exists</p>
      {% endif %}
-     <form action="/storeproduct?more=True" enctype="multipart/form-data" method="post">
+     <form name="createprod" onsubmit="return onsubmitform();" enctype="multipart/form-data" method="post">
       <div>Name: <input name="name" id="name"></input></div><br />
 	  <div>Factories: 
 	  {% for factory in factories %}
@@ -59,7 +72,8 @@
 	  </div><br />
       <div>Picture:<input type="file" name="picture"/></div><br />
       <div>Unique ID (optional): <input name="unique"></input></div><br />
-      <div><input type="submit" value="Create product" a class='span4 btn medium'></div>
+      <div><input type="submit" name="more" value="Save and create another" onclick="document.pressed=this.name" a class='span4 btn medium'></div>
+      <div><input type="submit" name="exit" value="Save and view product" onclick="document.pressed=this.name" a class='span4 btn medium'></div>
     </form></p>
 	
 	{% include "footer.html" %}	

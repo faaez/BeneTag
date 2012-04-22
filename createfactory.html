@@ -57,6 +57,23 @@
         $('#location').val(lat+','+lng);
     }
   </script>
+
+<script type="text/javascript">
+function onsubmitform()
+{
+  if(document.pressed == 'more')
+  {
+   document.createfact.action ="/storefactory?more=True";
+  }
+  else
+  if(document.pressed == 'exit')
+  {
+    document.createfact.action ="/storefactory";
+  }
+  return true;
+}
+</script>
+
   <body onload="initialize()">
 
    {% include "header.html" %}
@@ -68,13 +85,14 @@
 	  <p>Factory already exists</p>
 	  {% endif %}
 	
-		<p><form action="/storefactory?more=True" enctype="multipart/form-data" method="post">
+		<p><form name="createfact" onsubmit="return onsubmitform();" enctype="multipart/form-data" method="post">
 		  <div>Name: <input name="name"></input></div>
 		  <div>Address: <input id="address" onchange="address_change()" name="address"></input></div>
 		  <div>Picture:<input type="file" name="picture"/></div><br />
 		  <div>Unique ID (optional): <input name="unique"></input></div><br />
 		  <input id="location" name="location" type="hidden"></input><br />
-		  <div><input type="submit" value="Create factory" a class='span4 btn medium'></div>
+		  <div><input type="submit" name="more" value="Save and create another" onclick="document.pressed=this.name" a class='span4 btn medium'></div>
+      		  <div><input type="submit" name="exit" value="Save and view factory" onclick="document.pressed=this.name" a class='span4 btn medium'></div>
 		</form></p>
 	
 		<div id="map_canvas"></div>
