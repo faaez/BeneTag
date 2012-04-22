@@ -22,8 +22,10 @@ import mobile_page
 import producer_home
 import search_product
 import signup
+import view_closet
 import view_consumer
 import view_factory
+import view_myprofile
 import view_producer
 import view_producerfactories
 import view_producerproducts
@@ -41,17 +43,20 @@ application = webapp.WSGIApplication([
   ('/producerhome', producer_home.ProducerHomePage),
   ('/consumerhome', consumer_home.ConsumerHomePage), 
   ('/about', about.AboutPage),
+  ('/myprofile', view_myprofile.ViewMyProfile),
   
-  # create, edit and view consumer page
+  # create, edit and view consumer page and related entities
   ('/createconsumer', create_consumer.CreateConsumerPage),
   ('/storeconsumer', create_consumer.StoreConsumerPage),
   ('/editconsumer', edit_consumer.EditConsumerPage),
   ('/storeeditedconsumer', edit_consumer.StoreEditedConsumerPage),
   ('/viewconsumer', view_consumer.ViewConsumer),
-  
+  #('/myconsumerprofile', view_consumer.ViewMyConsumer),
   # closet
   ('/addtocloset', closet_add.AddToCloset),
   ('/removefromcloset', closet_rem.RemFromCloset),
+  ('/viewcloset', view_closet.ViewCloset),
+  ('/mycloset', view_closet.ViewMyCloset),
   
   # create, edit and view producer page, and relevant entities
   ('/createproducer', create_producer.CreateProducerPage),
@@ -62,6 +67,10 @@ application = webapp.WSGIApplication([
   ('/viewproducerworkers', view_producerworkers.ViewProducerWorkers),
   ('/viewproducerfactories', view_producerfactories.ViewProducerFactories),
   ('/viewproducerproducts', view_producerproducts.ViewProducerProducts),
+  #('/myproducerprofile', view_producer.ViewMyProducer),
+  ('/myworkers', view_producerworkers.ViewMyWorkers),
+  ('/myfactories', view_producerfactories.ViewMyFactories),
+  ('/myproducts', view_producerproducts.ViewMyProducts),
   
   # create, edit and view product and related entities
   ('/createproduct', create_product.CreateProductPage),

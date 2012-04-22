@@ -1,7 +1,8 @@
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
-
+import bene_util
 import os
+
 
 
 
@@ -19,10 +20,6 @@ class ViewProductWorkers(webapp.RequestHandler):
             return
         _product = db.get(ID)
         if not _product:
-            '''
-            TODO: if no id is sent, defaults to page with all factories?
-            '''
-            #factorylist = entities.Factory.all()
             template_values = {}
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
@@ -32,7 +29,7 @@ class ViewProductWorkers(webapp.RequestHandler):
         producer = _product.getProducer()
         workers = _product.getWorkers()
         factory = _product.getFactory()
-        template_values = {}
+        template_values = bene_util.urldecode(self.request.uri)
         template_values['id'] = ID
         template_values['product'] = _product
         template_values['name'] = name

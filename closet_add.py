@@ -37,8 +37,10 @@ class AddToCloset(webapp.RequestHandler):
             return
         
         # if not already in closet, add to closet, and redirect back to product page
+        #return
         if not _consumer.hasProduct(product.key()): 
             _consumer.addProduct(product.key())
+            _consumer.put()
         self.redirect('/mobilepage?%s' % urllib.urlencode({'id': product.key()}))  
         return
     

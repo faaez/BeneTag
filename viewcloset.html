@@ -1,0 +1,26 @@
+<html>
+	<head>
+		{% include "styles.html" %}
+		<title>BeneTag</title>
+		
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	</head>
+	
+	<body onload="initialize()">
+		
+		{% include "headersmall.html" %}
+		
+		<h1>{{consumer.name}}</a></h1>
+		
+		<p>Closet:</p>
+		{% for product in products %}
+			<p><a href="/mobilepage?id={{product.key}}">{{product.name}}</a> 
+			   {% if can_edit %} <small>(<a href="/removefromcloset?id={{product.key}}">Remove </a>)</small>{% endif %}
+			</p>
+		{% endfor %}
+		
+		{% include "footer.html" %}
+	
+	</body>
+
+</html>

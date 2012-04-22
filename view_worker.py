@@ -1,6 +1,7 @@
 from google.appengine.api import users
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
+import bene_util
 import os
 
 
@@ -18,10 +19,6 @@ class ViewWorker(webapp.RequestHandler):
             self.redirect('/')
         worker = db.get(ID)
         if not worker:
-            '''
-            TODO: if no id is sent, defaults to a page with all workers? 
-            '''
-            #workerlist = entities.Worker.all()
             template_values = {}
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
@@ -39,7 +36,7 @@ class ViewWorker(webapp.RequestHandler):
         else:
             latitude = None
             longitude = None
-        template_values = {}
+        template_values = bene_util.urldecode(self.request.uri)
         template_values['id'] = ID
         template_values['name'] = name
         template_values['picture'] = picture

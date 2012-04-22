@@ -1,6 +1,7 @@
 from google.appengine.api import users
 from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import template
+import bene_util
 import os
 import urllib
 
@@ -22,10 +23,6 @@ class ViewProduct(webapp.RequestHandler):
         product = db.get(ID)
         # Display error if product ID not found
         if not product:
-            '''
-            TODO: if no id is sent, defaults to a page with all workers? 
-            '''
-            #workerlist = entities.Worker.all()
             template_values = {}
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
@@ -39,7 +36,7 @@ class ViewProduct(webapp.RequestHandler):
             latitude = None
             longitude = None
         # Make a dictionary for template
-        template_values = {}
+        template_values = bene_util.urldecode(self.request.uri)
         template_values['id'] = ID
         template_values['name'] = product.name
         template_values['producer'] = product.getProducer()
