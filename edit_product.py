@@ -66,31 +66,45 @@ class EditProductPage(webapp.RequestHandler):
         Need to explicitly check equality of key()
         '''
         template_values['factories'] = []
-        for factory in _producer.getFactories():
-            add = True
-            for factory_old in _factories_old:
-                if factory_old.key() == factory.key():
-                    add = False
-            if add:
-                template_values['factories'].append(factory)
+        _factories = _producer.getFactories()
+        if _factories:
+            for factory in _factories:
+                if factory:
+                    add = True
+                    if _factories_old:
+                        for factory_old in _factories_old:
+                            if factory_old:
+                                if factory_old.key() == factory.key():
+                                    add = False
+                    if add:
+                        template_values['factories'].append(factory)
                         
         template_values['workers'] = []
-        for worker in _producer.getWorkers():
-            add = True
-            for worker_old in _workers_old:
-                if worker_old.key() == worker.key():
-                    add = False
-            if add:
-                template_values['workers'].append(worker)
+        _workers = _producer.getWorkers()
+        if _workers:
+            for worker in _workers:
+                if worker:
+                    add = True
+                    if _workers_old:
+                        for worker_old in _workers_old:
+                            if worker_old:
+                                if worker_old.key() == worker.key():
+                                    add = False
+                    if add:
+                        template_values['workers'].append(worker)
                                 
         template_values['badges'] = []
-        for badge in entities.Badge.all():
-            add = True
-            for badge_old in _badges_old:
-                if badge_old.key() == badge.key():
-                    add = False
-            if add:
-                template_values['badges'].append(badge)
+        _badges = entities.Badge.all()
+        if _badges:
+            for badge in _badges:
+                if badge:
+                    add = True
+                    if _badges_old:
+                        for badge_old in _badges_old:
+                            if badge_old.key() == badge.key():
+                                add = False
+                    if add:
+                        template_values['badges'].append(badge)
                     
         path = os.path.join(os.path.dirname(__file__), 'editproduct.html')
         self.response.out.write(template.render(path, template_values))

@@ -109,7 +109,7 @@ application = webapp.WSGIApplication([
   
   # misc
   ('/qr', create_qr.CreateQrPage),
-], debug=False)
+], debug=True)
 
 def main():
     run_wsgi_app(application)

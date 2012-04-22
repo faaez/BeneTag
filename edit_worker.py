@@ -60,13 +60,18 @@ class EditWorkerPage(webapp.RequestHandler):
         '''
         TODO: Make this more efficient. For some reason, 'factory not in _factories_old' doesn't work
         '''
-        for factory in _producer.getFactories(): 
-            add = True
-            for factory_old in _factories_old:
-                if factory_old.key() == factory.key():
-                    add = False
-            if add:
-                template_values['factories'].append(factory)
+        _factories = _producer.getFactories()
+        if _factories:
+            for factory in _factories:
+                if factory:
+                    add = True
+                    if _factories_old:
+                        for factory_old in _factories_old:
+                            if factory_old:
+                                if factory_old.key() == factory.key():
+                                    add = False
+                    if add:
+                        template_values['factories'].append(factory)
                                             
         path = os.path.join(os.path.dirname(__file__), 'editworker.html')
         self.response.out.write(template.render(path, template_values))
