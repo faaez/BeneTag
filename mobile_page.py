@@ -24,7 +24,7 @@ class ViewProduct(webapp.RequestHandler):
         product = db.get(ID)
         # Display error if product ID not found
         if not product:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -36,7 +36,7 @@ class ViewProduct(webapp.RequestHandler):
         else:
             latitude = None
             longitude = None
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['id'] = ID
         template_values['name'] = product.name
         template_values['producer'] = product.getProducer()
@@ -85,7 +85,7 @@ class ViewProduct(webapp.RequestHandler):
         if debug_mode:
             super(ViewProduct, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -117,7 +117,7 @@ class ProductImage(webapp.RequestHandler):
         if debug_mode:
             super(ProductImage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -147,7 +147,7 @@ class BadgeImage(webapp.RequestHandler):
         if debug_mode:
             super(BadgeImage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

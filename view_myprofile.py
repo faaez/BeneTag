@@ -32,7 +32,7 @@ class ViewMyProfile(webapp.RequestHandler):
             workers = _producer.getWorkers()
             factories = _producer.getFactories()
             
-            template_values = bene_util.urldecode(self.request.uri)
+            template_values = bene_util.initTemplate(self.request.uri)
             template_values['id'] = _producer.key()
             template_values['name'] = name
             template_values['description'] = description
@@ -69,7 +69,7 @@ class ViewMyProfile(webapp.RequestHandler):
         name = _consumer.name
         profile = _consumer.profile
         
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['id'] = _consumer.key()
         template_values['consumer'] = _consumer
         template_values['name'] = name
@@ -92,7 +92,7 @@ class ViewMyProfile(webapp.RequestHandler):
         if debug_mode:
             super(ViewMyProfile, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

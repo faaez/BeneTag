@@ -23,13 +23,13 @@ class ViewProducerWorkers(webapp.RequestHandler):
         producer = db.get(ID)
         # Display error if product ID not found
         if not producer:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
         
         # Make a dictionary for template
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['id'] = ID
         template_values['producer'] = producer
         template_values['workers'] = producer.getWorkers()
@@ -51,7 +51,7 @@ class ViewProducerWorkers(webapp.RequestHandler):
         if debug_mode:
             super(ViewProducerWorkers, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -77,7 +77,7 @@ class ViewMyWorkers(webapp.RequestHandler):
             return
         
         # Make a dictionary for template
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['id'] = producer.key()
         template_values['producer'] = producer
         template_values['workers'] = producer.getWorkers()
@@ -99,7 +99,7 @@ class ViewMyWorkers(webapp.RequestHandler):
         if debug_mode:
             super(ViewMyWorkers, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

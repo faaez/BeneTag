@@ -26,7 +26,7 @@ class ConsumerHomePage(webapp.RequestHandler):
             return
         
         # if setup done, then show home page
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         path = os.path.join(os.path.dirname(__file__), 'consumerhome.html')
         self.response.out.write(template.render(path, template_values))
         return
@@ -38,7 +38,7 @@ class ConsumerHomePage(webapp.RequestHandler):
         if debug_mode:
             super(ConsumerHomePage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

@@ -26,7 +26,7 @@ class ProducerHomePage(webapp.RequestHandler):
             self.redirect('/')
             return
         
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         path = os.path.join(os.path.dirname(__file__), 'producerhome.html')
         self.response.out.write(template.render(path, template_values))
         return
@@ -38,7 +38,7 @@ class ProducerHomePage(webapp.RequestHandler):
         if debug_mode:
             super(ProducerHomePage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

@@ -20,7 +20,7 @@ class ViewConsumer(webapp.RequestHandler):
             return
         consumer = db.get(ID)
         if not consumer:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -28,7 +28,7 @@ class ViewConsumer(webapp.RequestHandler):
         name = consumer.name
         profile = consumer.profile
         
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['id'] = ID
         template_values['consumer'] = consumer
         template_values['name'] = name
@@ -67,7 +67,7 @@ class ViewMyConsumer(webapp.RequestHandler):
         name = _consumer.name
         profile = _consumer.profile
         
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['id'] = _consumer.key()
         template_values['consumer'] = _consumer
         template_values['name'] = name
@@ -90,7 +90,7 @@ class ViewMyConsumer(webapp.RequestHandler):
         if debug_mode:
             super(ViewMyConsumer, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -122,7 +122,7 @@ class ConsumerImage(webapp.RequestHandler):
         if debug_mode:
             super(ConsumerImage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

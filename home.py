@@ -31,7 +31,7 @@ class HomePage(webapp.RequestHandler):
                     self.redirect('/consumerhome')
                     return
         else: # otherwise, show button for signing in and searching
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'home.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -43,7 +43,7 @@ class HomePage(webapp.RequestHandler):
         if debug_mode:
             super(HomePage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

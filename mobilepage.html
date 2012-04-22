@@ -6,7 +6,7 @@
         <meta property="og:type"        content="website" /> 
         <meta property="og:url"         content="{{url}}" /> 
         <meta property="og:title"       content="{{name}}" /> 
-        <meta property="og:description" content="Made by {{producer}}" /> 
+        <meta property="og:description" content="Made by {{producer.name}}" /> 
         <meta property="og:image"       content="{{qr_url}}" />
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="apple-touch-icon" href="icon.png"/>
@@ -26,8 +26,8 @@
                 
                 var userLat;
                 var userLong;
-                var factName = '{{factory_name}}';
-                var factAdd = '{{factory_address}}';
+                var factName = '{{factory.name}}';
+                var factAdd = '{{factory.address}}';
                 
                 if (navigator.geolocation) // check if browser support this feature or not
                 {
@@ -119,7 +119,7 @@
                         {%if forloop.counter0|divisibleby:3 %} 
                             <tr> 
                         {%endif%}
-                            <td><img id="badgeimage" src="badgeimage?key={{badge}}"></img </td>
+                            <td><img id="badgeimage" src="badgeimage?key={{badge.key}}"></img </td>
                         {%if forloop.counter|divisibleby:3 %} 
                             </tr> 
                         {%endif%}
@@ -179,7 +179,7 @@
                     <div id="social-row"><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-hashtags="BeneTag">Tweet</a>
                     </div>
                     <div id="social-row"><g:plusone></g:plusone></div>
-                    <div id="social-row"><a href="http://pinterest.com/pin/create/button/?url={{url}} &media={{qr_url}}&description=Made by {{producer}}" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a></div>
+                    <div id="social-row"><a href="http://pinterest.com/pin/create/button/?url={{url}} &media={{qr_url}}&description=Made by {{producer.name}}" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a></div>
                 </div>
                 
                 <div id="fb-root"></div>

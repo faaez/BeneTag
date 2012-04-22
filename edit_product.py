@@ -41,7 +41,7 @@ class EditProductPage(webapp.RequestHandler):
             return
         _product = db.get(ID)
         if not _product: # product doesn't exist
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -53,7 +53,7 @@ class EditProductPage(webapp.RequestHandler):
         _factories_old = _product.getFactories()
         _workers_old = _product.getWorkers()
         _badges_old = _product.getBadges()
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['id'] = ID
         template_values['factories_old'] = _factories_old
         template_values['workers_old'] = _workers_old
@@ -117,7 +117,7 @@ class EditProductPage(webapp.RequestHandler):
         if debug_mode:
             super(EditProductPage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -154,7 +154,7 @@ class StoreEditedProductPage(webapp.RequestHandler):
             return
         _product = db.get(ID)
         if not _product: # product doesn't exist
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -223,7 +223,7 @@ class StoreEditedProductPage(webapp.RequestHandler):
         if debug_mode:
             super(StoreEditedProductPage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

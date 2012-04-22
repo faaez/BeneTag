@@ -20,7 +20,7 @@ class ViewProductWorkers(webapp.RequestHandler):
             return
         _product = db.get(ID)
         if not _product:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -29,7 +29,7 @@ class ViewProductWorkers(webapp.RequestHandler):
         producer = _product.getProducer()
         workers = _product.getWorkers()
         factory = _product.getFactory()
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['id'] = ID
         template_values['product'] = _product
         template_values['name'] = name
@@ -48,7 +48,7 @@ class ViewProductWorkers(webapp.RequestHandler):
         if debug_mode:
             super(ViewProductWorkers, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

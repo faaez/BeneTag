@@ -23,13 +23,13 @@ class ViewCloset(webapp.RequestHandler):
         consumer = db.get(ID)
         # Display error if consumer ID not found
         if not consumer:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
         
         # Make a dictionary for template
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['id'] = ID
         template_values['consumer'] = consumer
         template_values['products'] = consumer.getProducts()
@@ -51,7 +51,7 @@ class ViewCloset(webapp.RequestHandler):
         if debug_mode:
             super(ViewCloset, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -76,7 +76,7 @@ class ViewMyCloset(webapp.RequestHandler):
             return
         
         # Make a dictionary for template
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['id'] = _consumer.key()
         template_values['consumer'] = _consumer
         template_values['products'] = _consumer.getProducts()
@@ -98,7 +98,7 @@ class ViewMyCloset(webapp.RequestHandler):
         if debug_mode:
             super(ViewMyCloset, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

@@ -32,7 +32,7 @@ class CreateWorkerPage(webapp.RequestHandler):
             self.redirect('/producerhome?%s' % urllib.urlencode({'verify': True}))
             return
         
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['factories'] = _producer.getFactories()
                 
         path = os.path.join(os.path.dirname(__file__), 'createworker.html')
@@ -46,7 +46,7 @@ class CreateWorkerPage(webapp.RequestHandler):
         if debug_mode:
             super(CreateWorkerPage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -110,7 +110,7 @@ class StoreWorkerPage(webapp.RequestHandler):
         if debug_mode:
             super(StoreWorkerPage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

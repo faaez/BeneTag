@@ -23,7 +23,7 @@ class CreateConsumerPage(webapp.RequestHandler):
             self.redirect('/')
             return
             
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         path = os.path.join(os.path.dirname(__file__), 'createconsumer.html')
         self.response.out.write(template.render(path, template_values))
         return
@@ -35,7 +35,7 @@ class CreateConsumerPage(webapp.RequestHandler):
         if debug_mode:
             super(CreateConsumerPage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -80,7 +80,7 @@ class StoreConsumerPage(webapp.RequestHandler):
         if debug_mode:
             super(StoreConsumerPage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

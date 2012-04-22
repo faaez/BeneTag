@@ -21,7 +21,7 @@ class ViewProducer(webapp.RequestHandler):
             return
         producer = db.get(ID)
         if not producer:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -33,7 +33,7 @@ class ViewProducer(webapp.RequestHandler):
         workers = producer.getWorkers()
         factories = producer.getFactories()
         
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['id'] = ID
         template_values['name'] = name
         template_values['description'] = description
@@ -57,6 +57,18 @@ class ViewProducer(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'viewproducer.html')
         self.response.out.write(template.render(path, template_values))
         return
+    
+    '''
+    Exception handler
+    '''
+    def handle_exception(self, exception, debug_mode):
+        if debug_mode:
+            super(ViewProducer, self).handle_exception(exception, debug_mode)
+        else:
+            template_values = bene_util.initTemplate(self.request.uri)
+            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
+            self.response.out.write(template.render(path, template_values))
+            return
     
     
 """
@@ -86,7 +98,7 @@ class ViewMyProducer(webapp.RequestHandler):
         workers = _producer.getWorkers()
         factories = _producer.getFactories()
         
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['id'] = _producer.key()
         template_values['name'] = name
         template_values['description'] = description
@@ -118,7 +130,7 @@ class ViewMyProducer(webapp.RequestHandler):
         if debug_mode:
             super(ViewMyProducer, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -149,7 +161,7 @@ class ProducerImage(webapp.RequestHandler):
         if debug_mode:
             super(ProducerImage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return

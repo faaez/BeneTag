@@ -19,7 +19,7 @@ class ViewWorker(webapp.RequestHandler):
             self.redirect('/')
         worker = db.get(ID)
         if not worker:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -36,7 +36,7 @@ class ViewWorker(webapp.RequestHandler):
         else:
             latitude = None
             longitude = None
-        template_values = bene_util.urldecode(self.request.uri)
+        template_values = bene_util.initTemplate(self.request.uri)
         template_values['id'] = ID
         template_values['name'] = name
         template_values['picture'] = picture
@@ -70,7 +70,7 @@ class ViewWorker(webapp.RequestHandler):
         if debug_mode:
             super(ViewWorker, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
@@ -103,7 +103,7 @@ class WorkerImage(webapp.RequestHandler):
         if debug_mode:
             super(WorkerImage, self).handle_exception(exception, debug_mode)
         else:
-            template_values = {}
+            template_values = bene_util.initTemplate(self.request.uri)
             path = os.path.join(os.path.dirname(__file__), 'not_found.html')
             self.response.out.write(template.render(path, template_values))
             return
