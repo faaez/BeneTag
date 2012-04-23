@@ -207,8 +207,8 @@ legend+.control-group{margin-top:20px;-webkit-margin-top-collapse:separate;}
 .form-horizontal .controls{margin-left:160px;*display:inline-block;*margin-left:0;*padding-left:20px;}
 .form-horizontal .help-block{margin-top:10px;margin-bottom:0;}
 .form-horizontal .form-actions{padding-left:160px;}
-[class^="icon-"],[class*=" icon-"]{display:inline-block;width:14px;height:14px;line-height:14px;vertical-align:text-top;background-image:url("../img/glyphicons-halflings.png");background-position:14px 14px;background-repeat:no-repeat;*margin-right:.3em;}[class^="icon-"]:last-child,[class*=" icon-"]:last-child{*margin-left:0;}
-.icon-white{background-image:url("../img/glyphicons-halflings-white.png");}
+[class^="icon-"],[class*=" icon-"]{display:inline-block;width:14px;height:14px;line-height:14px;vertical-align:text-top;background-image:url("/stylesheets/img/glyphicons-halflings.png");background-position:14px 14px;background-repeat:no-repeat;*margin-right:.3em;}[class^="icon-"]:last-child,[class*=" icon-"]:last-child{*margin-left:0;}
+.icon-white{background-image:url("/stylesheets/img/glyphicons-halflings-white.png");}
 .icon-glass{background-position:0 0;}
 .icon-music{background-position:-24px 0;}
 .icon-search{background-position:-48px 0;}
