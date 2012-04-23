@@ -29,12 +29,13 @@
 	
 		{% include "headersmall.html" %}
 		
-		<h1 id="factoryname">Factory : {{ name }}</h1>
-		<h4>Address: {{address}}</h4>
-		<hr></hr>
+		<p id="productname">Factory : {{ name }}</p>
+		<p id="info">Address: {{address}}</p>
 		
+		<hr id="separator-line">
 		
-		<h4>Products</h4>
+		<p id="section-heading">Products</p>
+		
 		<div>
 		{% for product in products%}
 		   {{index}}<a href="/mobilepage?id={{product.key}}">{{product.name}}</a> <br/>
@@ -49,14 +50,16 @@
 		  <p><a href="/viewworker?id={{worker.key}}">{{worker.name}}</a></p>
 		{% endfor %}
 		</div>
-		<hr></hr>
+		
+		<p id="section-heading">Products</p>
+		
 			{% if latitude and longitude %}
 				<div id="map_canvas"></div>
 			{% endif %}
 		
 		
 		{% if can_edit %}
-			<small><a href="/editfactory?id={{id}}">Edit your factory profile</a></small>
+			<p><a href="/editfactory?id={{id}}">Edit your factory profile</a></p>
 		{% endif %}
 		
 		{% include "footer.html" %}
