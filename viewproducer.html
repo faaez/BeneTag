@@ -10,22 +10,24 @@
 		
 		{% include "headersmall.html" %}
 		
-		<h1>{{producer.name}}</a></h1>
+		<p id="productname">{{producer.name}}</a></p>
 		
-		<p>Description:</p>
-		<p>{{producer.description}}</p>
+		<p id ="section-heading"><Description:</p>
+		<p id = "info">{{producer.description}}</p>
 		
-		<p><a href="/viewproducerworkers?id={{id}}">Workers</a></p>
+		<hr id="separator-line">
+		
+		<p id="info"><a href="/viewproducerworkers?id={{id}}">Workers</a></p>
 		<br />
 		
-		<p><a href="/viewproducerfactories?id={{id}}">Factories</a></p>
+		<p id="info"><a href="/viewproducerfactories?id={{id}}">Factories</a></p>
 		<br />
 		
-		<p><a href="/viewproducerproducts?id={{id}}">Products</a></p>
+		<p id="info"><a href="/viewproducerproducts?id={{id}}">Products</a></p>
 		<br />
 		
 		{% if can_edit %}
-			<small><a href="/editproducer">Edit your profile</a></small>
+			<p><a href="/editproducer">Edit your profile</a></p>
 		{% endif %}
 		
 		{% include "footer.html" %}
