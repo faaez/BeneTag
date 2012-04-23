@@ -26,7 +26,7 @@
 	</head>
 	
 	<body onload="initialize()">
-		{% include "headersmall.html" %}
+		{% include "navbar.html" %}
 		<h1>Workers on <a href="/mobilepage?id={{product.key}}">{{product.name}}</a></h1>
 		<p>Employer: <a href="/viewproducer?id={{producer.key}}">{{producer.name}}</a></p>
 		{% for worker in workers %}
