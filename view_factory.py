@@ -20,11 +20,8 @@ class ViewFactory(webapp.RequestHandler):
             self.redirect('/')
             return
         factory = db.get(ID)
-        if not factory:
-            template_values = bene_util.initTemplate(self.request.uri)
-            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-            self.response.out.write(template.render(path, template_values))
-            return
+        ''' an error in getting the factory will be redirected to exception handler'''
+        
         # Make a dictionary for template
         name = factory.name
         producer = factory.getProducer()

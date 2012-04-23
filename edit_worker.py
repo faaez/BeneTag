@@ -39,11 +39,7 @@ class EditWorkerPage(webapp.RequestHandler):
             self.redirect('/')
             return
         _worker = db.get(ID)
-        if not _worker: # doesn't exist
-            template_values = bene_util.initTemplate(self.request.uri)
-            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-            self.response.out.write(template.render(path, template_values))
-            return
+        ''' an error in getting the worker will be redirected to exception handler'''
         
         if _worker.owner != user: # not 'owner' of worker. I know it sounds very pre-emancipation
             self.redirect('/producerhome?%s' % urllib.urlencode({'not_owner': True}))
@@ -121,11 +117,7 @@ class StoreEditedWorkerPage(webapp.RequestHandler):
             self.redirect('/')
             return
         _worker = db.get(ID)
-        if not _worker: # doesn't exist
-            template_values = bene_util.initTemplate(self.request.uri)
-            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-            self.response.out.write(template.render(path, template_values))
-            return
+        ''' an error in getting the worker will be redirected to exception handler'''
         
         if _worker.owner != user: # not 'owner' of worker. I know it sounds very pre-emancipation
             self.redirect('/producerhome?%s' % urllib.urlencode({'not_owner': True}))

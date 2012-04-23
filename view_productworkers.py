@@ -19,11 +19,8 @@ class ViewProductWorkers(webapp.RequestHandler):
             self.redirect('/')
             return
         _product = db.get(ID)
-        if not _product:
-            template_values = bene_util.initTemplate(self.request.uri)
-            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-            self.response.out.write(template.render(path, template_values))
-            return
+        ''' an error in getting the product will be redirected to exception handler'''
+        
         # Make a dictionary for template
         name = _product.name
         producer = _product.getProducer()

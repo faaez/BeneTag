@@ -38,11 +38,7 @@ class EditFactoryPage(webapp.RequestHandler):
             self.redirect('/')
             return
         _factory = db.get(ID)
-        if not _factory:
-            template_values = bene_util.initTemplate(self.request.uri)
-            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-            self.response.out.write(template.render(path, template_values))
-            return
+        ''' an error in getting the factory will be redirected to exception handler'''
         
         if _factory.owner != user: # if not owner of factory
             self.redirect('/producerhome?%s' % urllib.urlencode({'not_owner': True}))
@@ -103,11 +99,7 @@ class StoreEditedFactoryPage(webapp.RequestHandler):
             self.redirect('/')
             return
         _factory = db.get(ID)
-        if not _factory:
-            template_values = bene_util.initTemplate(self.request.uri)
-            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-            self.response.out.write(template.render(path, template_values))
-            return
+        ''' an error in getting the factory will be redirected to exception handler'''
         
         if _factory.owner != user: # if not owner of factory
             self.redirect('/producerhome?%s' % urllib.urlencode({'not_owner': True}))

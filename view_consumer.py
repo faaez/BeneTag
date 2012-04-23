@@ -19,11 +19,8 @@ class ViewConsumer(webapp.RequestHandler):
             self.redirect('/')
             return
         consumer = db.get(ID)
-        if not consumer:
-            template_values = bene_util.initTemplate(self.request.uri)
-            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-            self.response.out.write(template.render(path, template_values))
-            return
+        ''' an error in getting the consumer will be redirected to exception handler'''
+        
         # Make a dictionary for template
         name = consumer.name
         profile = consumer.profile
@@ -106,11 +103,8 @@ class ConsumerImage(webapp.RequestHandler):
             return
         # Fetch the image for this worker
         consumer = db.get(ID)
-        if not consumer:
-            '''
-            TODO: what to do here?
-            '''
-            return
+        ''' an error in getting the consumer will be redirected to exception handler'''
+        
         self.response.headers['Content-Type'] = 'image'
         self.response.out.write(consumer.getPicture()) 
         return

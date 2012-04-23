@@ -18,11 +18,8 @@ class ViewWorker(webapp.RequestHandler):
             '''
             self.redirect('/')
         worker = db.get(ID)
-        if not worker:
-            template_values = bene_util.initTemplate(self.request.uri)
-            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-            self.response.out.write(template.render(path, template_values))
-            return
+        ''' an error in getting the worker will be redirected to exception handler'''
+        
         # Make a dictionary for template
         name = worker.name
         factory = worker.getFactory()
@@ -87,11 +84,8 @@ class WorkerImage(webapp.RequestHandler):
             return
         # Fetch the image for this worker
         worker = db.get(ID)
-        if not worker:
-            '''
-            TODO: what to do here?
-            '''
-            return
+        ''' an error in getting the worker will be redirected to exception handler'''
+        
         self.response.headers['Content-Type'] = 'image'
         self.response.out.write(worker.getPicture())
         return

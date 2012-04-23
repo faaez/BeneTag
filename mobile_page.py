@@ -22,12 +22,8 @@ class ViewProduct(webapp.RequestHandler):
             return
         # Fetch the data for this product
         product = db.get(ID)
-        # Display error if product ID not found
-        if not product:
-            template_values = bene_util.initTemplate(self.request.uri)
-            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-            self.response.out.write(template.render(path, template_values))
-            return
+        ''' an error in getting the product will be redirected to exception handler'''
+        
         # Make a dictionary for template
         _factory = product.getFactory()
         if _factory and _factory.location:
@@ -101,11 +97,8 @@ class ProductImage(webapp.RequestHandler):
             return
         # Fetch the image for this product
         product = db.get(ID)
-        if not product:
-            '''
-            TODO: what to do here?
-            '''
-            return
+        ''' an error in getting the product image will be redirected to exception handler'''
+        
         self.response.headers['Content-Type'] = 'image'
         self.response.out.write(product.getPicture())
         return
@@ -131,11 +124,8 @@ class BadgeImage(webapp.RequestHandler):
             '''
             return
         badge = db.get(key)
-        if not badge:
-            '''
-            TODO: what to do here?
-            '''
-            return
+        ''' an error in getting the badge image will be redirected to exception handler'''
+        
         self.response.headers['Content-Type'] = 'image'
         self.response.out.write(badge.getPicture())
         return

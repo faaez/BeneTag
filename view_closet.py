@@ -21,12 +21,7 @@ class ViewCloset(webapp.RequestHandler):
             return
         # Fetch the data for this consumer
         consumer = db.get(ID)
-        # Display error if consumer ID not found
-        if not consumer:
-            template_values = bene_util.initTemplate(self.request.uri)
-            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-            self.response.out.write(template.render(path, template_values))
-            return
+        ''' an error in getting the consumer will be redirected to exception handler'''
         
         # Make a dictionary for template
         template_values = bene_util.initTemplate(self.request.uri)

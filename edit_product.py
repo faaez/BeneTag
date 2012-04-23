@@ -40,11 +40,7 @@ class EditProductPage(webapp.RequestHandler):
             self.redirect('/')
             return
         _product = db.get(ID)
-        if not _product: # product doesn't exist
-            template_values = bene_util.initTemplate(self.request.uri)
-            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-            self.response.out.write(template.render(path, template_values))
-            return
+        ''' an error in getting the product will be redirected to exception handler'''
         
         if _product.owner != user: # if current user doesn't own product
             self.redirect('/producerhome?%s' % urllib.urlencode({'not_owner': True}))
@@ -153,11 +149,7 @@ class StoreEditedProductPage(webapp.RequestHandler):
             self.redirect('/')
             return
         _product = db.get(ID)
-        if not _product: # product doesn't exist
-            template_values = bene_util.initTemplate(self.request.uri)
-            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-            self.response.out.write(template.render(path, template_values))
-            return
+        ''' an error in getting the product will be redirected to exception handler'''
         
         if _product.owner != user: # if current user doesn't own product
             self.redirect('/producerhome?%s' % urllib.urlencode({'not_owner': True}))

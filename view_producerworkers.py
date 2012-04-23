@@ -21,12 +21,7 @@ class ViewProducerWorkers(webapp.RequestHandler):
             return
         # Fetch the data for this product
         producer = db.get(ID)
-        # Display error if product ID not found
-        if not producer:
-            template_values = bene_util.initTemplate(self.request.uri)
-            path = os.path.join(os.path.dirname(__file__), 'not_found.html')
-            self.response.out.write(template.render(path, template_values))
-            return
+        ''' an error in getting the producer will be redirected to exception handler'''
         
         # Make a dictionary for template
         template_values = bene_util.initTemplate(self.request.uri)
