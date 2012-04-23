@@ -36,8 +36,8 @@
                                                              userLat = position.coords.latitude;
                                                              userLong = position.coords.longitude;
                                                              var R = 3959; // miles
-                                                             var dLat = (userLat-{{latitude}})*(Math.PI/180);
-                                                             var dLon = (userLong-{{longitude}})*(Math.PI/180);
+                                                             var dLat = (userLat-({{latitude}}))*(Math.PI/180);
+                                                             var dLon = -(userLong-({{longitude}}))*(Math.PI/180);
                                                              var lat1 = {{latitude}}*(Math.PI/180);
                                                              var lat2 = userLat*(Math.PI/180);
                                                              
