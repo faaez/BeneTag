@@ -10,12 +10,15 @@
 		
 		{% include "headersmall.html" %}
 		
-		<h1>{{producer.name}}</a></h1>
+		<p id="productname">{{producer.name}}</a></p>
 		
-		<p>Products:</p>
+		<hr id="separator-line">
+		
+		<p id ="section-heading">Products:</p>
+		
 		{% for product in products %}
-			<p><a href="/mobilepage?id={{product.key}}">{{product.name}}</a> 
-			   {% if can_edit %} <small>(<a href="/editproduct?id={{product.key}}">Edit </a>)</small>{% endif %}
+			<p id="info"><a href="/mobilepage?id={{product.key}}">{{product.name}}</a> 
+			{% if can_edit %} (<a href="/editproduct?id={{product.key}}">edit </a>) {% endif %}
 			</p>
 		{% endfor %}
 		

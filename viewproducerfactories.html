@@ -10,12 +10,15 @@
 		
 		{% include "headersmall.html" %}
 		
-		<h1>{{producer.name}}</a></h1>
+		<p id="productname">{{producer.name}}</a></p>
 		
-		<p>Factories:</p>
+		<hr id="separator-line">
+		
+		<p id ="section-heading">Factories:</p>
+		
 		{% for factory in factories %}
-			<p><a href="/viewfactory?id={{factory.key}}">{{factory.name}}</a> 
-			   {% if can_edit %} <small>(<a href="/editfactory?id={{factory.key}}">Edit </a>)</small>{% endif %}
+			<p id="info"><a href="/viewfactory?id={{factory.key}}">{{factory.name}}</a> 
+			   {% if can_edit %} (<a href="/editfactory?id={{factory.key}}">edit </a>){% endif %}
 			</p>
 		{% endfor %}
 		

@@ -11,12 +11,15 @@
 	<body>
 		{% include "headersmall.html" %}
 		
-		<h1>{{producer.name}}</a></h1>
+		<p id="productname">{{producer.name}}</a></p>
 		
-		<p>Workers:</p>
+		<hr id="separator-line">
+		
+		<p id ="section-heading">Workers:</p>
+		
 		{% for worker in workers %}
-			<p><a href="/viewworker?id={{worker.key}}">{{worker.name}}</a> 
-			   {% if can_edit %} <small>(<a href="/editworker?id={{worker.key}}">Edit </a>)</small>{% endif %}
+			<p id="info"><a href="/viewworker?id={{worker.key}}">{{worker.name}}</a> 
+			   {% if can_edit %}(<a href="/editworker?id={{worker.key}}">Edit </a>){% endif %}
 			</p>
 		{% endfor %}
 		
