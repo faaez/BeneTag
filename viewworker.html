@@ -27,29 +27,40 @@
 
 	<body onload="initialize()">
 		{% include "headersmall.html" %}
-		<h1 id="workername">{{ name }}</h1>
+		
+		<p id="productname">{{ name }}</p>
+		
 		{% if has_image %}
 		<img id="workerimage" src="workerimage?id={{id}}"></img>
 		{% endif %}   
-		<h4>His Story</h4>
-		<h4>{{profile}}</h4>
-		<hr></hr>
-		<h4>Employer: <a href="/viewproducer?id={{producer.key}}">{{producer.name}}</a></h4>
-		<h4>Factory : <a href="/viewfactory?id={{factory.key}}">{{factory.name}}</a></h4>
-		<hr></hr>
+		
+		<hr id="separator-line">
+		
+		<p id="section-heading">His Story</p>
+		
+		<p id="info">Employer: <a href="/viewproducer?id={{producer.key}}">{{producer.name}}</a></p>
+		<p id="info">Factory : <a href="/viewfactory?id={{factory.key}}">{{factory.name}}</a></p>
+		
+		<p id="info">{{profile}}</p>
+		<hr id="separator-line">
+		
+		
 			{% if latitude and longitude %}
 				<div id="map_canvas"></div>
 			{% endif %}
 		
-		  </body>
-		<p>Products:</p>
+		<hr id="separator-line">
+		
+		<p id="section-heading">Products:</p>
 			{% for product in products %}
-			<p><a href="/mobilepage?id={{product.key}}">{{product.name}}</a></p>
+			<p id="info"><a href="/mobilepage?id={{product.key}}">{{product.name}}</a></p>
 			{% endfor %}
 		
 		{% if can_edit %}
-			<small><a href="/editworker?id={{id}}">Edit your worker's profile</a></small>
+			<p><a href="/editworker?id={{id}}">Edit your worker's profile</a></p>
 		{% endif %}
+		
 		{% include "footer.html" %}
+		
 	</body>
 </html>
